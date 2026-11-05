@@ -1,0 +1,381 @@
+/* =========================================================================
+   HappyUI · data display: table, avatar, stat, steps, checklist, quote,
+   pricing, option card, empty state
+   ========================================================================= */
+
+/* ---------- Table ---------- */
+.hui-table-wrap {
+  overflow-x: auto;
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: 12px 16px 12px 14px;
+  box-shadow: var(--hui-shadow-md);
+}
+
+.hui-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--hui-text-sm);
+}
+
+.hui-table caption {
+  padding: 0.9rem 1rem 0.2rem;
+  font: 700 var(--hui-hand-sm) / 1 var(--hui-font-hand);
+  text-align: left;
+}
+
+.hui-table th,
+.hui-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.hui-table thead th {
+  font-weight: 750;
+  font-size: var(--hui-text-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--hui-ink-soft);
+  white-space: nowrap;
+  background: var(--hui-surface-sunken);
+  border-bottom: var(--hui-stroke) solid var(--hui-line);
+}
+
+.hui-table tbody tr + tr td,
+.hui-table tbody tr + tr th { border-top: var(--hui-stroke-thin) dashed var(--hui-line-soft); }
+
+.hui-table tbody tr { transition: background-color var(--hui-duration-fast) var(--hui-ease); }
+.hui-table tbody tr:hover { background: var(--hui-brand-soft); }
+
+.hui-table .is-num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ---------- Avatar ---------- */
+.hui-avatar {
+  --_size: 2.75rem;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: var(--_size);
+  height: var(--_size);
+  overflow: hidden;
+  font: 700 calc(var(--_size) * 0.48) / 1 var(--hui-font-hand);
+  color: var(--hui-on-pop);
+  background: var(--hui-tone, var(--hui-brand));
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: 50%;
+}
+
+.hui-avatar > img { width: 100%; height: 100%; object-fit: cover; }
+
+.hui-avatar--sm { --_size: 2rem; }
+.hui-avatar--lg { --_size: 4rem; }
+.hui-avatar--xl { --_size: 5.5rem; }
+
+.hui-avatar-group { display: inline-flex; padding-left: 0.6rem; }
+
+.hui-avatar-group > .hui-avatar {
+  margin-left: -0.6rem;
+  box-shadow: 0 0 0 3px var(--hui-paper);
+}
+
+/* ---------- Stat ---------- */
+.hui-stat { display: flex; flex-direction: column; gap: 0.15rem; }
+
+.hui-stat__value {
+  font: 700 var(--hui-hand-xl) / 1 var(--hui-font-hand);
+  color: var(--hui-ink);
+}
+
+.hui-stat__label { font-size: var(--hui-text-sm); color: var(--hui-ink-soft); }
+
+.hui-stat__delta {
+  align-self: flex-start;
+  font: 700 var(--hui-text-xs) / 1.4 var(--hui-font-body);
+  color: var(--hui-tone-ink, var(--hui-green-ink));
+}
+
+/* ---------- Steps: 1, 2, 3 and done ---------- */
+.hui-steps {
+  --_on: var(--hui-tone, var(--hui-brand));
+  display: grid;
+  grid-template-columns: repeat(var(--hui-steps, 3), minmax(0, 1fr));
+  gap: var(--hui-space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: hui-step;
+}
+
+.hui-step {
+  position: relative;
+  margin: 0;
+  counter-increment: hui-step;
+}
+
+.hui-step::before {
+  content: counter(hui-step);
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: var(--hui-space-3);
+  font: 700 1.9rem / 1 var(--hui-font-hand);
+  color: var(--hui-on-pop);
+  background: var(--_on);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: 50%;
+  box-shadow: var(--hui-shadow-sm);
+  rotate: -6deg;
+}
+
+/* dashed path to the next step */
+.hui-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  left: 3.6rem;
+  right: 0.25rem;
+  border-top: var(--hui-stroke) dashed var(--hui-line-dashed);
+}
+
+.hui-step__title { margin: 0 0 0.25rem; font: 700 var(--hui-hand-md) / 1.1 var(--hui-font-hand); }
+.hui-step__text { margin: 0; font-size: var(--hui-text-sm); color: var(--hui-ink-soft); }
+
+.hui-steps--vertical { grid-template-columns: minmax(0, 1fr); gap: var(--hui-space-6); }
+.hui-steps--vertical .hui-step { padding-left: 4rem; }
+.hui-steps--vertical .hui-step::before { position: absolute; left: 0; top: 0; margin: 0; }
+.hui-steps--vertical .hui-step:not(:last-child)::after {
+  top: 3.4rem;
+  bottom: -1.2rem;
+  left: 1.5rem;
+  right: auto;
+  border-top: 0;
+  border-left: var(--hui-stroke) dashed var(--hui-line-dashed);
+}
+
+@media (max-width: 640px) {
+  .hui-steps { grid-template-columns: minmax(0, 1fr); }
+  .hui-step { padding-left: 4rem; }
+  .hui-step::before { position: absolute; left: 0; top: 0; margin: 0; }
+  .hui-step:not(:last-child)::after {
+    top: 3.4rem;
+    bottom: -1.2rem;
+    left: 1.5rem;
+    right: auto;
+    border-top: 0;
+    border-left: var(--hui-stroke) dashed var(--hui-line-dashed);
+  }
+}
+
+/* ---------- Checklist with hand-drawn ticks ---------- */
+.hui-checklist {
+  --_tick: var(--hui-tone-ink, var(--hui-red-ink));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hui-checklist > li {
+  position: relative;
+  margin: 0;
+  padding-left: 1.75em;
+}
+
+.hui-checklist > li + li { margin-top: 0.45em; }
+
+.hui-checklist > li::before {
+  content: "";
+  position: absolute;
+  top: 0.22em;
+  left: 0;
+  width: 1.2em;
+  height: 1.2em;
+  background: var(--_tick);
+  -webkit-mask: var(--hui-check-mask) center / contain no-repeat;
+  mask: var(--hui-check-mask) center / contain no-repeat;
+}
+
+.hui-checklist--inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  font-size: var(--hui-text-sm);
+  color: var(--hui-ink-soft);
+}
+
+.hui-checklist--inline > li + li { margin-top: 0; }
+
+/* A crossed-out item ("not included") */
+.hui-checklist > li.is-off { color: var(--hui-ink-faint); }
+.hui-checklist > li.is-off::before {
+  background: var(--hui-ink-faint);
+  -webkit-mask: none;
+  mask: none;
+  height: 2px;
+  top: 0.8em;
+  width: 0.9em;
+  border-radius: 2px;
+}
+
+/* ---------- Quote / testimonial ---------- */
+.hui-quote {
+  position: relative;
+  margin: 0;
+  padding: 1.6rem 1.5rem 1.35rem;
+  background: var(--hui-tone-fill, var(--hui-surface));
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble-alt);
+  box-shadow: var(--hui-shadow-md);
+  rotate: var(--hui-tilt, 0deg);
+}
+
+.hui-quote::before {
+  content: "\201C";
+  position: absolute;
+  top: -1.55rem;
+  left: 1rem;
+  font: 700 5.5rem / 1 var(--hui-font-hand);
+  color: var(--hui-tone-ink, var(--hui-red-ink));
+}
+
+.hui-quote__text {
+  margin: 0;
+  font: 600 var(--hui-hand-md) / 1.2 var(--hui-font-hand);
+  color: var(--hui-ink);
+}
+
+.hui-quote__by {
+  display: flex;
+  align-items: center;
+  gap: var(--hui-space-3);
+  margin-top: var(--hui-space-4);
+  font-size: var(--hui-text-sm);
+}
+
+.hui-quote__by strong { display: block; line-height: 1.2; }
+.hui-quote__by span { color: var(--hui-ink-soft); font-size: var(--hui-text-xs); }
+
+/* ---------- Pricing card ---------- */
+.hui-price {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--hui-space-4);
+  padding: 1.75rem 1.6rem 1.6rem;
+  background: var(--hui-tone-fill, var(--hui-surface));
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--hui-shadow-md);
+  rotate: var(--hui-tilt, 0deg);
+}
+
+.hui-price__name { margin: 0; font: 700 var(--hui-hand-lg) / 1 var(--hui-font-hand); }
+
+.hui-price__amount {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0;
+  font: 700 3.6rem / 1 var(--hui-font-hand);
+}
+
+.hui-price__amount small {
+  font: 500 var(--hui-text-sm) / 1 var(--hui-font-body);
+  color: var(--hui-ink-soft);
+}
+
+.hui-price__text { margin: 0; color: var(--hui-ink-soft); font-size: var(--hui-text-sm); }
+.hui-price .hui-checklist { flex: 1; }
+
+/* The one you recommend */
+.hui-price--featured {
+  --hui-tilt: -1deg;
+  background: var(--hui-tone-fill, var(--hui-brand-fill));
+  border-width: var(--hui-stroke-thick);
+  box-shadow: var(--hui-shadow-xl);
+}
+
+.hui-price__flag {
+  position: absolute;
+  top: -0.9rem;
+  right: 1.25rem;
+  rotate: 4deg;
+}
+
+/* ---------- Option card: pick one (platform, plan, size) ---------- */
+.hui-option {
+  --_on: var(--hui-tone-fill, var(--hui-brand-fill));
+  display: flex;
+  align-items: center;
+  gap: var(--hui-space-3);
+  padding: 0.75rem 0.9rem;
+  color: var(--hui-ink);
+  text-align: left;
+  text-decoration: none;
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--hui-shadow-sm);
+  cursor: pointer;
+  transition:
+    translate var(--hui-duration-fast) var(--hui-ease),
+    box-shadow var(--hui-duration-fast) var(--hui-ease),
+    background-color var(--hui-duration) var(--hui-ease);
+}
+
+.hui-option:hover { translate: -1px -2px; box-shadow: var(--hui-shadow-md); text-decoration: none; }
+
+.hui-option[aria-pressed="true"],
+.hui-option[aria-current="true"],
+.hui-option.is-selected,
+.hui-option:has(input:checked) {
+  background: var(--_on);
+}
+
+.hui-option > input { position: absolute; opacity: 0; pointer-events: none; }
+.hui-option:has(input:focus-visible) { outline: 3px solid var(--hui-focus); outline-offset: 3px; }
+
+.hui-option__icon { flex: none; width: 1.6rem; height: 1.6rem; }
+
+.hui-option__body { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+.hui-option__title { font-weight: 750; }
+.hui-option__meta { font-size: var(--hui-text-xs); color: var(--hui-ink-soft); }
+
+/* The little dashed circle on the right (download, add, go) */
+.hui-option__action {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin-left: auto;
+  border: var(--hui-stroke-thin) dashed var(--hui-ink-soft);
+  border-radius: 50%;
+  transition: background-color var(--hui-duration-fast) var(--hui-ease);
+}
+
+.hui-option__action svg { width: 1.05rem; height: 1.05rem; }
+
+.hui-option:hover .hui-option__action {
+  background: var(--hui-surface);
+  border-style: solid;
+  border-color: var(--hui-line);
+}
+
+/* ---------- Empty state ---------- */
+.hui-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--hui-space-3);
+  padding: var(--hui-space-10) var(--hui-space-6);
+  text-align: center;
+  border: var(--hui-stroke-thin) dashed var(--hui-line-dashed);
+  border-radius: var(--hui-radius-lg);
+}
+
+.hui-empty__art { width: 5rem; height: 5rem; color: var(--hui-ink-soft); }
+.hui-empty__title { margin: 0; font: 700 var(--hui-hand-lg) / 1.05 var(--hui-font-hand); }
+.hui-empty__text { margin: 0; max-width: 26rem; color: var(--hui-ink-soft); }

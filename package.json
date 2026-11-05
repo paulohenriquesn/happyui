@@ -1,0 +1,47 @@
+{
+  "name": "happyui",
+  "version": "1.0.0",
+  "description": "A hand-drawn, warm and friendly design system for the web. Plain CSS, a tiny bit of JS, works with any framework.",
+  "private": true,
+  "license": "MIT",
+  "author": "Paulo Henrique <contato@paulohenriquesn.com>",
+  "homepage": "https://github.com/paulohenriquesn/happyui",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulohenriquesn/happyui.git"
+  },
+  "keywords": [
+    "design-system",
+    "css",
+    "ui-kit",
+    "hand-drawn",
+    "sketch",
+    "components",
+    "claude-skill"
+  ],
+  "type": "module",
+  "main": "dist/happyui.js",
+  "style": "dist/happyui.css",
+  "files": [
+    "dist",
+    "src",
+    "js",
+    "tokens"
+  ],
+  "exports": {
+    ".": "./dist/happyui.css",
+    "./css": "./dist/happyui.css",
+    "./css/min": "./dist/happyui.min.css",
+    "./js": "./dist/happyui.js",
+    "./tokens": "./tokens/tokens.json"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/build.mjs && node scripts/check.mjs",
+    "test": "node scripts/build.mjs && node scripts/check.mjs && node scripts/test.mjs",
+    "screenshots": "node scripts/build.mjs && node scripts/screenshots.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.48.0"
+  }
+}

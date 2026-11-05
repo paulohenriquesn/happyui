@@ -1,0 +1,116 @@
+/* =========================================================================
+   HappyUI · motion
+   Small, bouncy and kind. Everything here turns itself off when the
+   visitor asks for reduced motion (see base.css).
+   ========================================================================= */
+
+/* ---------- Reveal on scroll ----------
+   Add .hui-reveal to a block. happyui.js adds .is-in when it scrolls into
+   view. Without the script (no .hui-js on <html>) nothing is hidden. */
+.hui-js .hui-reveal {
+  opacity: 0;
+  transform: translateY(28px) rotate(1.4deg) scale(0.985);
+  transition:
+    opacity 700ms var(--hui-ease),
+    transform 850ms var(--hui-ease),
+    translate var(--hui-duration) var(--hui-ease),
+    rotate var(--hui-duration) var(--hui-ease),
+    box-shadow var(--hui-duration) var(--hui-ease);
+  transition-delay: calc(var(--hui-i, 0) * 90ms), calc(var(--hui-i, 0) * 90ms), 0s, 0s, 0s;
+}
+
+.hui-js .hui-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Animation helpers ---------- */
+.hui-wiggle-hover:hover { animation: hui-wiggle 480ms var(--hui-ease); }
+.hui-nudge { animation: hui-nudge-down 2.4s ease-in-out 2s infinite; }
+.hui-bob { animation: hui-bob 3.2s ease-in-out infinite; }
+.hui-float { animation: hui-float 5s ease-in-out infinite; }
+.hui-buzz { animation: hui-buzz 1.8s ease-in-out infinite; transform-origin: 50% 60%; }
+.hui-bounce { animation: hui-bounce 1.6s var(--hui-ease) infinite; }
+.hui-spin { animation: hui-spin 1.2s linear infinite; }
+.hui-pop { animation: hui-pop-in 420ms var(--hui-ease-bounce) both; }
+
+/* Draw an SVG path like a pen: add .hui-draw to a <path> with pathLength="1" */
+.hui-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: hui-draw 1.4s var(--hui-ease) forwards;
+}
+
+/* Marching dashes on an SVG stroke (a "connection" line) */
+.hui-march {
+  stroke-dasharray: 6 7;
+  animation: hui-march 1s linear infinite;
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes hui-spin { to { rotate: 360deg; } }
+
+@keyframes hui-nudge-down {
+  0%, 70%, 100% { transform: translateY(0); }
+  80% { transform: translateY(4px); }
+  90% { transform: translateY(-1px); }
+}
+
+@keyframes hui-wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-4deg); }
+  50% { transform: rotate(3deg); }
+  75% { transform: rotate(-1.5deg); }
+}
+
+@keyframes hui-bob {
+  50% { transform: translateY(-6px) rotate(-3deg); }
+}
+
+@keyframes hui-float {
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes hui-buzz {
+  0%, 50%, 100% { transform: none; }
+  5%, 15%, 25%, 35%, 45% { transform: rotate(-8deg); }
+  10%, 20%, 30%, 40% { transform: rotate(8deg); }
+}
+
+@keyframes hui-bounce {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+  60% { transform: translateY(-3px); }
+}
+
+@keyframes hui-pop-in {
+  0% { opacity: 0; transform: scale(0.6) rotate(-6deg); }
+  70% { opacity: 1; transform: scale(1.04) rotate(1deg); }
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes hui-toast-in {
+  0% { opacity: 0; transform: translateX(110%) rotate(6deg); }
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes hui-toast-out {
+  to { opacity: 0; transform: translateX(110%) rotate(4deg); }
+}
+
+@keyframes hui-dialog-in {
+  0% { opacity: 0; transform: translateY(24px) rotate(2deg) scale(0.96); }
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes hui-hatch {
+  to { background-position: 26px 0, 0 0; }
+}
+
+@keyframes hui-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes hui-march {
+  to { stroke-dashoffset: -26; }
+}

@@ -1,0 +1,373 @@
+/* =========================================================================
+   HappyUI · forms
+   Native controls, dressed up. Every control keeps its real element, so
+   keyboards, screen readers and autofill keep working.
+   ========================================================================= */
+
+/* ---------- Field: label + control + hint or error ---------- */
+.hui-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.hui-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--hui-space-3);
+  font: 700 var(--hui-text-sm) / 1.3 var(--hui-font-body);
+  color: var(--hui-ink);
+}
+
+/* Little handwritten aside next to a label, like "(optional)" */
+.hui-label__aside {
+  font: 700 1.15rem / 1 var(--hui-font-hand);
+  color: var(--hui-ink-soft);
+}
+
+.hui-hint {
+  margin: 0;
+  font-size: var(--hui-text-xs);
+  line-height: 1.45;
+  color: var(--hui-ink-soft);
+}
+
+.hui-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4em;
+  margin: 0;
+  font: 650 var(--hui-text-xs) / 1.45 var(--hui-font-body);
+  color: var(--hui-red-ink);
+}
+
+.hui-error::before {
+  content: "!";
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.35em;
+  height: 1.35em;
+  font-weight: 800;
+  color: var(--hui-on-solid);
+  background: var(--hui-red-ink);
+  border-radius: 50%;
+}
+
+/* ---------- Text inputs ---------- */
+.hui-input,
+.hui-textarea,
+.hui-select > select {
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.6rem 0.9rem;
+  font: 450 var(--hui-text-md) / 1.4 var(--hui-font-body);
+  color: var(--hui-ink);
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: 9px 11px 10px 12px / 11px 9px 12px 10px;
+  box-shadow: var(--hui-shadow-sm);
+  outline: none;
+  transition:
+    box-shadow var(--hui-duration-fast) var(--hui-ease),
+    border-color var(--hui-duration-fast) var(--hui-ease),
+    background-color var(--hui-duration-fast) var(--hui-ease);
+}
+
+.hui-input::placeholder,
+.hui-textarea::placeholder {
+  font-family: var(--hui-font-hand);
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--hui-ink-faint);
+  opacity: 1;
+}
+
+.hui-input:hover,
+.hui-textarea:hover,
+.hui-select > select:hover {
+  box-shadow: var(--hui-shadow-md);
+}
+
+.hui-input:focus,
+.hui-textarea:focus,
+.hui-select > select:focus {
+  border-color: var(--hui-focus);
+  box-shadow: 3px 4px 0 var(--hui-focus);
+}
+
+.hui-input[aria-invalid="true"],
+.hui-textarea[aria-invalid="true"],
+.hui-select > select[aria-invalid="true"] {
+  border-color: var(--hui-red-ink);
+  box-shadow: 3px 4px 0 var(--hui-red-ink);
+}
+
+.hui-input:disabled,
+.hui-textarea:disabled,
+.hui-select > select:disabled {
+  color: var(--hui-ink-faint);
+  background: var(--hui-surface-sunken);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.hui-textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+/* Small and large */
+.hui-input--sm { min-height: 2.25rem; padding: 0.35rem 0.7rem; font-size: var(--hui-text-sm); }
+.hui-input--lg { min-height: 3.5rem; padding: 0.8rem 1.1rem; font-size: var(--hui-text-lg); }
+
+/* ---------- Select: wrap a native <select> to get the drawn chevron ---------- */
+.hui-select {
+  position: relative;
+  display: block;
+}
+
+.hui-select > select {
+  appearance: none;
+  padding-right: 2.75rem;
+  cursor: pointer;
+}
+
+.hui-select::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0.85rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  translate: 0 -50%;
+  background: var(--hui-ink);
+  -webkit-mask: var(--hui-chevron-mask) center / contain no-repeat;
+  mask: var(--hui-chevron-mask) center / contain no-repeat;
+  pointer-events: none;
+}
+
+/* ---------- Input with a button or label glued to it ---------- */
+.hui-input-group {
+  display: flex;
+  align-items: stretch;
+  gap: var(--hui-space-2);
+}
+
+.hui-input-group > .hui-input { flex: 1; min-width: 0; }
+
+/* ---------- Checkbox and radio ---------- */
+.hui-check,
+.hui-radio {
+  --_on: var(--hui-tone, var(--hui-brand));
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.65em;
+  font-size: var(--hui-text-md);
+  line-height: 1.45;
+  color: var(--hui-ink);
+  cursor: pointer;
+}
+
+.hui-check > input,
+.hui-radio > input {
+  appearance: none;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: 0.05em 0 0;
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  box-shadow: var(--hui-shadow-sm);
+  cursor: pointer;
+  transition: background-color var(--hui-duration-fast) var(--hui-ease), translate var(--hui-duration-fast) var(--hui-ease);
+}
+
+.hui-check > input { border-radius: 5px 7px 6px 8px; }
+.hui-radio > input { border-radius: 50%; }
+
+.hui-check > input::before {
+  content: "";
+  width: 1.15rem;
+  height: 1.15rem;
+  background: var(--hui-on-pop);
+  -webkit-mask: var(--hui-check-mask) center / contain no-repeat;
+  mask: var(--hui-check-mask) center / contain no-repeat;
+  scale: 0;
+  transition: scale var(--hui-duration) var(--hui-ease-bounce);
+}
+
+.hui-radio > input::before {
+  content: "";
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--hui-on-pop);
+  scale: 0;
+  transition: scale var(--hui-duration) var(--hui-ease-bounce);
+}
+
+.hui-check > input:checked,
+.hui-radio > input:checked {
+  background: var(--_on);
+}
+
+.hui-check > input:checked::before,
+.hui-radio > input:checked::before {
+  scale: 1;
+}
+
+.hui-check > input:indeterminate { background: var(--_on); }
+.hui-check > input:indeterminate::before {
+  scale: 1;
+  height: 3px;
+  width: 0.7rem;
+  border-radius: 2px;
+  -webkit-mask: none;
+  mask: none;
+}
+
+.hui-check > input:active,
+.hui-radio > input:active { translate: 1px 1px; box-shadow: none; }
+
+.hui-check > input:focus-visible,
+.hui-radio > input:focus-visible {
+  outline: 3px solid var(--hui-focus);
+  outline-offset: 3px;
+}
+
+.hui-check > input:disabled,
+.hui-radio > input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.hui-check:has(> input:disabled),
+.hui-radio:has(> input:disabled) { color: var(--hui-ink-faint); cursor: not-allowed; }
+
+/* ---------- Switch: on and off, with a bouncy knob ---------- */
+.hui-switch {
+  --_on: var(--hui-tone, var(--hui-green));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  color: var(--hui-ink);
+  cursor: pointer;
+}
+
+.hui-switch > input {
+  appearance: none;
+  position: relative;
+  flex: none;
+  width: 3.1rem;
+  height: 1.75rem;
+  margin: 0;
+  background: var(--hui-surface-sunken);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-radius-pill);
+  box-shadow: var(--hui-shadow-sm);
+  cursor: pointer;
+  transition: background-color var(--hui-duration) var(--hui-ease);
+}
+
+.hui-switch > input::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0.2rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  translate: 0 -50%;
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: 50%;
+  transition: left var(--hui-duration) var(--hui-ease-bounce);
+}
+
+.hui-switch > input:checked { background: var(--_on); }
+.hui-switch > input:checked::before { left: calc(100% - 1.35rem); background: #fff; }
+
+.hui-switch > input:focus-visible {
+  outline: 3px solid var(--hui-focus);
+  outline-offset: 3px;
+}
+
+.hui-switch > input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ---------- Range slider ---------- */
+.hui-range {
+  --_on: var(--hui-tone, var(--hui-brand));
+  appearance: none;
+  width: 100%;
+  height: 1.75rem;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.hui-range::-webkit-slider-runnable-track {
+  height: 0.7rem;
+  background: var(--hui-surface-sunken);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-radius-pill);
+}
+
+.hui-range::-moz-range-track {
+  height: 0.7rem;
+  background: var(--hui-surface-sunken);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-radius-pill);
+}
+
+.hui-range::-moz-range-progress {
+  height: 0.7rem;
+  background: var(--_on);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-radius-pill);
+}
+
+.hui-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: -0.53rem;
+  background: var(--_on);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: 50%;
+  box-shadow: var(--hui-shadow-sm);
+  transition: scale var(--hui-duration-fast) var(--hui-ease-bounce);
+}
+
+.hui-range::-moz-range-thumb {
+  width: 1.3rem;
+  height: 1.3rem;
+  background: var(--_on);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: 50%;
+  box-shadow: var(--hui-shadow-sm);
+}
+
+.hui-range:active::-webkit-slider-thumb { scale: 1.15; }
+
+.hui-range:focus-visible {
+  outline: 3px solid var(--hui-focus);
+  outline-offset: 4px;
+  border-radius: var(--hui-radius-sm);
+}
+
+/* ---------- Fieldset ---------- */
+.hui-fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hui-space-3);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.hui-fieldset > legend {
+  margin-bottom: var(--hui-space-2);
+  padding: 0;
+  font: 700 var(--hui-text-sm) / 1.3 var(--hui-font-body);
+}

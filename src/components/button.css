@@ -1,0 +1,217 @@
+/* =========================================================================
+   HappyUI · button, chip
+   Buttons are drawn boxes with a hard pencil shadow. Hover lifts them a
+   little, press pushes them into the paper.
+   ========================================================================= */
+
+.hui-button {
+  --_bg: var(--hui-tone, var(--hui-surface));
+  --_fg: var(--hui-tone-on, var(--hui-ink));
+  --_shadow: var(--hui-shadow-md);
+  --_shadow-hover: 4px 5px 0 var(--hui-shadow-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 2.75rem;
+  padding: 0.5em 1.15em;
+  font: 700 var(--hui-text-md) / 1.2 var(--hui-font-body);
+  letter-spacing: 0.01em;
+  color: var(--_fg);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  background: var(--_bg);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--_shadow);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    translate var(--hui-duration-fast) var(--hui-ease),
+    rotate var(--hui-duration-fast) var(--hui-ease),
+    box-shadow var(--hui-duration-fast) var(--hui-ease),
+    background-color var(--hui-duration) var(--hui-ease);
+}
+
+.hui-button:hover {
+  translate: -1px -1px;
+  rotate: -1deg;
+  box-shadow: var(--_shadow-hover);
+  text-decoration: none;
+}
+
+.hui-button:active {
+  translate: 2px 3px;
+  rotate: 0deg;
+  box-shadow: 0 0 0 var(--hui-shadow-color);
+}
+
+.hui-button:focus-visible {
+  outline: 3px solid var(--hui-focus);
+  outline-offset: 3px;
+}
+
+/* The one main action of a screen */
+.hui-button--primary {
+  --hui-tone: var(--hui-brand);
+  --hui-tone-on: var(--hui-on-pop);
+}
+
+/* Solid ink. Inverts in dark mode, so it always reads. */
+.hui-button--ink {
+  --_bg: var(--hui-ink);
+  --_fg: var(--hui-paper);
+}
+
+/* Quiet: no box until you hover it (two classes so sizes never add a shadow) */
+.hui-button.hui-button--ghost {
+  --_bg: transparent;
+  --_fg: var(--hui-tone-ink, var(--hui-ink));
+  --_shadow: none;
+  --_shadow-hover: none;
+  border-color: transparent;
+}
+
+.hui-button.hui-button--ghost:hover {
+  rotate: 0deg;
+  translate: 0 0;
+  border-color: var(--hui-line-dashed);
+  border-style: dashed;
+  background: var(--hui-surface-sunken);
+}
+
+.hui-button.hui-button--ghost:active { translate: 0 1px; }
+
+/* Sizes */
+.hui-button--sm {
+  min-height: 2.25rem;
+  padding: 0.3em 0.85em;
+  font-size: var(--hui-text-sm);
+  gap: 0.45em;
+  --_shadow: var(--hui-shadow-sm);
+  --_shadow-hover: var(--hui-shadow-md);
+}
+
+.hui-button--lg {
+  min-height: 3.5rem;
+  padding: 0.7em 1.6em;
+  font-size: var(--hui-text-lg);
+  --_shadow: var(--hui-shadow-lg);
+  --_shadow-hover: 6px 7px 0 var(--hui-shadow-color);
+}
+
+.hui-button--block { display: flex; width: 100%; }
+
+/* Square button for a single icon. Always give it an aria-label. */
+.hui-button--icon {
+  width: 2.75rem;
+  padding: 0;
+}
+
+.hui-button--icon.hui-button--sm { width: 2.25rem; }
+.hui-button--icon.hui-button--lg { width: 3.5rem; }
+
+/* Inside a button */
+.hui-button__icon {
+  flex: none;
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.hui-button:hover .hui-button__icon {
+  animation: hui-nudge-down 520ms var(--hui-ease);
+}
+
+/* Two lines of text: a label and a small hint below it */
+.hui-button__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.hui-button__label { font-weight: 750; }
+
+.hui-button__hint {
+  font-size: 0.78em;
+  font-weight: 500;
+  opacity: 0.78;
+}
+
+/* Busy: the label hides and a spinning doodle appears */
+.hui-button[aria-busy="true"] {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+
+.hui-button[aria-busy="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 1.3em;
+  height: 1.3em;
+  margin: auto;
+  border: 2.5px dashed var(--_fg);
+  border-radius: 50%;
+  animation: hui-spin 1.1s linear infinite;
+}
+
+.hui-button:disabled,
+.hui-button[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  translate: 0 0;
+  rotate: 0deg;
+  box-shadow: var(--hui-shadow-sm);
+}
+
+/* A row of buttons */
+.hui-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hui-space-3);
+}
+
+/* ---------- Chip: a small toggle, filter or quick choice ---------- */
+.hui-chip {
+  --_on: var(--hui-tone, var(--hui-brand));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 2.25rem;
+  padding: 0.25em 0.9em;
+  font: 650 var(--hui-text-sm) / 1.2 var(--hui-font-body);
+  color: var(--hui-ink);
+  white-space: nowrap;
+  text-decoration: none;
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-radius-sm);
+  box-shadow: var(--hui-shadow-sm);
+  cursor: pointer;
+  transition:
+    translate var(--hui-duration-fast) var(--hui-ease),
+    box-shadow var(--hui-duration-fast) var(--hui-ease),
+    background-color var(--hui-duration) var(--hui-ease);
+}
+
+.hui-chip:hover {
+  translate: -1px -1px;
+  box-shadow: var(--hui-shadow-md);
+}
+
+.hui-chip:active { translate: 1px 1px; box-shadow: none; }
+
+.hui-chip[aria-pressed="true"],
+.hui-chip[aria-selected="true"],
+.hui-chip.is-active {
+  color: var(--hui-on-pop);
+  background: var(--_on);
+}
+
+.hui-chip svg { width: 1.1em; height: 1.1em; }

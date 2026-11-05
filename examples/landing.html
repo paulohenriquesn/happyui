@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tiny Wins · a HappyUI landing page example</title>
+  <meta name="description" content="An example landing page built only with HappyUI components.">
+  <script>
+    document.documentElement.classList.add("hui-js");
+    try { var t = localStorage.getItem("happyui-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap">
+  <link rel="stylesheet" href="../dist/happyui.css">
+  <style>
+    /* Page-specific placement only. Every look comes from HappyUI. */
+    .ex-stage { position: relative; }
+    .ex-note { position: absolute; right: -1.25rem; bottom: -6.25rem; width: 10.5rem; --hui-tilt: 5deg; }
+    @media (max-width: 900px) { .hui-hero__media { margin-top: 2.75rem; } .ex-note { right: .5rem; } }
+    .ex-ann { position: absolute; top: -2.9rem; left: 2rem; }
+    .ex-star { position: absolute; right: -1.4rem; top: 32%; --hui-doodle-size: 2.4rem; }
+    .ex-big { margin: 0; text-align: center; color: var(--hui-blue-ink); }
+    .ex-art { min-height: 10.5rem; position: relative; }
+    .ex-art__note { position: absolute; top: .8rem; right: 1rem; }
+    .ex-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: .45rem; align-items: end; height: 8.5rem; }
+    .ex-week span { display: block; border: var(--hui-stroke) solid var(--hui-line); border-radius: 6px 6px 3px 3px; background: var(--hui-green); }
+    .ex-week span:nth-child(3n) { background: var(--hui-yellow); }
+    .ex-week span:nth-child(4n) { background: var(--hui-pink); }
+    .ex-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: .45rem; text-align: center; font: 700 1.1rem/1 var(--hui-font-hand); color: var(--hui-ink-soft); }
+  </style>
+</head>
+<body class="hui">
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" style="fill:var(--hui-icon-accent,none)"/><path d="M8.5 14.2c1.8 2.2 5.2 2.2 7 0"/><path d="M9 9.6v.4M15 9.6v.4"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="m12 3.5 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M6 10a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4S6 15 6 10z"/><path d="M10 20a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2" style="fill:var(--hui-icon-accent,none)"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2" style="fill:var(--hui-icon-accent,none)"/><path d="m16 11 5-3v8l-5-3"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2" style="fill:var(--hui-icon-accent,none)"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M5 5.5h14A1.5 1.5 0 0 1 20.5 7v8.5A1.5 1.5 0 0 1 19 17h-7l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="15" rx="2" style="fill:var(--hui-icon-accent,none)"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M11 3c.6 3.8 1.8 5.4 6 6-4.2.6-5.4 2.2-6 6-.6-3.8-1.8-5.4-6-6 4.2-.6 5.4-2.2 6-6z"/><path d="M18.5 14.5c.3 1.6.9 2.3 2.5 2.5-1.6.2-2.2.9-2.5 2.5-.3-1.6-.9-2.3-2.5-2.5 1.6-.2 2.2-.9 2.5-2.5z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="m13.5 7 3 3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" style="fill:var(--hui-icon-accent,none)"/><path d="M15.5 8.5V6A1.5 1.5 0 0 0 14 4.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.8v.2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 21 19.5H3z"/><path d="M12 10v4.5M12 17.2v.2"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M5 19C5 10 10.5 5 20 5c0 9.5-5 15-14 15"/><path d="M5 19c3-3.5 6-6 9.5-8"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 17.5V6l10-2v11.5"/><circle cx="6.5" cy="17.5" r="2.5" style="fill:var(--hui-icon-accent,none)"/><circle cx="16.5" cy="15.5" r="2.5" style="fill:var(--hui-icon-accent,none)"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M5 9h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10.5h1.5a2.5 2.5 0 0 1 0 5H16M8.5 3.5c-.8 1 .8 2-.2 3M12 3.5c-.8 1 .8 2-.2 3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8" style="fill:var(--hui-icon-accent,none)"/><path d="M4.5 20c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2" style="fill:var(--hui-icon-accent,none)"/><circle cx="9" cy="17" r="2" style="fill:var(--hui-icon-accent,none)"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4.5 20 11"/><path style="fill:var(--hui-icon-accent,none)" d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.5 5.4 3.5 8.5s-1 5.9-3.5 8.5c-2.5-2.6-3.5-5.4-3.5-8.5s1-5.9 3.5-8.5z"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M12 3.5c3.5 4.4 6 7.6 6 10.5a6 6 0 0 1-12 0c0-2.9 2.5-6.1 6-10.5z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v14H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3"/></symbol>
+</svg>
+
+<a class="hui-sr-only" href="#main">Skip to content</a>
+
+<header class="hui-nav">
+  <div class="hui-container hui-nav__inner">
+    <a class="hui-logo" href="#top">
+      <span class="hui-logo__mark hui-green"><svg class="hui-icon"><use href="#i-leaf"/></svg></span>
+      tiny wins
+    </a>
+    <nav class="hui-nav__links" aria-label="Main">
+      <a class="hui-nav__link" href="#features">Features</a>
+      <a class="hui-nav__link" href="#how">How it works</a>
+      <a class="hui-nav__link" href="#pricing">Pricing</a>
+      <a class="hui-nav__link" href="#faq">FAQ</a>
+    </nav>
+    <div class="hui-nav__actions">
+      <button class="hui-button hui-button--icon hui-button--sm" type="button" data-hui-theme-toggle aria-label="Switch light or dark theme">
+        <svg class="hui-icon hui-icon--sm hui-only-light"><use href="#i-moon"/></svg>
+        <svg class="hui-icon hui-icon--sm hui-only-dark"><use href="#i-sun"/></svg>
+      </button>
+      <a class="hui-button hui-button--primary hui-button--sm" href="#pricing"><svg class="hui-icon hui-icon--sm"><use href="#i-download"/></svg> Get the app</a>
+    </div>
+    <details class="hui-nav__menu">
+      <summary class="hui-button hui-button--icon hui-button--sm" aria-label="Open menu"><svg class="hui-icon hui-icon--sm"><use href="#i-menu"/></svg></summary>
+      <div class="hui-nav__sheet">
+        <a class="hui-nav__link" href="#features">Features</a>
+        <a class="hui-nav__link" href="#how">How it works</a>
+        <a class="hui-nav__link" href="#pricing">Pricing</a>
+        <a class="hui-nav__link" href="#faq">FAQ</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- Hero -->
+<section class="hui-container" id="top">
+  <div class="hui-hero">
+    <div class="hui-hero__copy hui-reveal">
+      <a class="hui-banner" href="#features"><span class="hui-badge hui-badge--solid hui-red">New in 2.0</span> Habits you can share with friends</a>
+      <span class="hui-small hui-muted" style="font-weight: 600">Tiny Wins for iPhone, Android and the web</span>
+      <h1 class="hui-display">Little habits, <span class="hui-scribble">big smiles.</span></h1>
+      <p class="hui-lede">Your <span class="hui-highlight hui-blue">water</span>, <span class="hui-highlight hui-teal">walks</span>, <span class="hui-highlight hui-orange">reading</span> and <span class="hui-highlight hui-green">sleep</span>, cheered on like a good friend would. No guilt, no streak panic. Just one tiny win, then another.</p>
+      <div class="hui-button-group">
+        <a class="hui-button hui-button--primary hui-button--lg" href="#pricing">
+          <svg class="hui-icon hui-button__icon"><use href="#i-download"/></svg>
+          <span class="hui-button__text">
+            <span class="hui-button__label">Start for free</span>
+            <span class="hui-button__hint">iPhone · Android · web</span>
+          </span>
+        </a>
+        <a class="hui-button" href="#how">See how it works</a>
+      </div>
+      <ul class="hui-checklist hui-checklist--inline">
+        <li>Free forever plan</li>
+        <li>No account needed</li>
+        <li>Works offline</li>
+      </ul>
+    </div>
+
+    <div class="hui-hero__media hui-reveal" style="--hui-i: 2">
+      <div class="ex-stage">
+        <span class="hui-annotation hui-annotation--down-right ex-ann">tap to cheer!</span>
+        <span class="hui-tape hui-tape--tl"></span>
+        <span class="hui-tape hui-tape--tr hui-green"></span>
+        <div class="hui-window">
+          <div class="hui-window__bar">
+            <span class="hui-window__dot"></span><span class="hui-window__dot"></span><span class="hui-window__dot"></span>
+            <span class="hui-window__title">Tiny Wins · Tuesday</span>
+          </div>
+          <div class="hui-window__body hui-stack" style="--hui-gap: .8rem">
+            <div class="hui-cluster" style="justify-content: space-between">
+              <div>
+                <span class="hui-eyebrow">Hi Sam, you got this!</span>
+                <p class="hui-h4" style="margin: 0">Today, 3 of 4 done</p>
+              </div>
+              <span class="hui-avatar hui-pink">S</span>
+            </div>
+            <label class="hui-option hui-green"><input type="checkbox" checked><svg class="hui-icon hui-option__icon hui-blue"><use href="#i-drop"/></svg><span class="hui-option__body"><span class="hui-option__title">Drink water</span><span class="hui-option__meta">8 of 8 glasses</span></span><span class="hui-option__action"><svg class="hui-icon"><use href="#i-check"/></svg></span></label>
+            <label class="hui-option hui-green"><input type="checkbox" checked><svg class="hui-icon hui-option__icon hui-yellow"><use href="#i-sun"/></svg><span class="hui-option__body"><span class="hui-option__title">Morning walk</span><span class="hui-option__meta">20 minutes in the sun</span></span><span class="hui-option__action"><svg class="hui-icon"><use href="#i-check"/></svg></span></label>
+            <label class="hui-option"><input type="checkbox"><svg class="hui-icon hui-option__icon hui-pink"><use href="#i-book"/></svg><span class="hui-option__body"><span class="hui-option__title">Read a little</span><span class="hui-option__meta">5 pages left</span></span><span class="hui-option__action"><svg class="hui-icon"><use href="#i-plus"/></svg></span></label>
+            <progress class="hui-progress hui-green" value="75" max="100" aria-label="Today">75%</progress>
+          </div>
+        </div>
+        <div class="hui-note ex-note">nap after five pages!<small>past you, 8 am</small></div>
+        <span class="hui-doodle hui-doodle--star hui-orange ex-star hui-bob" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hui-grid hui-grid--4 hui-reveal" style="--hui-gap: 1rem; margin-top: 1rem" data-hui-stagger>
+    <a class="hui-option" href="#pricing"><svg class="hui-icon hui-option__icon"><use href="#i-home"/></svg><span class="hui-option__body"><span class="hui-option__title">iPhone</span><span class="hui-option__meta">iOS 16 or later</span></span><span class="hui-option__action"><svg class="hui-icon"><use href="#i-download"/></svg></span></a>
+    <a class="hui-option" href="#pricing"><svg class="hui-icon hui-option__icon"><use href="#i-leaf"/></svg><span class="hui-option__body"><span class="hui-option__title">Android</span><span class="hui-option__meta">9 or later</span></span><span class="hui-option__action"><svg class="hui-icon"><use href="#i-download"/></svg></span></a>
+    <a class="hui-option" href="#pricing"><svg class="hui-icon hui-option__icon"><use href="#i-globe"/></svg><span class="hui-option__body"><span class="hui-option__title">Web</span><span class="hui-option__meta">any browser</span></span><span class="hui-option__action"><svg class="hui-icon"><use href="#i-arrow-right"/></svg></span></a>
+    <a class="hui-option hui-yellow" href="#pricing" aria-current="true"><svg class="hui-icon hui-option__icon"><use href="#i-sparkles"/></svg><span class="hui-option__body"><span class="hui-option__title">Your device</span><span class="hui-option__meta">we picked the right one</span></span><span class="hui-option__action"><svg class="hui-icon"><use href="#i-download"/></svg></span></a>
+  </div>
+</section>
+
+<!-- The problem -->
+<section class="hui-section">
+  <div class="hui-container">
+    <div class="hui-section__head hui-reveal">
+      <h2 class="hui-h1">Habits are great on paper and <span class="hui-strike">terrible in real life</span>.</h2>
+    </div>
+    <div class="hui-grid hui-grid--3" style="--hui-gap: 2rem" data-hui-stagger>
+      <div class="hui-card hui-tilt-left hui-reveal">
+        <div class="hui-card__media hui-pink ex-art"><span class="hui-doodle hui-doodle--heart hui-pink" style="--hui-doodle-size: 3.5rem" aria-hidden="true"></span><span class="hui-annotation hui-annotation--plain ex-art__note">ugh.</span></div>
+        <h3 class="hui-card__title">Day 1: so motivated.</h3>
+        <p class="hui-card__text">Day 3: the app sends a sad red notification.</p>
+      </div>
+      <div class="hui-card hui-reveal">
+        <div class="hui-card__media hui-yellow ex-art"><span class="hui-doodle hui-doodle--swirl hui-orange hui-float" style="--hui-doodle-size: 3.5rem" aria-hidden="true"></span></div>
+        <h3 class="hui-card__title">Twelve apps, zero habits.</h3>
+        <p class="hui-card__text">One for water, one for steps, one for the other apps.</p>
+      </div>
+      <div class="hui-card hui-tilt-right hui-reveal">
+        <div class="hui-card__media hui-blue ex-art"><svg class="hui-icon hui-blue hui-buzz" style="--hui-icon-size: 3.25rem"><use href="#i-bell"/></svg><span class="hui-annotation hui-annotation--plain ex-art__note">ding ding...</span></div>
+        <h3 class="hui-card__title">The streak broke. Again.</h3>
+        <p class="hui-card__text">So you gave up on a Tuesday. Totally fair.</p>
+      </div>
+    </div>
+    <p class="hui-display ex-big hui-reveal" style="margin-top: 3.5rem; font-size: var(--hui-hand-2xl)">Tiny Wins makes it fun.</p>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="hui-section" id="features">
+  <div class="hui-container">
+    <div class="hui-section__head hui-reveal">
+      <span class="hui-eyebrow">Everything in one pocket</span>
+      <h2 class="hui-h1"><span class="hui-marker hui-green">Gentle nudges</span> for every part of your day</h2>
+      <p class="hui-lede">Track what matters, skip what does not, and celebrate the days you show up.</p>
+    </div>
+    <div class="hui-grid hui-grid--4" data-hui-stagger>
+      <div class="hui-card hui-card--dashed hui-reveal"><svg class="hui-icon hui-card__icon hui-blue"><use href="#i-drop"/></svg><h3 class="hui-card__title">Water</h3><p class="hui-card__text">A tap per glass. Your plant icon gets greener.</p></div>
+      <div class="hui-card hui-card--dashed hui-reveal"><svg class="hui-icon hui-card__icon hui-yellow"><use href="#i-sun"/></svg><h3 class="hui-card__title">Walks</h3><p class="hui-card__text">Counts steps on its own. No buttons to remember.</p></div>
+      <div class="hui-card hui-card--dashed hui-reveal"><svg class="hui-icon hui-card__icon hui-pink"><use href="#i-book"/></svg><h3 class="hui-card__title">Reading</h3><p class="hui-card__text">Pages, minutes or chapters. You pick the unit.</p></div>
+      <div class="hui-card hui-card--dashed hui-reveal"><svg class="hui-icon hui-card__icon hui-purple"><use href="#i-moon"/></svg><h3 class="hui-card__title">Sleep</h3><p class="hui-card__text">A calm reminder an hour before bed, never a siren.</p></div>
+      <div class="hui-card hui-card--dashed hui-reveal"><svg class="hui-icon hui-card__icon hui-orange"><use href="#i-chat"/></svg><h3 class="hui-card__title">Cheer squads</h3><p class="hui-card__text">Friends see your wins and send a sticker back.</p></div>
+      <div class="hui-card hui-card--dashed hui-reveal"><svg class="hui-icon hui-card__icon hui-green"><use href="#i-calendar"/></svg><h3 class="hui-card__title">Rest days</h3><p class="hui-card__text">Plan a day off and your streak waits for you.</p></div>
+      <div class="hui-card hui-card--dashed hui-reveal"><svg class="hui-icon hui-card__icon hui-teal"><use href="#i-chart"/></svg><h3 class="hui-card__title">Weekly story</h3><p class="hui-card__text">Sunday recap with your best moment, drawn by hand.</p></div>
+      <div class="hui-card hui-card--dashed hui-reveal"><svg class="hui-icon hui-card__icon hui-red"><use href="#i-lock"/></svg><h3 class="hui-card__title">Private</h3><p class="hui-card__text">Your data stays on your phone unless you share it.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="hui-section" id="how">
+  <div class="hui-container">
+    <div class="hui-split">
+      <div class="hui-reveal">
+        <span class="hui-eyebrow">Pick once</span>
+        <h2 class="hui-h3">Choose three habits. <span class="hui-highlight">That is the whole setup.</span></h2>
+        <p>Tiny Wins starts small on purpose. Three habits, one screen, and a friendly check-in each evening. Add more when it feels easy, not before.</p>
+        <ol class="hui-steps hui-steps--vertical" style="margin-top: 1.5rem">
+          <li class="hui-step"><h3 class="hui-step__title">Pick three habits</h3><p class="hui-step__text">Water, a walk and five pages is a great start.</p></li>
+          <li class="hui-step"><h3 class="hui-step__title">Tap when you do them</h3><p class="hui-step__text">One tap. Confetti optional, but recommended.</p></li>
+          <li class="hui-step"><h3 class="hui-step__title">Read your Sunday story</h3><p class="hui-step__text">See the week as a little hand-drawn chart.</p></li>
+        </ol>
+        <a class="hui-link" href="#pricing" style="margin-top: .5rem">Try it in your browser</a>
+      </div>
+      <div class="hui-reveal" style="--hui-i: 1">
+        <div class="ex-stage">
+          <span class="hui-tape hui-tape--top hui-pink"></span>
+          <div class="hui-frame hui-tilt-slight">
+            <div class="hui-stack" style="padding: 1.25rem; --hui-gap: .9rem">
+              <div class="hui-cluster" style="justify-content: space-between">
+                <p class="hui-h4" style="margin: 0">Your week</p>
+                <span class="hui-badge hui-green">best week yet</span>
+              </div>
+              <div class="ex-week" aria-hidden="true">
+                <span style="height: 55%"></span><span style="height: 80%"></span><span style="height: 40%"></span><span style="height: 92%"></span><span style="height: 70%"></span><span style="height: 100%"></span><span style="height: 62%"></span>
+              </div>
+              <div class="ex-days" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+              <div class="hui-grid" style="--hui-min: 8rem; --hui-gap: 1rem">
+                <div class="hui-stat"><span class="hui-stat__value">23</span><span class="hui-stat__label">tiny wins</span><span class="hui-stat__delta">+6 vs last week</span></div>
+                <div class="hui-stat"><span class="hui-stat__value">6/7</span><span class="hui-stat__label">days you showed up</span><span class="hui-stat__delta hui-blue">one rest day, planned</span></div>
+              </div>
+            </div>
+          </div>
+          <span class="hui-annotation hui-annotation--up-right hui-blue" style="position: absolute; right: 1rem; bottom: -2.6rem">drawn fresh every sunday</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Love -->
+<section class="hui-section">
+  <div class="hui-container">
+    <div class="hui-section__head hui-reveal">
+      <span class="hui-eyebrow">Kind words</span>
+      <h2 class="hui-h1">People <span class="hui-marker hui-pink">actually like</span> their habit app now</h2>
+    </div>
+    <div class="hui-grid hui-grid--3" style="--hui-gap: 2rem" data-hui-stagger>
+      <figure class="hui-quote hui-tilt-slight hui-reveal">
+        <blockquote class="hui-quote__text" style="border: 0; padding: 0; margin: 0">The first app that says "nice job" instead of "you failed". I drink water now. Wild.</blockquote>
+        <figcaption class="hui-quote__by"><span class="hui-avatar hui-blue">L</span><span><strong>Lena</strong><span>nurse, night shifts</span></span></figcaption>
+      </figure>
+      <figure class="hui-quote hui-yellow hui-reveal">
+        <blockquote class="hui-quote__text" style="border: 0; padding: 0; margin: 0">My kids check my streak before theirs. We are a competitive family of readers.</blockquote>
+        <figcaption class="hui-quote__by"><span class="hui-avatar hui-green">R</span><span><strong>Rafael</strong><span>dad of three</span></span></figcaption>
+      </figure>
+      <figure class="hui-quote hui-tilt-right hui-reveal">
+        <blockquote class="hui-quote__text" style="border: 0; padding: 0; margin: 0">Rest days that do not break the streak. Whoever thought of that deserves a cake.</blockquote>
+        <figcaption class="hui-quote__by"><span class="hui-avatar hui-purple">T</span><span><strong>Tomo</strong><span>marathon beginner</span></span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="hui-section" id="pricing">
+  <div class="hui-container">
+    <div class="hui-section__head hui-reveal">
+      <span class="hui-eyebrow">Pricing</span>
+      <h2 class="hui-h1">Free to start. <span class="hui-marker hui-yellow">Cheap to keep.</span></h2>
+      <p class="hui-lede">Change plans or leave any time. Your wins come with you.</p>
+    </div>
+    <div class="hui-grid hui-grid--3" style="--hui-gap: 1.75rem; align-items: start" data-hui-stagger>
+      <div class="hui-price hui-reveal">
+        <h3 class="hui-price__name">Solo</h3>
+        <p class="hui-price__amount">$0 <small>forever</small></p>
+        <p class="hui-price__text">For one person and three habits.</p>
+        <ul class="hui-checklist hui-green"><li>Three habits</li><li>Weekly story</li><li>Works offline</li><li class="is-off">Cheer squads</li></ul>
+        <a class="hui-button hui-button--block" href="#top">Start free</a>
+      </div>
+      <div class="hui-price hui-price--featured hui-reveal">
+        <span class="hui-badge hui-badge--solid hui-red hui-price__flag">Most loved</span>
+        <h3 class="hui-price__name">Plus</h3>
+        <p class="hui-price__amount">$3 <small>per month</small></p>
+        <p class="hui-price__text">For people who want all the habits.</p>
+        <ul class="hui-checklist"><li>Unlimited habits</li><li>Cheer squads up to 8</li><li>Custom stickers</li><li>Rest days</li></ul>
+        <a class="hui-button hui-button--primary hui-button--block" href="#top">Try Plus free for 14 days</a>
+      </div>
+      <div class="hui-price hui-reveal">
+        <h3 class="hui-price__name">Family</h3>
+        <p class="hui-price__amount">$6 <small>per month</small></p>
+        <p class="hui-price__text">Up to six people under one roof.</p>
+        <ul class="hui-checklist hui-blue"><li>Everything in Plus</li><li>Shared family goals</li><li>Kid friendly mode</li></ul>
+        <a class="hui-button hui-button--block" href="#top">Pick Family</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="hui-section--tight" id="faq">
+  <div class="hui-container hui-container--narrow">
+    <div class="hui-section__head hui-reveal">
+      <span class="hui-eyebrow">Questions</span>
+      <h2 class="hui-h1">Good questions, <span class="hui-circled">short</span> answers</h2>
+    </div>
+    <div class="hui-accordion hui-reveal">
+      <details class="hui-accordion__item" open><summary>Do I need an account?</summary><div class="hui-accordion__body"><p>No. Everything works on your phone. Make an account only if you want to sync or join a cheer squad.</p></div></details>
+      <details class="hui-accordion__item"><summary>What happens if I miss a day?</summary><div class="hui-accordion__body"><p>Nothing scary. You get a gentle "welcome back" and your rest days keep the streak safe.</p></div></details>
+      <details class="hui-accordion__item"><summary>Can I export my data?</summary><div class="hui-accordion__body"><p>Yes, as a spreadsheet or a printable poster of your year.</p></div></details>
+      <details class="hui-accordion__item"><summary>Is there a dark mode?</summary><div class="hui-accordion__body"><p>Yes. Try the moon button at the top of this page.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- Call to action -->
+<section class="hui-container hui-section--tight">
+  <div class="hui-callout hui-reveal">
+    <p class="hui-callout__title">Ready for your first tiny win? <em>It takes ten seconds.</em></p>
+    <div class="hui-button-group">
+      <a class="hui-button" href="#top"><svg class="hui-icon hui-button__icon"><use href="#i-home"/></svg> iPhone</a>
+      <a class="hui-button hui-button--primary" href="#top"><svg class="hui-icon hui-button__icon"><use href="#i-leaf"/></svg> Android</a>
+      <a class="hui-button" href="#top"><svg class="hui-icon hui-button__icon"><use href="#i-globe"/></svg> Web</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="hui-footer">
+  <div class="hui-container hui-footer__inner">
+    <div class="hui-footer__brand">
+      <a class="hui-logo" href="#top"><span class="hui-logo__mark hui-green"><svg class="hui-icon"><use href="#i-leaf"/></svg></span> tiny wins</a>
+      <p>A made-up habit app, built to show what a full page looks like with HappyUI. Every block on this page is a HappyUI component.</p>
+    </div>
+    <nav class="hui-footer__cols" aria-label="Footer">
+      <div><h2 class="hui-footer__title">App</h2><ul><li><a href="#features">Features</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+      <div><h2 class="hui-footer__title">HappyUI</h2><ul><li><a href="../docs/index.html">Showcase</a></li><li><a href="app.html">App example</a></li><li><a href="https://github.com/paulohenriquesn/happyui">GitHub</a></li></ul></div>
+    </nav>
+  </div>
+  <div class="hui-container hui-footer__bottom">
+    <span>Tiny Wins is not a real company. The smiles are real though.</span>
+    <span class="hui-hand" style="font-size: 1.3rem">go drink some water!</span>
+  </div>
+</footer>
+
+<script src="../dist/happyui.js"></script>
+</body>
+</html>

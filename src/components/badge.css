@@ -1,0 +1,116 @@
+/* =========================================================================
+   HappyUI · badge, kbd, inline code
+   ========================================================================= */
+
+.hui-badge {
+  --_bg: var(--hui-tone, var(--hui-surface));
+  --_fg: var(--hui-tone-on, var(--hui-ink));
+  --_dot: var(--hui-tone-ink, var(--hui-ink));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.18em 0.65em;
+  font: 700 var(--hui-text-xs) / 1.35 var(--hui-font-body);
+  letter-spacing: 0.02em;
+  color: var(--_fg);
+  white-space: nowrap;
+  vertical-align: middle;
+  background: var(--_bg);
+  border: var(--hui-stroke-thin) solid var(--hui-line);
+  border-radius: var(--hui-radius-pill);
+}
+
+/* Loud label, like a red "NEW" stamp */
+.hui-badge--solid {
+  --_bg: var(--hui-tone-ink, var(--hui-ink));
+  --_fg: var(--hui-on-solid);
+  padding: 0.3em 0.6em 0.25em;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  border-color: transparent;
+  border-radius: 8px 3px;
+}
+
+/* Transparent with a colored dot in front */
+.hui-badge--dot {
+  --_bg: transparent;
+  --_fg: var(--hui-ink);
+}
+
+.hui-badge--dot::before {
+  content: "";
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+  background: var(--_dot);
+}
+
+/* Handwritten sticker */
+.hui-badge--hand {
+  padding: 0.05em 0.6em 0.1em;
+  font: 700 var(--hui-hand-sm) / 1 var(--hui-font-hand);
+  letter-spacing: 0;
+  border-radius: var(--hui-wobble);
+  rotate: -2deg;
+}
+
+.hui-badge--lg {
+  padding: 0.3em 0.85em;
+  font-size: var(--hui-text-sm);
+}
+
+/* A count bubble on top of an icon or avatar */
+.hui-badge--count {
+  min-width: 1.5em;
+  height: 1.5em;
+  padding: 0 0.35em;
+  justify-content: center;
+  --_bg: var(--hui-tone-ink, var(--hui-red-ink));
+  --_fg: var(--hui-on-solid);
+  border-color: var(--hui-paper);
+}
+
+/* ---------- Keyboard key ---------- */
+.hui-kbd {
+  display: inline-block;
+  min-width: 1.8em;
+  padding: 0.05em 0.45em 0.1em;
+  font: 600 0.8em / 1.5 var(--hui-font-mono);
+  color: var(--hui-ink);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: 0.08em;
+  background: var(--hui-surface);
+  border: var(--hui-stroke-thin) solid var(--hui-line);
+  border-bottom-width: 3px;
+  border-radius: 7px;
+}
+
+/* ---------- Inline code ---------- */
+.hui-code {
+  padding: 0.12em 0.4em;
+  font: 500 0.86em / 1.4 var(--hui-font-mono);
+  color: var(--hui-ink);
+  background: var(--hui-tone-fill, var(--hui-brand-fill));
+  border-radius: var(--hui-radius-xs);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* ---------- Code block ---------- */
+.hui-pre {
+  position: relative;
+  margin: 0;
+  padding: 1rem 1.15rem;
+  overflow-x: auto;
+  font: 500 var(--hui-text-sm) / 1.65 var(--hui-font-mono);
+  color: var(--hui-ink);
+  white-space: pre;
+  tab-size: 2;
+  background: var(--hui-surface-sunken);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: 10px 14px 10px 12px;
+  box-shadow: var(--hui-shadow-sm);
+}
+
+.hui-pre code { font: inherit; background: none; padding: 0; }

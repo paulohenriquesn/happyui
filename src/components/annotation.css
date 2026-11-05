@@ -1,0 +1,42 @@
+/* =========================================================================
+   HappyUI · annotation
+   A handwritten note with a curved arrow that points at something,
+   like "click a device to try it".
+   ========================================================================= */
+
+.hui-annotation {
+  --_c: var(--hui-tone-ink, var(--hui-red-ink));
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.25em;
+  font: 700 var(--hui-hand-sm) / 1 var(--hui-font-hand);
+  color: var(--_c);
+  rotate: var(--hui-tilt, -3deg);
+}
+
+.hui-annotation::before,
+.hui-annotation::after {
+  flex: none;
+  width: 2.6em;
+  height: 1.6em;
+  background: currentColor;
+  -webkit-mask: var(--hui-arrow-mask) center / contain no-repeat;
+  mask: var(--hui-arrow-mask) center / contain no-repeat;
+}
+
+/* Default: the arrow sits on the left and points up-left */
+.hui-annotation::before { content: ""; translate: 0 -0.55em; }
+
+.hui-annotation--up-right::before { content: none; }
+.hui-annotation--up-right::after { content: ""; translate: 0 -0.55em; transform: scaleX(-1); }
+
+.hui-annotation--down-left { align-items: flex-start; }
+.hui-annotation--down-left::before { translate: 0 0.55em; transform: scaleY(-1); }
+
+.hui-annotation--down-right { align-items: flex-start; }
+.hui-annotation--down-right::before { content: none; }
+.hui-annotation--down-right::after { content: ""; translate: 0 0.55em; transform: scale(-1, -1); }
+
+/* Words only, no arrow */
+.hui-annotation--plain::before,
+.hui-annotation--plain::after { content: none; }

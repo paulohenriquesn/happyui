@@ -1,0 +1,18 @@
+{
+  "name": "happyui-react",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Optional React layer for HappyUI: thin typed wrappers over the CSS classes. Copy happyui.tsx into your project.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "typescript": "^7.0.2"
+  }
+}

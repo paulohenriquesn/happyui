@@ -1,0 +1,140 @@
+/* =========================================================================
+   HappyUI · typography
+   Two voices: Caveat (handwriting) for titles and notes, Shantell Sans
+   (a friendly marker sans) for everything you read.
+   ========================================================================= */
+
+.hui-display {
+  margin: 0;
+  font: 700 var(--hui-hand-3xl) / var(--hui-leading-tight) var(--hui-font-hand);
+  letter-spacing: 0.01em;
+  color: var(--hui-ink);
+  text-wrap: balance;
+}
+
+.hui-h1 {
+  margin: 0 0 0.35em;
+  font: 700 var(--hui-hand-2xl) / 1.02 var(--hui-font-hand);
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
+.hui-h2 {
+  margin: 0 0 0.35em;
+  font: 700 var(--hui-hand-xl) / 1.05 var(--hui-font-hand);
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
+/* The bold "marker" heading, for sub-sections and side-by-side blocks */
+.hui-h3 {
+  margin: 0 0 0.45em;
+  font: 800 clamp(1.35rem, 1.1rem + 0.9vw, 1.75rem) / 1.2 var(--hui-font-body);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+/* Card titles and small handwritten headings */
+.hui-h4 {
+  margin: 0 0 0.25em;
+  font: 700 var(--hui-hand-md) / 1.1 var(--hui-font-hand);
+}
+
+/* The little red note that sits above a title */
+.hui-eyebrow {
+  --_c: var(--hui-tone-ink, var(--hui-red-ink));
+  display: inline-block;
+  margin: 0 0 0.25rem;
+  font: 700 var(--hui-hand-sm) / 1 var(--hui-font-hand);
+  color: var(--_c);
+  rotate: -2deg;
+}
+
+/* Intro paragraph under a title */
+.hui-lede {
+  margin: 0 0 1em;
+  font-size: var(--hui-text-lg);
+  line-height: 1.6;
+  color: var(--hui-ink);
+  text-wrap: pretty;
+}
+
+.hui-hand { font-family: var(--hui-font-hand); font-weight: 700; }
+.hui-mono { font-family: var(--hui-font-mono); }
+.hui-small { font-size: var(--hui-text-sm); }
+.hui-tiny { font-size: var(--hui-text-xs); }
+.hui-muted { color: var(--hui-ink-soft); }
+.hui-faint { color: var(--hui-ink-faint); }
+.hui-center { text-align: center; }
+
+/* Colored text that stays readable in both themes */
+.hui-text-ink { color: var(--hui-ink); }
+.hui-text-tone { color: var(--hui-tone-ink, var(--hui-brand-ink)); }
+
+/* A handwritten link with an arrow, for "see more" moments */
+.hui-link {
+  --_c: var(--hui-tone-ink, var(--hui-blue-ink));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font: 700 var(--hui-hand-sm) / 1.1 var(--hui-font-hand);
+  color: var(--_c);
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.hui-link::after {
+  content: "\2192";
+  font-family: var(--hui-font-body);
+  font-size: 0.8em;
+  transition: translate var(--hui-duration) var(--hui-ease);
+}
+
+.hui-link:hover {
+  text-decoration: underline wavy;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 5px;
+}
+
+.hui-link:hover::after { translate: 4px 0; }
+
+.hui-link--back::after { content: none; }
+.hui-link--back::before {
+  content: "\2190";
+  font-family: var(--hui-font-body);
+  font-size: 0.8em;
+  transition: translate var(--hui-duration) var(--hui-ease);
+}
+.hui-link--back:hover::before { translate: -4px 0; }
+
+/* Long-form text: comfortable measure and rhythm */
+.hui-prose {
+  max-width: 68ch;
+}
+
+.hui-prose > * + * { margin-top: 0; }
+.hui-prose :where(h2, h3) { margin-top: 1.6em; }
+
+/* ---------- Icons ----------
+   Use any outline icon set (Lucide, Tabler, Phosphor, your own) with
+   class="hui-icon". Shapes styled with fill: var(--hui-icon-accent) get
+   the tone color, which gives icons a pastel splash. */
+.hui-icon {
+  --hui-icon-accent: var(--hui-tone, none);
+  flex: none;
+  width: var(--hui-icon-size, 1.5em);
+  height: var(--hui-icon-size, 1.5em);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.25em;
+}
+
+.hui-icon--sm { --hui-icon-size: 1.15em; }
+.hui-icon--lg { --hui-icon-size: 2em; }
+.hui-icon--xl { --hui-icon-size: 2.75em; }

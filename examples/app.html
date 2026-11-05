@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tiny Wins dashboard · a HappyUI app example</title>
+  <meta name="description" content="An example app screen built only with HappyUI components.">
+  <script>
+    document.documentElement.classList.add("hui-js");
+    try { var t = localStorage.getItem("happyui-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap">
+  <link rel="stylesheet" href="../dist/happyui.css">
+  <style>
+    /* Page-specific layout only. Every look comes from HappyUI. */
+    .ex-page { padding-block: 2rem 4rem; }
+    .ex-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1.75rem; }
+    .ex-head h1 { margin: .35rem 0 0; }
+    .ex-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 21rem); gap: 1.75rem; align-items: start; }
+    @media (max-width: 960px) { .ex-layout { grid-template-columns: minmax(0, 1fr); } }
+    .ex-bar { width: 7rem; }
+    .ex-cell { display: flex; align-items: center; gap: .65rem; }
+  </style>
+</head>
+<body class="hui">
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" style="fill:var(--hui-icon-accent,none)"/><path d="M8.5 14.2c1.8 2.2 5.2 2.2 7 0"/><path d="M9 9.6v.4M15 9.6v.4"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="m12 3.5 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M6 10a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4S6 15 6 10z"/><path d="M10 20a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2" style="fill:var(--hui-icon-accent,none)"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2" style="fill:var(--hui-icon-accent,none)"/><path d="m16 11 5-3v8l-5-3"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2" style="fill:var(--hui-icon-accent,none)"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M5 5.5h14A1.5 1.5 0 0 1 20.5 7v8.5A1.5 1.5 0 0 1 19 17h-7l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="15" rx="2" style="fill:var(--hui-icon-accent,none)"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M11 3c.6 3.8 1.8 5.4 6 6-4.2.6-5.4 2.2-6 6-.6-3.8-1.8-5.4-6-6 4.2-.6 5.4-2.2 6-6z"/><path d="M18.5 14.5c.3 1.6.9 2.3 2.5 2.5-1.6.2-2.2.9-2.5 2.5-.3-1.6-.9-2.3-2.5-2.5 1.6-.2 2.2-.9 2.5-2.5z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="m13.5 7 3 3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" style="fill:var(--hui-icon-accent,none)"/><path d="M15.5 8.5V6A1.5 1.5 0 0 0 14 4.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.8v.2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 21 19.5H3z"/><path d="M12 10v4.5M12 17.2v.2"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M5 19C5 10 10.5 5 20 5c0 9.5-5 15-14 15"/><path d="M5 19c3-3.5 6-6 9.5-8"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 17.5V6l10-2v11.5"/><circle cx="6.5" cy="17.5" r="2.5" style="fill:var(--hui-icon-accent,none)"/><circle cx="16.5" cy="15.5" r="2.5" style="fill:var(--hui-icon-accent,none)"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M5 9h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10.5h1.5a2.5 2.5 0 0 1 0 5H16M8.5 3.5c-.8 1 .8 2-.2 3M12 3.5c-.8 1 .8 2-.2 3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8" style="fill:var(--hui-icon-accent,none)"/><path d="M4.5 20c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2" style="fill:var(--hui-icon-accent,none)"/><circle cx="9" cy="17" r="2" style="fill:var(--hui-icon-accent,none)"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4.5 20 11"/><path style="fill:var(--hui-icon-accent,none)" d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.5 5.4 3.5 8.5s-1 5.9-3.5 8.5c-2.5-2.6-3.5-5.4-3.5-8.5s1-5.9 3.5-8.5z"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M12 3.5c3.5 4.4 6 7.6 6 10.5a6 6 0 0 1-12 0c0-2.9 2.5-6.1 6-10.5z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v14H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3"/></symbol>
+</svg>
+
+<a class="hui-sr-only" href="#main">Skip to content</a>
+
+<header class="hui-nav">
+  <div class="hui-container hui-nav__inner">
+    <a class="hui-logo" href="#main">
+      <span class="hui-logo__mark hui-green"><svg class="hui-icon"><use href="#i-leaf"/></svg></span>
+      tiny wins
+    </a>
+    <nav class="hui-nav__links" aria-label="Main">
+      <a class="hui-nav__link" href="#main" aria-current="page">Today</a>
+      <a class="hui-nav__link" href="#main">Habits</a>
+      <a class="hui-nav__link" href="#main">Squad</a>
+      <a class="hui-nav__link" href="#main">Stories</a>
+    </nav>
+    <div class="hui-nav__actions">
+      <button class="hui-button hui-button--icon hui-button--sm hui-button--ghost" type="button" aria-label="Notifications" data-hui-tooltip="2 new cheers" data-hui-tooltip-pos="bottom"><svg class="hui-icon hui-icon--sm"><use href="#i-bell"/></svg></button>
+      <button class="hui-button hui-button--icon hui-button--sm" type="button" data-hui-theme-toggle aria-label="Switch light or dark theme">
+        <svg class="hui-icon hui-icon--sm hui-only-light"><use href="#i-moon"/></svg>
+        <svg class="hui-icon hui-icon--sm hui-only-dark"><use href="#i-sun"/></svg>
+      </button>
+      <details class="hui-menu hui-menu--end">
+        <summary class="hui-button hui-button--sm" aria-label="Account menu"><span class="hui-avatar hui-avatar--sm hui-pink">S</span> Sam</summary>
+        <div class="hui-menu__list" role="menu">
+          <span class="hui-menu__label">sam@example.com</span>
+          <a class="hui-menu__item" role="menuitem" href="#main"><svg class="hui-icon"><use href="#i-user"/></svg> Profile</a>
+          <a class="hui-menu__item" role="menuitem" href="#main"><svg class="hui-icon"><use href="#i-sliders"/></svg> Settings</a>
+          <hr class="hui-menu__sep">
+          <a class="hui-menu__item hui-menu__item--danger" role="menuitem" href="#main"><svg class="hui-icon"><use href="#i-x"/></svg> Sign out</a>
+        </div>
+      </details>
+    </div>
+    <details class="hui-nav__menu">
+      <summary class="hui-button hui-button--icon hui-button--sm" aria-label="Open menu"><svg class="hui-icon hui-icon--sm"><use href="#i-menu"/></svg></summary>
+      <div class="hui-nav__sheet">
+        <a class="hui-nav__link" href="#main" aria-current="page">Today</a>
+        <a class="hui-nav__link" href="#main">Habits</a>
+        <a class="hui-nav__link" href="#main">Squad</a>
+        <a class="hui-nav__link" href="#main">Stories</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<main id="main" class="hui-container ex-page">
+  <div class="ex-head">
+    <div>
+      <nav class="hui-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="#main">Home</a></li><li><a href="#main">Habits</a></li><li><span aria-current="page">This week</span></li></ol></nav>
+      <h1 class="hui-h1">Hey Sam, <span class="hui-marker hui-green">great week!</span></h1>
+    </div>
+    <div class="hui-button-group">
+      <button class="hui-button" type="button" data-hui-copy="https://tinywins.example/s/sam"><svg class="hui-icon hui-button__icon"><use href="#i-copy"/></svg> Share link</button>
+      <button class="hui-button hui-button--primary" type="button" data-hui-open="#new-habit"><svg class="hui-icon hui-button__icon"><use href="#i-plus"/></svg> New habit</button>
+    </div>
+  </div>
+
+  <div class="hui-grid hui-grid--4" style="--hui-gap: 1.25rem; margin-bottom: 1.75rem" data-hui-stagger>
+    <div class="hui-card hui-reveal"><div class="hui-stat"><span class="hui-stat__value">23</span><span class="hui-stat__label">tiny wins this week</span><span class="hui-stat__delta">+6 vs last week</span></div></div>
+    <div class="hui-card hui-reveal"><div class="hui-stat"><span class="hui-stat__value">12</span><span class="hui-stat__label">day streak</span><span class="hui-stat__delta hui-blue">your best is 19</span></div></div>
+    <div class="hui-card hui-yellow hui-reveal"><div class="hui-stat"><span class="hui-stat__value">4</span><span class="hui-stat__label">cheers from friends</span><span class="hui-stat__delta hui-orange">2 new today</span></div></div>
+    <div class="hui-card hui-reveal"><div class="hui-stat"><span class="hui-stat__value">86%</span><span class="hui-stat__label">of your goal</span><progress class="hui-progress hui-green" value="86" max="100" aria-label="Weekly goal" style="margin-top: .5rem">86%</progress></div></div>
+  </div>
+
+  <div class="ex-layout">
+    <div class="hui-stack" style="--hui-gap: 1.25rem">
+      <div class="hui-tabs hui-tabs--line" data-hui-tabs>
+        <div class="hui-tabs__list" role="tablist" aria-label="Period">
+          <button class="hui-tabs__tab" role="tab" id="t-week" aria-controls="p-week" aria-selected="true">This week</button>
+          <button class="hui-tabs__tab" role="tab" id="t-month" aria-controls="p-month">This month</button>
+          <button class="hui-tabs__tab" role="tab" id="t-all" aria-controls="p-all">All time</button>
+        </div>
+        <div class="hui-tabs__panel" role="tabpanel" id="p-week" aria-labelledby="t-week" tabindex="0">
+          <div class="hui-table-wrap">
+            <table class="hui-table">
+              <thead><tr><th>Habit</th><th>Goal</th><th>Status</th><th>Progress</th><th class="is-num">Done</th><th><span class="hui-sr-only">Actions</span></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="ex-cell"><svg class="hui-icon hui-blue"><use href="#i-drop"/></svg><strong>Drink water</strong></span></td>
+                  <td>8 glasses a day</td>
+                  <td><span class="hui-badge hui-badge--dot hui-green">On track</span></td>
+                  <td><progress class="hui-progress hui-blue ex-bar" value="100" max="100" aria-label="Drink water">100%</progress></td>
+                  <td class="is-num">7/7</td>
+                  <td><details class="hui-menu hui-menu--end"><summary class="hui-button hui-button--icon hui-button--sm hui-button--ghost" aria-label="Actions for Drink water"><svg class="hui-icon hui-icon--sm"><use href="#i-sliders"/></svg></summary><div class="hui-menu__list" role="menu"><button class="hui-menu__item" role="menuitem" type="button"><svg class="hui-icon"><use href="#i-edit"/></svg> Edit</button><button class="hui-menu__item hui-menu__item--danger" role="menuitem" type="button" data-hui-open="#delete-habit"><svg class="hui-icon"><use href="#i-trash"/></svg> Delete</button></div></details></td>
+                </tr>
+                <tr>
+                  <td><span class="ex-cell"><svg class="hui-icon hui-yellow"><use href="#i-sun"/></svg><strong>Morning walk</strong></span></td>
+                  <td>20 minutes</td>
+                  <td><span class="hui-badge hui-badge--dot hui-green">On track</span></td>
+                  <td><progress class="hui-progress hui-yellow ex-bar" value="86" max="100" aria-label="Morning walk">86%</progress></td>
+                  <td class="is-num">6/7</td>
+                  <td><details class="hui-menu hui-menu--end"><summary class="hui-button hui-button--icon hui-button--sm hui-button--ghost" aria-label="Actions for Morning walk"><svg class="hui-icon hui-icon--sm"><use href="#i-sliders"/></svg></summary><div class="hui-menu__list" role="menu"><button class="hui-menu__item" role="menuitem" type="button"><svg class="hui-icon"><use href="#i-edit"/></svg> Edit</button><button class="hui-menu__item hui-menu__item--danger" role="menuitem" type="button" data-hui-open="#delete-habit"><svg class="hui-icon"><use href="#i-trash"/></svg> Delete</button></div></details></td>
+                </tr>
+                <tr>
+                  <td><span class="ex-cell"><svg class="hui-icon hui-pink"><use href="#i-book"/></svg><strong>Read a little</strong></span></td>
+                  <td>10 pages</td>
+                  <td><span class="hui-badge hui-badge--dot hui-orange">Catching up</span></td>
+                  <td><progress class="hui-progress hui-pink ex-bar" value="57" max="100" aria-label="Read a little">57%</progress></td>
+                  <td class="is-num">4/7</td>
+                  <td><details class="hui-menu hui-menu--end"><summary class="hui-button hui-button--icon hui-button--sm hui-button--ghost" aria-label="Actions for Read a little"><svg class="hui-icon hui-icon--sm"><use href="#i-sliders"/></svg></summary><div class="hui-menu__list" role="menu"><button class="hui-menu__item" role="menuitem" type="button"><svg class="hui-icon"><use href="#i-edit"/></svg> Edit</button><button class="hui-menu__item hui-menu__item--danger" role="menuitem" type="button" data-hui-open="#delete-habit"><svg class="hui-icon"><use href="#i-trash"/></svg> Delete</button></div></details></td>
+                </tr>
+                <tr>
+                  <td><span class="ex-cell"><svg class="hui-icon hui-purple"><use href="#i-moon"/></svg><strong>Sleep by 11</strong></span></td>
+                  <td>every night</td>
+                  <td><span class="hui-badge hui-badge--dot hui-blue">Rest day</span></td>
+                  <td><progress class="hui-progress hui-purple ex-bar" value="71" max="100" aria-label="Sleep by 11">71%</progress></td>
+                  <td class="is-num">5/7</td>
+                  <td><details class="hui-menu hui-menu--end"><summary class="hui-button hui-button--icon hui-button--sm hui-button--ghost" aria-label="Actions for Sleep by 11"><svg class="hui-icon hui-icon--sm"><use href="#i-sliders"/></svg></summary><div class="hui-menu__list" role="menu"><button class="hui-menu__item" role="menuitem" type="button"><svg class="hui-icon"><use href="#i-edit"/></svg> Edit</button><button class="hui-menu__item hui-menu__item--danger" role="menuitem" type="button" data-hui-open="#delete-habit"><svg class="hui-icon"><use href="#i-trash"/></svg> Delete</button></div></details></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="hui-tabs__panel" role="tabpanel" id="p-month" aria-labelledby="t-month" tabindex="0" hidden>
+          <div class="hui-alert hui-info" role="status"><span class="hui-alert__icon"><svg class="hui-icon"><use href="#i-info"/></svg></span><div class="hui-alert__body"><p class="hui-alert__title">The month is still young</p><p class="hui-alert__text">Come back on Sunday for your first monthly story.</p></div></div>
+        </div>
+        <div class="hui-tabs__panel" role="tabpanel" id="p-all" aria-labelledby="t-all" tabindex="0" hidden>
+          <div class="hui-empty">
+            <svg class="hui-icon hui-empty__art hui-yellow"><use href="#i-sparkles"/></svg>
+            <h2 class="hui-empty__title">Your story starts here</h2>
+            <p class="hui-empty__text">After four weeks we draw your first poster. Keep collecting those tiny wins.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hui-alert hui-success" role="status">
+        <span class="hui-alert__icon"><svg class="hui-icon"><use href="#i-check"/></svg></span>
+        <div class="hui-alert__body"><p class="hui-alert__title">Water: seven days in a row!</p><p class="hui-alert__text">You unlocked the blue sticker. Your plant says thanks.</p></div>
+        <button class="hui-button hui-button--icon hui-button--sm hui-button--ghost hui-alert__close" type="button" aria-label="Dismiss"><svg class="hui-icon hui-icon--sm"><use href="#i-x"/></svg></button>
+      </div>
+    </div>
+
+    <aside class="hui-stack" style="--hui-gap: 1.25rem">
+      <form class="hui-card hui-stack" style="--hui-gap: 1rem" onsubmit="event.preventDefault(); HappyUI.toast('Morning stretch is on your list.', { title: 'Habit added!', tone: 'green' }); this.reset()">
+        <h2 class="hui-card__title">Quick add</h2>
+        <div class="hui-field">
+          <label class="hui-label" for="q-name">Habit</label>
+          <input class="hui-input" id="q-name" placeholder="Morning stretch" required>
+        </div>
+        <div class="hui-field">
+          <label class="hui-label" for="q-often">How often</label>
+          <div class="hui-select"><select id="q-often"><option>Every day</option><option>Weekdays</option><option>Three times a week</option></select></div>
+        </div>
+        <label class="hui-switch"><input type="checkbox" role="switch" checked> Remind me at 8 am</label>
+        <button class="hui-button hui-button--primary hui-button--block" type="submit">Add habit</button>
+      </form>
+
+      <div class="hui-card">
+        <h2 class="hui-card__title">Your squad</h2>
+        <div class="hui-stack" style="--hui-gap: .75rem">
+          <div class="ex-cell"><span class="hui-avatar hui-blue">L</span><div><strong>Lena</strong><div class="hui-tiny hui-muted">cheered your walk</div></div></div>
+          <div class="ex-cell"><span class="hui-avatar hui-green">R</span><div><strong>Rafael</strong><div class="hui-tiny hui-muted">read 40 pages today</div></div></div>
+          <div class="ex-cell"><span class="hui-avatar hui-purple">T</span><div><strong>Tomo</strong><div class="hui-tiny hui-muted">on a rest day</div></div></div>
+        </div>
+        <div class="hui-card__footer">
+          <button class="hui-button hui-button--sm hui-pink" type="button" data-hui-toast="Your squad got a big hug." data-hui-toast-title="Sent!" data-hui-toast-tone="pink"><svg class="hui-icon hui-icon--sm"><use href="#i-heart"/></svg> Send a cheer</button>
+        </div>
+      </div>
+
+      <div class="hui-note hui-blue" style="--hui-tilt: -1.5deg">sunday story is coming in 3 days<small>keep going!</small></div>
+    </aside>
+  </div>
+</main>
+
+<dialog class="hui-dialog" id="new-habit" aria-labelledby="new-habit-title">
+  <form class="hui-dialog__inner" method="dialog">
+    <div class="hui-dialog__head">
+      <h2 class="hui-dialog__title" id="new-habit-title">A new tiny habit</h2>
+      <button class="hui-button hui-button--icon hui-button--sm hui-button--ghost" type="button" data-hui-close aria-label="Close"><svg class="hui-icon hui-icon--sm"><use href="#i-x"/></svg></button>
+    </div>
+    <p class="hui-dialog__text">Start smaller than you think. You can always add more later.</p>
+    <div class="hui-field">
+      <label class="hui-label" for="d-name">What do you want to do?</label>
+      <input class="hui-input" id="d-name" placeholder="Stretch for two minutes">
+    </div>
+    <div class="hui-cluster" style="--hui-gap: 1rem">
+      <label class="hui-radio"><input type="radio" name="d-when" checked> Morning</label>
+      <label class="hui-radio"><input type="radio" name="d-when"> Evening</label>
+      <label class="hui-radio"><input type="radio" name="d-when"> Any time</label>
+    </div>
+    <div class="hui-dialog__actions">
+      <button class="hui-button hui-button--ghost" type="button" data-hui-close>Not now</button>
+      <button class="hui-button hui-button--primary" type="submit" onclick="HappyUI.toast('See you tomorrow morning!', { title: 'Habit added', tone: 'green' })">Add it</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog class="hui-dialog" id="delete-habit" aria-labelledby="delete-habit-title">
+  <div class="hui-dialog__inner">
+    <div class="hui-dialog__head">
+      <h2 class="hui-dialog__title" id="delete-habit-title">Delete this habit?</h2>
+    </div>
+    <p class="hui-dialog__text">Its history goes away too. If you only need a break, plan a rest day instead.</p>
+    <div class="hui-dialog__actions">
+      <button class="hui-button hui-button--ghost" type="button" data-hui-close>Keep it</button>
+      <button class="hui-button hui-red" type="button" data-hui-close value="delete">Delete habit</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="../dist/happyui.js"></script>
+</body>
+</html>

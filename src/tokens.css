@@ -1,0 +1,256 @@
+/* =========================================================================
+   HappyUI · tokens
+   Every color, size, font and timing lives here as a CSS variable.
+   Change a variable and every component follows.
+   Format rule: one declaration per line (the build reads this file to
+   generate tokens/tokens.json).
+   ========================================================================= */
+
+/* Tone variables are set by tone classes (.hui-pink, .hui-blue, ...).
+   They do NOT inherit, so a tone only paints the element it is written on
+   and never leaks into nested components. */
+@property --hui-tone { syntax: "*"; inherits: false; }
+@property --hui-tone-on { syntax: "*"; inherits: false; }
+@property --hui-tone-fill { syntax: "*"; inherits: false; }
+@property --hui-tone-soft { syntax: "*"; inherits: false; }
+@property --hui-tone-ink { syntax: "*"; inherits: false; }
+@property --hui-tone-mark { syntax: "*"; inherits: false; }
+/* Same idea for the hand-placed rotation of a card, note or frame */
+@property --hui-tilt { syntax: "*"; inherits: false; }
+
+/* ---------- Theme independent ---------- */
+:root {
+  /* Typefaces */
+  --hui-font-hand: "Caveat", "Caveat Variable", "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  --hui-font-body: "Shantell Sans Variable", "Shantell Sans", "Segoe UI", "Trebuchet MS", system-ui, sans-serif;
+  --hui-font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+
+  /* Body text sizes */
+  --hui-text-xs: 0.8125rem;
+  --hui-text-sm: 0.9375rem;
+  --hui-text-md: 1.0625rem;
+  --hui-text-lg: 1.1875rem;
+  --hui-text-xl: 1.375rem;
+
+  /* Handwritten sizes (Caveat runs small, so these are bigger) */
+  --hui-hand-sm: 1.375rem;
+  --hui-hand-md: 1.75rem;
+  --hui-hand-lg: 2.25rem;
+  --hui-hand-xl: clamp(2.25rem, 1.5rem + 2.4vw, 3.25rem);
+  --hui-hand-2xl: clamp(2.6rem, 1.6rem + 3.6vw, 4.5rem);
+  --hui-hand-3xl: clamp(3.5rem, 1.8rem + 6.4vw, 7rem);
+
+  /* Line heights */
+  --hui-leading-tight: 0.95;
+  --hui-leading-snug: 1.2;
+  --hui-leading: 1.65;
+
+  /* Spacing (4px steps) */
+  --hui-space-1: 0.25rem;
+  --hui-space-2: 0.5rem;
+  --hui-space-3: 0.75rem;
+  --hui-space-4: 1rem;
+  --hui-space-5: 1.25rem;
+  --hui-space-6: 1.5rem;
+  --hui-space-8: 2rem;
+  --hui-space-10: 2.5rem;
+  --hui-space-12: 3rem;
+  --hui-space-16: 4rem;
+  --hui-space-20: 5rem;
+  --hui-space-24: 6rem;
+
+  /* Corners. "wobble" draws a box that looks drawn by hand. */
+  --hui-radius-xs: 4px;
+  --hui-radius-sm: 6px;
+  --hui-radius-md: 10px;
+  --hui-radius-lg: 16px;
+  --hui-radius-pill: 999px;
+  --hui-wobble: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  --hui-wobble-alt: 15px 255px 15px 225px / 225px 15px 255px 15px;
+
+  /* Pencil strokes */
+  --hui-stroke-thin: 1.5px;
+  --hui-stroke: 2px;
+  --hui-stroke-thick: 2.5px;
+
+  /* Small rotations that make things feel placed by hand */
+  --hui-tilt-sm: 0.6deg;
+  --hui-tilt-md: 1.5deg;
+  --hui-tilt-lg: 3deg;
+
+  /* Motion */
+  --hui-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --hui-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --hui-duration-fast: 140ms;
+  --hui-duration: 220ms;
+  --hui-duration-slow: 900ms;
+
+  /* Layout */
+  --hui-container: 72rem;
+  --hui-container-narrow: 46rem;
+  --hui-grid-size: 28px;
+
+  /* Layers */
+  --hui-z-sticky: 40;
+  --hui-z-dropdown: 60;
+  --hui-z-toast: 90;
+}
+
+/* ---------- Light theme (default): warm paper and pencil ---------- */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --hui-paper: #fbf9f3;
+  --hui-surface: #ffffff;
+  --hui-surface-sunken: #f6f1e7;
+  --hui-ink: #29251f;
+  --hui-ink-soft: #645d4e;
+  --hui-ink-faint: #76705f;
+  --hui-line: #29251f;
+  --hui-line-soft: #ddd5c5;
+  --hui-line-dashed: #8a8270;
+  --hui-shadow-color: rgb(41 37 31 / 0.82);
+  --hui-grid-color: rgb(110 160 210 / 0.1);
+  --hui-focus: #2f5bd3;
+  --hui-backdrop: rgb(41 37 31 / 0.42);
+  --hui-on-pop: #29251f;
+  --hui-on-solid: #ffffff;
+
+  /* Tones: pop = bright pastel (buttons, badges), fill = big surfaces,
+     soft = whisper tint, ink = readable colored text, mark = highlighter */
+  --hui-yellow: #ffe066;
+  --hui-yellow-fill: #fff3a8;
+  --hui-yellow-soft: #fff9d9;
+  --hui-yellow-ink: #876000;
+  --hui-yellow-mark: rgb(255 222 89 / 0.75);
+
+  --hui-orange: #ffc48a;
+  --hui-orange-fill: #ffe2c4;
+  --hui-orange-soft: #fff1e3;
+  --hui-orange-ink: #b24f0c;
+  --hui-orange-mark: rgb(255 178 102 / 0.62);
+
+  --hui-red: #ffab9c;
+  --hui-red-fill: #ffd9d1;
+  --hui-red-soft: #ffeeea;
+  --hui-red-ink: #c63b22;
+  --hui-red-mark: rgb(255 140 120 / 0.5);
+
+  --hui-pink: #ffaccb;
+  --hui-pink-fill: #ffd6e5;
+  --hui-pink-soft: #ffecf3;
+  --hui-pink-ink: #b8285e;
+  --hui-pink-mark: rgb(255 146 186 / 0.6);
+
+  --hui-purple: #cdb5ff;
+  --hui-purple-fill: #e7dcff;
+  --hui-purple-soft: #f3eeff;
+  --hui-purple-ink: #6a3fd0;
+  --hui-purple-mark: rgb(196 160 255 / 0.55);
+
+  --hui-blue: #a9cbff;
+  --hui-blue-fill: #d8e8ff;
+  --hui-blue-soft: #edf4ff;
+  --hui-blue-ink: #2f5bd3;
+  --hui-blue-mark: rgb(140 190 255 / 0.55);
+
+  --hui-teal: #93e0e3;
+  --hui-teal-fill: #d3f3f2;
+  --hui-teal-soft: #eaf9f8;
+  --hui-teal-ink: #0d7a72;
+  --hui-teal-mark: rgb(110 214 230 / 0.55);
+
+  --hui-green: #a8e8b0;
+  --hui-green-fill: #d9f5dc;
+  --hui-green-soft: #edfaee;
+  --hui-green-ink: #1f7a43;
+  --hui-green-mark: rgb(140 226 150 / 0.65);
+}
+
+/* ---------- Dark theme: the same sketchbook at night ---------- */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --hui-paper: #1d1b18;
+  --hui-surface: #282520;
+  --hui-surface-sunken: #161411;
+  --hui-ink: #f4efe4;
+  --hui-ink-soft: #c9c0ae;
+  --hui-ink-faint: #9b9281;
+  --hui-line: #f4efe4;
+  --hui-line-soft: #3e3a33;
+  --hui-line-dashed: #8d8574;
+  --hui-shadow-color: rgb(0 0 0 / 0.9);
+  --hui-grid-color: rgb(150 185 230 / 0.07);
+  --hui-focus: #8fb2ff;
+  --hui-backdrop: rgb(0 0 0 / 0.6);
+  --hui-on-pop: #29251f;
+  --hui-on-solid: #1d1b18;
+
+  --hui-yellow: #f7d65c;
+  --hui-yellow-fill: #3d3519;
+  --hui-yellow-soft: #2b2719;
+  --hui-yellow-ink: #f5cf55;
+  --hui-yellow-mark: rgb(214 170 30 / 0.45);
+
+  --hui-orange: #ffb877;
+  --hui-orange-fill: #402c1c;
+  --hui-orange-soft: #2c2219;
+  --hui-orange-ink: #ffae6b;
+  --hui-orange-mark: rgb(230 120 40 / 0.42);
+
+  --hui-red: #ff9d8c;
+  --hui-red-fill: #43241f;
+  --hui-red-soft: #2e1d1a;
+  --hui-red-ink: #ff8f7a;
+  --hui-red-mark: rgb(230 80 60 / 0.4);
+
+  --hui-pink: #ff9fc2;
+  --hui-pink-fill: #40222f;
+  --hui-pink-soft: #2d1c23;
+  --hui-pink-ink: #ff8fb7;
+  --hui-pink-mark: rgb(230 80 140 / 0.4);
+
+  --hui-purple: #c3a6ff;
+  --hui-purple-fill: #31284a;
+  --hui-purple-soft: #241f33;
+  --hui-purple-ink: #bea4ff;
+  --hui-purple-mark: rgb(140 100 240 / 0.42);
+
+  --hui-blue: #9cc0ff;
+  --hui-blue-fill: #22314d;
+  --hui-blue-soft: #1b2333;
+  --hui-blue-ink: #93b4ff;
+  --hui-blue-mark: rgb(70 120 230 / 0.42);
+
+  --hui-teal: #85d8db;
+  --hui-teal-fill: #1c3a39;
+  --hui-teal-soft: #172827;
+  --hui-teal-ink: #6fd6cf;
+  --hui-teal-mark: rgb(40 170 170 / 0.4);
+
+  --hui-green: #98e0a3;
+  --hui-green-fill: #213a27;
+  --hui-green-soft: #192a1d;
+  --hui-green-ink: #82d996;
+  --hui-green-mark: rgb(60 170 90 / 0.42);
+}
+
+/* ---------- Derived tokens ----------
+   Declared on every themed element so they recompute inside a nested
+   [data-theme] block. Override the brand here to recolor the whole kit. */
+:root,
+[data-theme] {
+  --hui-brand: var(--hui-yellow);
+  --hui-brand-fill: var(--hui-yellow-fill);
+  --hui-brand-soft: var(--hui-yellow-soft);
+  --hui-brand-ink: var(--hui-yellow-ink);
+  --hui-brand-mark: var(--hui-yellow-mark);
+
+  --hui-shadow-sm: 2px 2px 0 var(--hui-shadow-color);
+  --hui-shadow-md: 3px 4px 0 var(--hui-shadow-color);
+  --hui-shadow-lg: 5px 6px 0 var(--hui-shadow-color);
+  --hui-shadow-xl: 8px 9px 0 var(--hui-shadow-color);
+  --hui-shadow-float: 0 14px 30px -14px rgb(20 16 8 / 0.45);
+}

@@ -1,0 +1,141 @@
+/* Helpers for the showcase page only. Not part of HappyUI. */
+
+.doc-label {
+  display: block;
+  margin-top: 0.35rem;
+  font: 700 1.2rem / 1 var(--hui-font-hand);
+  color: var(--hui-ink-soft);
+}
+
+.doc-label:first-child { margin-top: 0; }
+
+.doc-gap-top { margin-top: clamp(2rem, 1.5rem + 2vw, 3rem); }
+
+/* Hero stage: a window with tape, a sticky note and a note */
+.doc-stage { position: relative; }
+
+.doc-hero-note {
+  position: absolute;
+  right: 1.5rem;
+  bottom: -6.9rem;
+  width: 10.5rem;
+  --hui-tilt: 4deg;
+}
+
+.doc-hero-ann {
+  position: absolute;
+  top: -3.1rem;
+  left: 38%;
+}
+
+.doc-hero-spark {
+  position: absolute;
+  left: -1.6rem;
+  bottom: 2rem;
+  --hui-doodle-size: 2.5rem;
+}
+
+@media (max-width: 900px) {
+  .hui-hero__media { margin-top: 2.75rem; }
+  .doc-hero-note { right: 0.5rem; }
+  .doc-hero-spark { left: -0.5rem; }
+}
+
+/* Color swatches */
+.doc-tones {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
+  gap: 1.25rem;
+}
+
+.doc-tone {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.65rem 0.65rem 0.8rem;
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--hui-shadow-md);
+}
+
+.doc-tone strong { font-size: 1.6rem; line-height: 1; margin-top: 0.2rem; }
+
+.doc-tone__pop {
+  height: 4.25rem;
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: 8px 12px 9px 11px;
+}
+
+.doc-tone__row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.35rem; }
+
+.doc-tone__row span {
+  display: grid;
+  place-items: center;
+  height: 1.9rem;
+  font: 600 0.72rem / 1 var(--hui-font-body);
+  color: var(--hui-ink);
+  border: var(--hui-stroke-thin) solid var(--hui-line);
+  border-radius: 6px;
+}
+
+.doc-tone__ink { font: 700 0.8rem / 1.2 var(--hui-font-mono); }
+
+.doc-inks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+
+.doc-inks span {
+  display: grid;
+  place-items: center;
+  height: 3rem;
+  font: 600 0.8rem / 1 var(--hui-font-body);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: 8px 11px 9px 12px;
+}
+
+.doc-shadows { display: flex; flex-wrap: wrap; gap: 1.1rem; padding: 0.25rem 0 0.5rem; }
+
+.doc-shadows span {
+  display: grid;
+  place-items: center;
+  width: 4.25rem;
+  height: 3.25rem;
+  font: 700 1.2rem / 1 var(--hui-font-hand);
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+}
+
+/* Picture area of the little comic cards */
+.doc-media { position: relative; min-height: 10rem; }
+
+.doc-media__note {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+}
+
+.doc-frame-art {
+  display: grid;
+  place-items: center;
+  gap: 0.6rem;
+  min-height: 15rem;
+  padding: 2rem;
+  text-align: center;
+  background:
+    linear-gradient(var(--hui-grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--hui-grid-color) 1px, transparent 1px),
+    var(--hui-yellow-soft);
+  background-size: 18px 18px;
+  border-radius: 10px 14px 10px 12px;
+}
+
+.doc-frame-ann {
+  position: absolute;
+  left: 2.5rem;
+  bottom: -2.5rem;
+}
+
+.doc-static-toast {
+  margin-top: 0.5rem;
+  animation: none;
+}

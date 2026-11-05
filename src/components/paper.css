@@ -1,0 +1,302 @@
+/* =========================================================================
+   HappyUI · paper: card, frame, tape, sticky note, callout, banner, window
+   Big surfaces are sheets of paper with a pencil outline and a hard
+   shadow. The "wobble" radius makes every edge look drawn by hand.
+   ========================================================================= */
+
+/* ---------- Card ---------- */
+.hui-card {
+  --_fill: var(--hui-tone-fill, var(--hui-surface));
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--hui-space-2);
+  padding: var(--hui-card-padding, 1.25rem 1.4rem 1.4rem);
+  color: var(--hui-ink);
+  background: var(--_fill);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--hui-shadow-md);
+  rotate: var(--hui-tilt, 0deg);
+}
+
+.hui-card > :where(*) { margin-block: 0; }
+
+.hui-card__icon {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  color: var(--hui-ink);
+}
+
+.hui-card__title {
+  font: 700 var(--hui-hand-md) / 1.1 var(--hui-font-hand);
+  color: var(--hui-ink);
+}
+
+.hui-card__text {
+  font-size: var(--hui-text-sm);
+  line-height: 1.55;
+  color: var(--hui-ink);
+}
+
+.hui-card__meta {
+  font-size: var(--hui-text-xs);
+  color: var(--hui-ink-soft);
+}
+
+/* Picture area at the top, like a photo glued on the page */
+.hui-card__media {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  min-height: 9rem;
+  margin-bottom: var(--hui-space-2);
+  background: var(--hui-tone-soft, var(--hui-surface-sunken));
+  border-radius: 8px 12px 9px 11px;
+}
+
+.hui-card__media > :where(img, video) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hui-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hui-space-3);
+  margin-top: auto;
+  padding-top: var(--hui-space-3);
+}
+
+/* Icon on the left, words on the right */
+.hui-card--row {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--hui-space-4);
+}
+
+.hui-card--row > .hui-card__body { display: flex; flex-direction: column; gap: var(--hui-space-1); min-width: 0; }
+
+/* Variants */
+.hui-card--soft { --_fill: var(--hui-tone-soft, var(--hui-surface-sunken)); }
+
+.hui-card--flat { box-shadow: none; }
+
+.hui-card--dashed {
+  background: var(--hui-tone-soft, transparent);
+  border: var(--hui-stroke-thin) dashed var(--hui-line-dashed);
+  border-radius: var(--hui-radius-md);
+  box-shadow: none;
+}
+
+.hui-card--lg { --hui-card-padding: clamp(1.5rem, 1rem + 2vw, 2.5rem); }
+
+/* Clickable card: lifts on hover */
+a.hui-card,
+.hui-card--interactive {
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    translate var(--hui-duration) var(--hui-ease),
+    rotate var(--hui-duration) var(--hui-ease),
+    box-shadow var(--hui-duration) var(--hui-ease);
+}
+
+a.hui-card:hover,
+.hui-card--interactive:hover {
+  translate: -2px -3px;
+  rotate: calc(var(--hui-tilt, 0deg) - 0.6deg);
+  box-shadow: var(--hui-shadow-lg);
+  text-decoration: none;
+}
+
+a.hui-card:active,
+.hui-card--interactive:active {
+  translate: 1px 2px;
+  box-shadow: var(--hui-shadow-sm);
+}
+
+/* ---------- Frame: a taped-on picture, screenshot or demo ---------- */
+.hui-frame {
+  position: relative;
+  padding: var(--hui-frame-padding, 0.75rem);
+  background: var(--hui-tone-fill, var(--hui-surface));
+  border: var(--hui-stroke-thick) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--hui-shadow-lg);
+  rotate: var(--hui-tilt, 0deg);
+}
+
+.hui-frame > :where(img, video, svg, canvas) {
+  display: block;
+  width: 100%;
+  border-radius: 12px 16px 12px 14px;
+}
+
+.hui-frame--bare { padding: 0; overflow: visible; }
+.hui-frame--bare > :where(img, video, svg, canvas) { border-radius: inherit; }
+
+/* ---------- Tape: stick it to a corner of a frame or card ---------- */
+.hui-tape {
+  position: absolute;
+  z-index: 2;
+  width: var(--hui-tape-width, 6.75rem);
+  height: 1.75rem;
+  background: var(--hui-tone, var(--hui-brand));
+  opacity: 0.72;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+  clip-path: polygon(2% 8%, 98% 0, 100% 34%, 97% 62%, 100% 100%, 3% 94%, 0 66%, 2% 38%);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .hui-tape { opacity: 0.86; }
+
+.hui-tape--tl { top: -0.8rem; left: 1.5rem; rotate: -5deg; }
+.hui-tape--tr { top: -0.8rem; right: 1.5rem; rotate: 4deg; }
+.hui-tape--top { top: -0.9rem; left: 50%; translate: -50% 0; rotate: -2deg; }
+.hui-tape--bl { bottom: -0.8rem; left: 1.5rem; rotate: 4deg; }
+.hui-tape--br { bottom: -0.8rem; right: 1.5rem; rotate: -5deg; }
+
+/* ---------- Sticky note ---------- */
+.hui-note {
+  position: relative;
+  display: block;
+  padding: 1.35rem 1.3rem 1.5rem;
+  font: 700 var(--hui-hand-md) / 1.15 var(--hui-font-hand);
+  color: var(--hui-on-pop);
+  background:
+    linear-gradient(rgb(255 255 255 / 0.18), transparent 40%),
+    var(--hui-tone, var(--hui-brand));
+  border-radius: 3px 3px 4px 18px / 3px 3px 4px 8px;
+  box-shadow:
+    0 1px 0 rgb(0 0 0 / 0.06),
+    var(--hui-shadow-float);
+  rotate: var(--hui-tilt, -2deg);
+}
+
+.hui-note > :where(*) { margin: 0; }
+.hui-note > * + * { margin-top: 0.4em; }
+
+.hui-note small,
+.hui-note .hui-note__by {
+  display: block;
+  font: 500 var(--hui-text-sm) / 1.4 var(--hui-font-body);
+  opacity: 0.8;
+}
+
+/* ---------- Callout: a big colored box that asks for one action ---------- */
+.hui-callout {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--hui-space-6);
+  padding: clamp(1.5rem, 1rem + 2vw, 2.5rem) clamp(1.5rem, 1rem + 3vw, 3rem);
+  color: var(--hui-ink);
+  background: var(--hui-tone-fill, var(--hui-brand-fill));
+  border: var(--hui-stroke-thick) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--hui-shadow-lg);
+  rotate: var(--hui-tilt, -0.8deg);
+}
+
+.hui-callout__title {
+  margin: 0;
+  font: 700 var(--hui-hand-xl) / 1.05 var(--hui-font-hand);
+}
+
+.hui-callout__title em {
+  display: block;
+  font-style: normal;
+  color: var(--hui-blue-ink);
+}
+
+/* ---------- Banner: the tilted "what's new" pill at the top ---------- */
+.hui-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65em;
+  max-width: 100%;
+  padding: 0.35em 0.95em 0.35em 0.4em;
+  font: 500 var(--hui-text-sm) / 1.3 var(--hui-font-body);
+  color: var(--hui-ink);
+  text-decoration: none;
+  background: var(--hui-tone-fill, var(--hui-brand-fill));
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--hui-shadow-sm);
+  rotate: var(--hui-tilt, -1.5deg);
+  transition: rotate var(--hui-duration) var(--hui-ease), translate var(--hui-duration) var(--hui-ease);
+}
+
+a.hui-banner:hover {
+  rotate: 0deg;
+  translate: 0 -2px;
+  text-decoration: none;
+}
+
+a.hui-banner::after {
+  content: "\2192";
+  transition: translate var(--hui-duration) var(--hui-ease);
+}
+
+a.hui-banner:hover::after { translate: 3px 0; }
+
+/* ---------- Window: a pretend app window for demos and screenshots ---------- */
+.hui-window {
+  position: relative;
+  overflow: hidden;
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: 14px 18px 14px 16px;
+  box-shadow: var(--hui-shadow-lg);
+  rotate: var(--hui-tilt, 0deg);
+}
+
+.hui-window__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.4rem;
+  padding: 0.45rem 0.9rem;
+  font: 600 var(--hui-text-xs) / 1 var(--hui-font-body);
+  color: var(--hui-ink-soft);
+  background: var(--hui-surface-sunken);
+  border-bottom: var(--hui-stroke) solid var(--hui-line);
+}
+
+.hui-window__dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border: var(--hui-stroke-thin) solid var(--hui-line);
+  border-radius: 50%;
+  background: var(--hui-red);
+}
+
+.hui-window__dot:nth-child(2) { background: var(--hui-yellow); }
+.hui-window__dot:nth-child(3) { background: var(--hui-green); }
+
+.hui-window__title { margin-left: 0.5rem; }
+
+.hui-window__body { padding: var(--hui-window-padding, 1.25rem); }
+
+/* A dark screen inside the sketch, like a real app at night */
+.hui-window--night {
+  --hui-surface: #171a2b;
+  --hui-surface-sunken: #11131f;
+  color: #eef0ff;
+  background: linear-gradient(140deg, #1b1f36, #241a3d 60%, #2d1c43);
+}
+
+.hui-window--night .hui-window__bar { color: #b9bfdd; border-bottom-color: var(--hui-line); }
+
+/* ---------- Tilt helpers ---------- */
+.hui-tilt-left { --hui-tilt: calc(var(--hui-tilt-md) * -1); }
+.hui-tilt-right { --hui-tilt: var(--hui-tilt-md); }
+.hui-tilt-slight { --hui-tilt: calc(var(--hui-tilt-sm) * -1); }
+.hui-straight { --hui-tilt: 0deg; }

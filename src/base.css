@@ -1,0 +1,171 @@
+/* =========================================================================
+   HappyUI · base
+   Put class="hui" on <body> (or any wrapper) to get the paper, the fonts
+   and friendly defaults for plain HTML. Everything here uses :where(), so
+   it has zero specificity and any class of yours wins.
+   ========================================================================= */
+
+:where(.hui),
+:where(.hui) *,
+:where(.hui) *::before,
+:where(.hui) *::after {
+  box-sizing: border-box;
+}
+
+:where(.hui) {
+  margin: 0;
+  font-family: var(--hui-font-body);
+  font-size: var(--hui-text-md);
+  font-weight: 400;
+  line-height: var(--hui-leading);
+  color: var(--hui-ink);
+  background-color: var(--hui-paper);
+  /* graph paper */
+  background-image:
+    linear-gradient(var(--hui-grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--hui-grid-color) 1px, transparent 1px);
+  background-size: var(--hui-grid-size) var(--hui-grid-size);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+/* A themed block inside the page gets its own paper and ink:
+   <section data-theme="dark"> ... </section> */
+:where(.hui [data-theme]) {
+  color: var(--hui-ink);
+  background-color: var(--hui-paper);
+}
+
+/* A blank sheet, without the grid */
+:where(.hui-plain) {
+  background-image: none;
+}
+
+/* ---------- Headings ---------- */
+:where(.hui) :where(h1, h2, h3, h4, h5, h6) {
+  margin: 0 0 0.5em;
+  color: var(--hui-ink);
+  line-height: var(--hui-leading-snug);
+  text-wrap: balance;
+}
+
+:where(.hui) :where(h1, h2) {
+  font-family: var(--hui-font-hand);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.02;
+}
+
+:where(.hui) h1 { font-size: var(--hui-hand-3xl); line-height: var(--hui-leading-tight); }
+:where(.hui) h2 { font-size: var(--hui-hand-2xl); }
+
+:where(.hui) :where(h3, h4, h5, h6) {
+  font-family: var(--hui-font-body);
+  font-weight: 800;
+  letter-spacing: -0.005em;
+}
+
+:where(.hui) h3 { font-size: 1.5rem; }
+:where(.hui) h4 { font-size: 1.25rem; }
+:where(.hui) h5 { font-size: 1.0625rem; }
+:where(.hui) h6 { font-size: 0.9375rem; }
+
+/* ---------- Text ---------- */
+:where(.hui) p {
+  margin: 0 0 1em;
+  text-wrap: pretty;
+}
+
+:where(.hui) :where(strong, b) { font-weight: 700; }
+:where(.hui) small { font-size: 0.875em; }
+:where(.hui) em { font-style: italic; }
+
+:where(.hui) a {
+  color: var(--hui-blue-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+:where(.hui) a:hover {
+  text-decoration-style: wavy;
+}
+
+:where(.hui) :where(ul, ol) {
+  margin: 0 0 1em;
+  padding-left: 1.3em;
+}
+
+:where(.hui) li + li { margin-top: 0.25em; }
+
+:where(.hui) blockquote {
+  margin: 0 0 1em;
+  padding-left: 1rem;
+  border-left: 3px solid var(--hui-line);
+  font-family: var(--hui-font-hand);
+  font-size: var(--hui-hand-md);
+  line-height: 1.2;
+}
+
+:where(.hui) :where(code, kbd, samp, pre) {
+  font-family: var(--hui-font-mono);
+  font-size: 0.875em;
+}
+
+:where(.hui) :where(img, svg, video, canvas) {
+  max-width: 100%;
+}
+
+:where(.hui) :where(img, video) {
+  height: auto;
+}
+
+:where(.hui) :where(button, input, select, textarea) {
+  font: inherit;
+  color: inherit;
+}
+
+:where(.hui) hr {
+  height: 10px;
+  margin: 2rem 0;
+  border: 0;
+  background: var(--hui-line-dashed);
+  -webkit-mask: var(--hui-squiggle-mask) left center / 40px 10px repeat-x;
+  mask: var(--hui-squiggle-mask) left center / 40px 10px repeat-x;
+}
+
+:where(.hui) ::selection {
+  background: var(--hui-yellow);
+  color: var(--hui-on-pop);
+}
+
+/* One focus style for everything: a thick blue pencil ring */
+:where(.hui) :focus-visible {
+  outline: 3px solid var(--hui-focus);
+  outline-offset: 3px;
+}
+
+:where(.hui) [hidden] { display: none !important; }
+
+/* Shared drawings used as masks (the color comes from CSS, not the SVG) */
+:root {
+  --hui-squiggle-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10'%3E%3Cpath d='M0 5 Q 10 0 20 5 T 40 5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+  --hui-check-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3.5 13.2 C 6 14.6 7.8 16.6 9.2 19.4 C 12 12.6 15.8 8 21 4.4' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --hui-chevron-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5.5 9.2 C 8 11.4 10 13.4 12.2 15.6 C 14.2 13.2 16.4 11 18.8 8.6' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --hui-arrow-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 40'%3E%3Cpath d='M60 34 C 44 37 22 30 9 8' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M9 8 L 7.5 21 M9 8 L 21 13' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --hui-swoosh-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 20' preserveAspectRatio='none'%3E%3Cpath d='M4 13 C 70 5 130 15 190 9 S 270 6 296 10' fill='none' stroke='black' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E");
+  --hui-circle-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80' preserveAspectRatio='none'%3E%3Cpath d='M112 7 C 165 6 196 22 193 42 C 190 65 140 76 96 74 C 45 72 6 60 8 38 C 10 17 55 5 128 11' fill='none' stroke='black' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.hui) *,
+  :where(.hui) *::before,
+  :where(.hui) *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

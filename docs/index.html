@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HappyUI · a hand-drawn design system</title>
+  <meta name="description" content="HappyUI is a hand-drawn, warm and friendly design system for the web. Plain CSS, a tiny bit of JavaScript, works with any framework.">
+  <script>
+    document.documentElement.classList.add("hui-js");
+    try { var t = localStorage.getItem("happyui-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap">
+  <link rel="stylesheet" href="../dist/happyui.css">
+  <link rel="stylesheet" href="assets/docs.css">
+</head>
+<body class="hui">
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" style="fill:var(--hui-icon-accent,none)"/><path d="M8.5 14.2c1.8 2.2 5.2 2.2 7 0"/><path d="M9 9.6v.4M15 9.6v.4"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="m12 3.5 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M6 10a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4S6 15 6 10z"/><path d="M10 20a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2" style="fill:var(--hui-icon-accent,none)"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2" style="fill:var(--hui-icon-accent,none)"/><path d="m16 11 5-3v8l-5-3"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2" style="fill:var(--hui-icon-accent,none)"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M5 5.5h14A1.5 1.5 0 0 1 20.5 7v8.5A1.5 1.5 0 0 1 19 17h-7l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="15" rx="2" style="fill:var(--hui-icon-accent,none)"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M11 3c.6 3.8 1.8 5.4 6 6-4.2.6-5.4 2.2-6 6-.6-3.8-1.8-5.4-6-6 4.2-.6 5.4-2.2 6-6z"/><path d="M18.5 14.5c.3 1.6.9 2.3 2.5 2.5-1.6.2-2.2.9-2.5 2.5-.3-1.6-.9-2.3-2.5-2.5 1.6-.2 2.2-.9 2.5-2.5z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="m13.5 7 3 3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" style="fill:var(--hui-icon-accent,none)"/><path d="M15.5 8.5V6A1.5 1.5 0 0 0 14 4.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.8v.2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 21 19.5H3z"/><path d="M12 10v4.5M12 17.2v.2"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M5 19C5 10 10.5 5 20 5c0 9.5-5 15-14 15"/><path d="M5 19c3-3.5 6-6 9.5-8"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 17.5V6l10-2v11.5"/><circle cx="6.5" cy="17.5" r="2.5" style="fill:var(--hui-icon-accent,none)"/><circle cx="16.5" cy="15.5" r="2.5" style="fill:var(--hui-icon-accent,none)"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M5 9h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10.5h1.5a2.5 2.5 0 0 1 0 5H16M8.5 3.5c-.8 1 .8 2-.2 3M12 3.5c-.8 1 .8 2-.2 3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8" style="fill:var(--hui-icon-accent,none)"/><path d="M4.5 20c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2" style="fill:var(--hui-icon-accent,none)"/><circle cx="9" cy="17" r="2" style="fill:var(--hui-icon-accent,none)"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4.5 20 11"/><path style="fill:var(--hui-icon-accent,none)" d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.5 5.4 3.5 8.5s-1 5.9-3.5 8.5c-2.5-2.6-3.5-5.4-3.5-8.5s1-5.9 3.5-8.5z"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M12 3.5c3.5 4.4 6 7.6 6 10.5a6 6 0 0 1-12 0c0-2.9 2.5-6.1 6-10.5z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path style="fill:var(--hui-icon-accent,none)" d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v14H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3"/></symbol>
+</svg>
+
+<a class="hui-sr-only" href="#main">Skip to content</a>
+
+<header class="hui-nav">
+  <div class="hui-container hui-nav__inner">
+    <a class="hui-logo" href="#top">
+      <span class="hui-logo__mark"><svg class="hui-icon"><use href="#i-smile"/></svg></span>
+      happyui
+    </a>
+    <nav class="hui-nav__links" aria-label="Main">
+      <a class="hui-nav__link" href="#foundations">Foundations</a>
+      <a class="hui-nav__link" href="#buttons">Components</a>
+      <a class="hui-nav__link" href="../examples/landing.html">Landing example</a>
+      <a class="hui-nav__link" href="../examples/app.html">App example</a>
+    </nav>
+    <div class="hui-nav__actions">
+      <button class="hui-button hui-button--icon hui-button--sm" type="button" data-hui-theme-toggle aria-label="Switch light or dark theme">
+        <svg class="hui-icon hui-icon--sm hui-only-light"><use href="#i-moon"/></svg>
+        <svg class="hui-icon hui-icon--sm hui-only-dark"><use href="#i-sun"/></svg>
+      </button>
+      <a class="hui-button hui-button--primary hui-button--sm" href="https://github.com/paulohenriquesn/happyui">
+        <svg class="hui-icon hui-icon--sm"><use href="#i-code"/></svg> GitHub
+      </a>
+    </div>
+    <details class="hui-nav__menu">
+      <summary class="hui-button hui-button--icon hui-button--sm" aria-label="Open menu"><svg class="hui-icon hui-icon--sm"><use href="#i-menu"/></svg></summary>
+      <div class="hui-nav__sheet">
+        <a class="hui-nav__link" href="#foundations">Foundations</a>
+        <a class="hui-nav__link" href="#buttons">Components</a>
+        <a class="hui-nav__link" href="../examples/landing.html">Landing example</a>
+        <a class="hui-nav__link" href="../examples/app.html">App example</a>
+        <a class="hui-nav__link" href="https://github.com/paulohenriquesn/happyui">GitHub</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============================== HERO ============================== -->
+<section class="hui-container" id="top" data-shot="hero">
+  <div class="hui-hero">
+    <div class="hui-hero__copy hui-reveal">
+      <a class="hui-banner" href="#buttons"><span class="hui-badge hui-badge--solid hui-red">New</span> Version 1.0 is out. Come say hi</a>
+      <h1 class="hui-display">Make the web feel <span class="hui-scribble">hand-made.</span></h1>
+      <p class="hui-lede">HappyUI is a warm, hand-drawn component kit. It is plain CSS with a pinch of JavaScript, so it works with
+        <span class="hui-highlight hui-blue">React</span>, <span class="hui-highlight hui-teal">Vue</span>,
+        <span class="hui-highlight hui-orange">Svelte</span> and <span class="hui-highlight hui-green">plain HTML</span>.
+        Pencil outlines, marker highlights and paper that smiles back.</p>
+      <div class="hui-button-group">
+        <a class="hui-button hui-button--primary hui-button--lg" href="#install">
+          <svg class="hui-icon hui-button__icon"><use href="#i-download"/></svg>
+          <span class="hui-button__text">
+            <span class="hui-button__label">Get HappyUI</span>
+            <span class="hui-button__hint">one CSS file, no build</span>
+          </span>
+        </a>
+        <a class="hui-button" href="#buttons">Browse components</a>
+      </div>
+      <ul class="hui-checklist hui-checklist--inline">
+        <li>No build step</li>
+        <li>Light and dark</li>
+        <li>Keyboard friendly</li>
+        <li>Works as a Claude skill</li>
+      </ul>
+    </div>
+
+    <div class="hui-hero__media hui-reveal" style="--hui-i: 2">
+      <div class="doc-stage">
+        <span class="hui-annotation hui-annotation--down-right doc-hero-ann">it's all real HTML</span>
+        <span class="hui-tape hui-tape--tl"></span>
+        <span class="hui-tape hui-tape--tr hui-pink"></span>
+        <div class="hui-window">
+          <div class="hui-window__bar">
+            <span class="hui-window__dot"></span><span class="hui-window__dot"></span><span class="hui-window__dot"></span>
+            <span class="hui-window__title">Tiny Wins · today</span>
+          </div>
+          <div class="hui-window__body hui-stack" style="--hui-gap: .85rem">
+            <div class="hui-cluster" style="justify-content: space-between">
+              <div>
+                <span class="hui-eyebrow">Good morning, Sam!</span>
+                <h2 class="hui-h4" style="margin: 0">Three tiny wins for today</h2>
+              </div>
+              <div class="hui-avatar-group">
+                <span class="hui-avatar hui-avatar--sm hui-pink">A</span>
+                <span class="hui-avatar hui-avatar--sm hui-blue">J</span>
+                <span class="hui-avatar hui-avatar--sm hui-green">K</span>
+              </div>
+            </div>
+            <label class="hui-check"><input type="checkbox" checked> Drink a big glass of water</label>
+            <label class="hui-check hui-green"><input type="checkbox" checked> Ten minute walk outside</label>
+            <label class="hui-check"><input type="checkbox"> Read five pages of a book</label>
+            <progress class="hui-progress hui-green" value="66" max="100" aria-label="Progress today">66%</progress>
+            <div class="hui-cluster" style="justify-content: space-between">
+              <div class="hui-cluster" style="--hui-gap: .5rem">
+                <span class="hui-badge hui-blue">2 of 3 done</span>
+                <span class="hui-badge hui-badge--dot hui-pink">12 day streak</span>
+              </div>
+              <button class="hui-button hui-button--sm hui-yellow" type="button" data-hui-toast="Nice! One more tiny win today." data-hui-toast-title="Woohoo" data-hui-toast-tone="green">
+                <svg class="hui-icon hui-icon--sm"><use href="#i-plus"/></svg> Add a win
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="hui-note hui-pink doc-hero-note">call grandma!<small>sunday, 5 pm</small></div>
+        <span class="hui-doodle hui-doodle--sparkle hui-orange doc-hero-spark hui-bob" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== INSTALL ============================== -->
+<section class="hui-container hui-section--tight" id="install">
+  <div class="hui-split hui-split--even">
+    <div class="hui-reveal">
+      <span class="hui-eyebrow">Start in a minute</span>
+      <h2 class="hui-h2"><span class="hui-marker">Three lines</span> and you are in.</h2>
+      <p class="hui-lede">Add the two fonts, the stylesheet and the script. Then put <code class="hui-code">class="hui"</code> on your body and start using the components.</p>
+      <p class="hui-muted">No bundler, no config. If you use npm, it is the same files. The script is optional: everything still renders without it.</p>
+    </div>
+    <div class="hui-reveal" style="--hui-i: 1">
+      <pre class="hui-pre"><code>&lt;!-- 1. the two fonts --&gt;
+&lt;link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700
+  &amp;family=Shantell+Sans:ital,wght@0,300..800;1,300..800"&gt;
+
+&lt;!-- 2. HappyUI --&gt;
+&lt;link rel="stylesheet" href="happyui.min.css"&gt;
+&lt;script src="happyui.js" defer&gt;&lt;/script&gt;
+
+&lt;!-- 3. use it --&gt;
+&lt;body class="hui"&gt;
+  &lt;button class="hui-button hui-button--primary"&gt;
+    Hello!
+  &lt;/button&gt;
+&lt;/body&gt;</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== FOUNDATIONS ============================== -->
+<section class="hui-section" id="foundations">
+  <div class="hui-container">
+    <div class="hui-section__head hui-reveal">
+      <span class="hui-eyebrow">Foundations</span>
+      <h2 class="hui-h1">Paper, <span class="hui-marker hui-blue">pencil</span> and eight happy colors</h2>
+      <p class="hui-lede">Every color is a CSS variable with five shades, tuned so text stays readable in light and dark.</p>
+    </div>
+
+    <div data-shot="colors">
+      <div class="doc-tones" data-hui-stagger>
+        <div class="doc-tone hui-reveal">
+          <div class="doc-tone__pop" style="background: var(--hui-yellow)"></div>
+          <div class="doc-tone__row"><span style="background: var(--hui-yellow-fill)">fill</span><span style="background: var(--hui-yellow-soft)">soft</span><span style="background: var(--hui-yellow-mark)">mark</span></div>
+          <strong class="hui-hand">Yellow</strong><span class="doc-tone__ink" style="color: var(--hui-yellow-ink)">.hui-yellow · brand</span>
+        </div>
+        <div class="doc-tone hui-reveal">
+          <div class="doc-tone__pop" style="background: var(--hui-orange)"></div>
+          <div class="doc-tone__row"><span style="background: var(--hui-orange-fill)">fill</span><span style="background: var(--hui-orange-soft)">soft</span><span style="background: var(--hui-orange-mark)">mark</span></div>
+          <strong class="hui-hand">Orange</strong><span class="doc-tone__ink" style="color: var(--hui-orange-ink)">.hui-orange · warning</span>
+        </div>
+        <div class="doc-tone hui-reveal">
+          <div class="doc-tone__pop" style="background: var(--hui-red)"></div>
+          <div class="doc-tone__row"><span style="background: var(--hui-red-fill)">fill</span><span style="background: var(--hui-red-soft)">soft</span><span style="background: var(--hui-red-mark)">mark</span></div>
+          <strong class="hui-hand">Red</strong><span class="doc-tone__ink" style="color: var(--hui-red-ink)">.hui-red · danger</span>
+        </div>
+        <div class="doc-tone hui-reveal">
+          <div class="doc-tone__pop" style="background: var(--hui-pink)"></div>
+          <div class="doc-tone__row"><span style="background: var(--hui-pink-fill)">fill</span><span style="background: var(--hui-pink-soft)">soft</span><span style="background: var(--hui-pink-mark)">mark</span></div>
+          <strong class="hui-hand">Pink</strong><span class="doc-tone__ink" style="color: var(--hui-pink-ink)">.hui-pink</span>
+        </div>
+        <div class="doc-tone hui-reveal">
+          <div class="doc-tone__pop" style="background: var(--hui-purple)"></div>
+          <div class="doc-tone__row"><span style="background: var(--hui-purple-fill)">fill</span><span style="background: var(--hui-purple-soft)">soft</span><span style="background: var(--hui-purple-mark)">mark</span></div>
+          <strong class="hui-hand">Purple</strong><span class="doc-tone__ink" style="color: var(--hui-purple-ink)">.hui-purple</span>
+        </div>
+        <div class="doc-tone hui-reveal">
+          <div class="doc-tone__pop" style="background: var(--hui-blue)"></div>
+          <div class="doc-tone__row"><span style="background: var(--hui-blue-fill)">fill</span><span style="background: var(--hui-blue-soft)">soft</span><span style="background: var(--hui-blue-mark)">mark</span></div>
+          <strong class="hui-hand">Blue</strong><span class="doc-tone__ink" style="color: var(--hui-blue-ink)">.hui-blue · info</span>
+        </div>
+        <div class="doc-tone hui-reveal">
+          <div class="doc-tone__pop" style="background: var(--hui-teal)"></div>
+          <div class="doc-tone__row"><span style="background: var(--hui-teal-fill)">fill</span><span style="background: var(--hui-teal-soft)">soft</span><span style="background: var(--hui-teal-mark)">mark</span></div>
+          <strong class="hui-hand">Teal</strong><span class="doc-tone__ink" style="color: var(--hui-teal-ink)">.hui-teal</span>
+        </div>
+        <div class="doc-tone hui-reveal">
+          <div class="doc-tone__pop" style="background: var(--hui-green)"></div>
+          <div class="doc-tone__row"><span style="background: var(--hui-green-fill)">fill</span><span style="background: var(--hui-green-soft)">soft</span><span style="background: var(--hui-green-mark)">mark</span></div>
+          <strong class="hui-hand">Green</strong><span class="doc-tone__ink" style="color: var(--hui-green-ink)">.hui-green · success</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hui-grid hui-grid--2 doc-gap-top" data-shot="type">
+      <div class="hui-card hui-reveal">
+        <span class="doc-label">Typography · Caveat + Shantell Sans</span>
+        <p class="hui-display" style="font-size: 4rem">Hello there!</p>
+        <p class="hui-h2" style="margin: 0">A handwritten title</p>
+        <p class="hui-h3" style="margin: 0">A bold marker heading</p>
+        <p class="hui-h4" style="margin: 0">Card title, written by hand</p>
+        <p style="margin: 0">Body text is Shantell Sans, a friendly marker font that stays easy to read at small sizes. <strong>Bold</strong>, <em>italic</em> and <a href="#foundations">a link</a>.</p>
+        <p class="hui-small hui-muted" style="margin: 0">Small muted text for hints and captions.</p>
+        <p style="margin: 0"><span class="hui-eyebrow">an eyebrow note</span> and <code class="hui-code">inline code</code> and <kbd class="hui-kbd">Ctrl</kbd> + <kbd class="hui-kbd">K</kbd></p>
+      </div>
+      <div class="hui-stack hui-reveal" style="--hui-i: 1; --hui-gap: 1.25rem">
+        <div class="hui-card">
+          <span class="doc-label">Paper and ink</span>
+          <div class="doc-inks">
+            <span style="background: var(--hui-paper)">paper</span>
+            <span style="background: var(--hui-surface)">surface</span>
+            <span style="background: var(--hui-surface-sunken)">sunken</span>
+            <span style="background: var(--hui-ink); color: var(--hui-paper)">ink</span>
+            <span style="background: var(--hui-ink-soft); color: var(--hui-paper)">ink soft</span>
+            <span style="background: var(--hui-ink-faint); color: var(--hui-paper)">ink faint</span>
+          </div>
+        </div>
+        <div class="hui-card">
+          <span class="doc-label">Shadows, strokes and the wobble</span>
+          <div class="doc-shadows">
+            <span style="box-shadow: var(--hui-shadow-sm)">sm</span>
+            <span style="box-shadow: var(--hui-shadow-md)">md</span>
+            <span style="box-shadow: var(--hui-shadow-lg)">lg</span>
+            <span style="box-shadow: var(--hui-shadow-xl)">xl</span>
+            <span style="box-shadow: var(--hui-shadow-float); border-style: dashed">float</span>
+          </div>
+          <p class="hui-small hui-muted" style="margin: 0">Every box uses <code class="hui-code">--hui-wobble</code>, a border radius that makes straight lines look drawn by hand.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== BUTTONS ============================== -->
+<section class="hui-section" id="buttons">
+  <div class="hui-container">
+    <div class="hui-section__head hui-reveal">
+      <span class="hui-eyebrow">Buttons and chips</span>
+      <h2 class="hui-h1">Push me, <span class="hui-marker hui-pink">I bounce back</span></h2>
+      <p class="hui-lede">Hover lifts a button off the paper. Pressing pushes it in. Add any tone class to color it.</p>
+    </div>
+
+    <div class="hui-grid hui-grid--2" data-shot="buttons">
+      <div class="hui-card hui-reveal">
+        <span class="doc-label">Kinds</span>
+        <div class="hui-button-group">
+          <button class="hui-button hui-button--primary" type="button">Primary</button>
+          <button class="hui-button" type="button">Default</button>
+          <button class="hui-button hui-button--ink" type="button">Ink</button>
+          <button class="hui-button hui-button--ghost" type="button">Ghost</button>
+        </div>
+        <span class="doc-label">Tones</span>
+        <div class="hui-button-group">
+          <button class="hui-button hui-pink" type="button">Pink</button>
+          <button class="hui-button hui-blue" type="button">Blue</button>
+          <button class="hui-button hui-green" type="button">Green</button>
+          <button class="hui-button hui-purple" type="button">Purple</button>
+          <button class="hui-button hui-orange" type="button">Orange</button>
+          <button class="hui-button hui-teal" type="button">Teal</button>
+        </div>
+        <span class="doc-label">Sizes and states</span>
+        <div class="hui-button-group">
+          <button class="hui-button hui-button--sm" type="button">Small</button>
+          <button class="hui-button" type="button">Medium</button>
+          <button class="hui-button hui-button--lg" type="button">Large</button>
+          <button class="hui-button hui-button--primary" type="button" aria-busy="true">Saving</button>
+          <button class="hui-button" type="button" disabled>Disabled</button>
+        </div>
+      </div>
+      <div class="hui-card hui-reveal" style="--hui-i: 1">
+        <span class="doc-label">With icons</span>
+        <div class="hui-button-group">
+          <a class="hui-button hui-button--primary hui-button--lg" href="#buttons">
+            <svg class="hui-icon hui-button__icon"><use href="#i-download"/></svg>
+            <span class="hui-button__text"><span class="hui-button__label">Download for Mac</span><span class="hui-button__hint">macOS 13 or later · 12 MB</span></span>
+          </a>
+          <button class="hui-button hui-green" type="button"><svg class="hui-icon hui-button__icon"><use href="#i-check"/></svg> Save</button>
+          <button class="hui-button hui-button--icon" type="button" aria-label="Add"><svg class="hui-icon"><use href="#i-plus"/></svg></button>
+          <button class="hui-button hui-button--icon hui-pink" type="button" aria-label="Like"><svg class="hui-icon"><use href="#i-heart"/></svg></button>
+        </div>
+        <span class="doc-label">Chips</span>
+        <div class="hui-cluster">
+          <button class="hui-chip" type="button" aria-pressed="true">All</button>
+          <button class="hui-chip" type="button" aria-pressed="false">Design</button>
+          <button class="hui-chip hui-blue" type="button" aria-pressed="true">Code</button>
+          <button class="hui-chip hui-green" type="button" aria-pressed="false">Music</button>
+          <button class="hui-chip" type="button" aria-pressed="false"><svg class="hui-icon"><use href="#i-plus"/></svg> More</button>
+        </div>
+        <span class="doc-label">Links</span>
+        <div class="hui-cluster" style="--hui-gap: 1.5rem">
+          <a class="hui-link" href="#buttons">Try it live in your browser</a>
+          <a class="hui-link hui-red" href="#buttons">Read the story</a>
+          <a href="#buttons">A plain text link</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== INK ============================== -->
+<section class="hui-section" id="ink">
+  <div class="hui-container">
+    <div class="hui-section__head hui-reveal">
+      <span class="hui-eyebrow">Ink effects</span>
+      <h2 class="hui-h1">Mark it, <span class="hui-circled">circle</span> it, <span class="hui-scribble">underline</span> it</h2>
+      <p class="hui-lede">The little marks a person leaves on paper. Inside a reveal block they draw themselves as you scroll.</p>
+    </div>
+
+    <div class="hui-grid hui-grid--2" data-shot="ink">
+      <div class="hui-card hui-reveal">
+        <span class="doc-label">Marker on titles</span>
+        <p class="hui-h2" style="margin: 0"><span class="hui-marker">One mouse, one keyboard</span></p>
+        <p class="hui-h2" style="margin: 0"><span class="hui-marker hui-green">Your notes on every screen</span></p>
+        <p class="hui-h2" style="margin: 0"><span class="hui-marker hui-purple">A remote and a gamepad</span></p>
+        <span class="doc-label">Highlighter in text</span>
+        <p style="margin: 0">Works with <span class="hui-highlight hui-blue">Mac</span>, <span class="hui-highlight hui-teal">Windows</span>, <span class="hui-highlight hui-orange">Linux</span> and <span class="hui-highlight hui-green">Android</span>. Your phone is a <span class="hui-highlight">full friend</span>, not a guest.</p>
+        <span class="doc-label">Strike and rethink</span>
+        <p class="hui-h3" style="margin: 0">Great at their own jobs, <span class="hui-strike">terrible together</span>.</p>
+      </div>
+      <div class="hui-card hui-reveal" style="--hui-i: 1">
+        <span class="doc-label">Badges</span>
+        <div class="hui-cluster">
+          <span class="hui-badge">Default</span>
+          <span class="hui-badge hui-yellow">Yellow</span>
+          <span class="hui-badge hui-pink">Pink</span>
+          <span class="hui-badge hui-green">Green</span>
+          <span class="hui-badge hui-blue">Blue</span>
+          <span class="hui-badge hui-badge--solid hui-red">New in 2.0</span>
+          <span class="hui-badge hui-badge--solid hui-blue">Beta</span>
+          <span class="hui-badge hui-badge--dot hui-green">Online</span>
+          <span class="hui-badge hui-badge--dot hui-orange">Away</span>
+          <span class="hui-badge hui-badge--hand hui-purple">so cute!</span>
+          <span class="hui-badge hui-badge--count">3</span>
+        </div>
+        <span class="doc-label">Dividers</span>
+        <hr class="hui-divider" style="margin-block: .5rem">
+        <div class="hui-divider-label" style="margin-block: .25rem">or</div>
+        <span class="doc-label">Doodles</span>
+        <div class="hui-cluster" style="--hui-gap: 1.25rem">
+          <span class="hui-doodle hui-doodle--star hui-yellow" aria-hidden="true"></span>
+          <span class="hui-doodle hui-doodle--sparkle hui-orange" aria-hidden="true"></span>
+          <span class="hui-doodle hui-doodle--heart hui-pink" aria-hidden="true"></span>
+          <span class="hui-doodle hui-doodle--sun hui-orange" aria-hidden="true"></span>
+          <span class="hui-doodle hui-doodle--swirl hui-purple" aria-hidden="true"></span>
+          <span class="hui-doodle hui-doodle--check hui-green" aria-hidden="true"></span>
+          <span class="hui-doodle hui-doodle--arrow hui-red" aria-hidden="true"></span>
+        </div>
+        <span class="doc-label">Annotations</span>
+        <div class="hui-cluster" style="--hui-gap: 2rem; padding-top: .75rem">
+          <span class="hui-annotation">click a device to try it</span>
+          <span class="hui-annotation hui-annotation--up-right hui-blue">files just fly</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PAPER ============================== -->
+<section class="hui-section" id="cards">
+  <div class="hui-container">
+    <div class="hui-section__head hui-reveal">
+      <span class="hui-eyebrow">Paper</span>
+      <h2 class="hui-h1">Cards, notes and <span class="hui-marker hui-orange">taped-on frames</span></h2>
+      <p class="hui-lede">Sheets of paper with a pencil outline and a hard shadow. Tilt them a little and they feel placed by a person.</p>
+    </div>
+
+    <div data-shot="cards">
+      <div class="hui-grid hui-grid--3" data-hui-stagger>
+        <div class="hui-card hui-reveal">
+          <svg class="hui-icon hui-card__icon hui-pink"><use href="#i-camera"/></svg>
+          <h3 class="hui-card__title">Camera sharing</h3>
+          <p class="hui-card__text">Use the other computer's camera in a window, or as a webcam in any video app.</p>
+        </div>
+        <div class="hui-card hui-reveal">
+          <svg class="hui-icon hui-card__icon hui-yellow"><use href="#i-folder"/></svg>
+          <h3 class="hui-card__title">Shared folders</h3>
+          <p class="hui-card__text">A folder on one machine shows up as a drive on the other. No cloud in between.</p>
+        </div>
+        <div class="hui-card hui-reveal">
+          <svg class="hui-icon hui-card__icon hui-purple"><use href="#i-bell"/></svg>
+          <h3 class="hui-card__title">Notifications</h3>
+          <p class="hui-card__text">Alerts from one device land on the other, looking like they were always there.</p>
+        </div>
+        <div class="hui-card hui-card--dashed hui-reveal">
+          <svg class="hui-icon hui-card__icon hui-green"><use href="#i-leaf"/></svg>
+          <h3 class="hui-card__title">Dashed card</h3>
+          <p class="hui-card__text">Lighter, for long feature grids where twelve heavy boxes would shout.</p>
+        </div>
+        <div class="hui-card hui-blue hui-reveal">
+          <svg class="hui-icon hui-card__icon"><use href="#i-zap"/></svg>
+          <h3 class="hui-card__title">Toned card</h3>
+          <p class="hui-card__text">Add a tone class and the whole sheet takes the color. Text stays readable.</p>
+        </div>
+        <a class="hui-card hui-reveal" href="#cards">
+          <svg class="hui-icon hui-card__icon hui-orange"><use href="#i-sparkles"/></svg>
+          <h3 class="hui-card__title">Clickable card</h3>
+          <p class="hui-card__text">Make it a link and it lifts when you point at it. Try it.</p>
+          <span class="hui-link" style="font-size: 1.25rem">Open</span>
+        </a>
+      </div>
+
+      <div class="hui-grid hui-grid--3 doc-gap-top" style="--hui-gap: 2rem" data-hui-stagger>
+        <div class="hui-card hui-tilt-left hui-reveal">
+          <div class="hui-card__media hui-pink doc-media">
+            <span class="hui-doodle hui-doodle--heart hui-pink" style="--hui-doodle-size: 3.5rem" aria-hidden="true"></span>
+            <span class="hui-annotation hui-annotation--plain doc-media__note">?!</span>
+          </div>
+          <h3 class="hui-card__title">Two keyboards, two mice.</h3>
+          <p class="hui-card__text">One very confused person.</p>
+        </div>
+        <div class="hui-card hui-reveal">
+          <div class="hui-card__media hui-yellow doc-media">
+            <span class="hui-doodle hui-doodle--sun hui-orange hui-float" style="--hui-doodle-size: 3.75rem" aria-hidden="true"></span>
+          </div>
+          <h3 class="hui-card__title">Emailing yourself a file.</h3>
+          <p class="hui-card__text">Again. To the computer right next to you.</p>
+        </div>
+        <div class="hui-card hui-tilt-right hui-reveal">
+          <div class="hui-card__media hui-blue doc-media">
+            <svg class="hui-icon hui-blue hui-buzz" style="--hui-icon-size: 3.5rem"><use href="#i-bell"/></svg>
+            <span class="hui-annotation hui-annotation--plain doc-media__note">ring ring...</span>
+          </div>
+          <h3 class="hui-card__title">The phone rings, somewhere.</h3>
+          <p class="hui-card__text">Under a cushion, in another room, out of battery.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hui-grid hui-grid--2 doc-gap-top" style="--hui-gap: 2.5rem" data-shot="notes">
+      <div class="doc-stage hui-reveal" style="align-self: start">
+        <span class="hui-tape hui-tape--tl"></span>
+        <span class="hui-tape hui-tape--tr"></span>
+        <div class="hui-frame">
+          <div class="doc-frame-art">
+            <span class="hui-doodle hui-doodle--star hui-yellow hui-float" style="--hui-doodle-size: 3rem" aria-hidden="true"></span>
+            <span class="hui-h3" style="margin: 0">A frame for screenshots, demos and pictures</span>
+            <span class="hui-muted hui-small">.hui-frame + .hui-tape</span>
+          </div>
+        </div>
+        <span class="hui-annotation doc-frame-ann">tape on the corners</span>
+      </div>
+      <div class="hui-stack" style="--hui-gap: 2rem">
+        <div class="hui-cluster" style="--hui-gap: 1.25rem; align-items: flex-start" data-hui-stagger>
+          <div class="hui-note hui-reveal" style="width: 9.5rem">buy more coffee<small>before monday</small></div>
+          <div class="hui-note hui-green hui-reveal" style="width: 8.75rem; --hui-tilt: 2deg">ship it friday!</div>
+          <div class="hui-note hui-blue hui-reveal" style="width: 9rem; --hui-tilt: -1deg">be kind to the new intern</div>
+        </div>
+        <div class="hui-callout hui-reveal">
+          <p class="hui-callout__title">Two computers on one desk? <em>You're two clicks away.</em></p>
+          <div class="hui-button-group">
+            <button class="hui-button" type="button">Mac</button>
+            <button class="hui-button hui-button--primary" type="button">Windows</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== FORMS ============================== -->
+<section class="hui-section" id="forms">
+  <div class="hui-container">
+    <div class="hui-section__head hui-reveal">
+      <span class="hui-eyebrow">Forms</span>
+      <h2 class="hui-h1">Fill me in, <span class="hui-marker hui-teal">gently</span></h2>
+      <p class="hui-lede">Real native controls with a fresh coat of paint, so keyboards, screen readers and autofill keep working.</p>
+    </div>
+
+    <div class="hui-grid hui-grid--2" data-shot="forms">
+      <form class="hui-card hui-card--lg hui-stack hui-reveal" style="--hui-gap: 1.1rem" onsubmit="event.preventDefault(); HappyUI.toast('We saved your note.', { title: 'Saved!', tone: 'green' })">
+        <div class="hui-field">
+          <label class="hui-label" for="f-name">Your name</label>
+          <input class="hui-input" id="f-name" placeholder="Sam Smiles" autocomplete="name">
+        </div>
+        <div class="hui-field">
+          <label class="hui-label" for="f-email">E-mail <span class="hui-label__aside">we never spam</span></label>
+          <input class="hui-input" id="f-email" type="email" placeholder="sam@example.com" aria-describedby="f-email-hint">
+          <p class="hui-hint" id="f-email-hint">We only write when something good happens.</p>
+        </div>
+        <div class="hui-field">
+          <label class="hui-label" for="f-plan">Plan</label>
+          <div class="hui-select">
+            <select id="f-plan">
+              <option>Free, for one person</option>
+              <option>Team, up to 10 people</option>
+              <option>School, unlimited</option>
+            </select>
+          </div>
+        </div>
+        <div class="hui-field">
+          <label class="hui-label" for="f-code">Invite code</label>
+          <input class="hui-input" id="f-code" value="HAPPY-2O26" aria-invalid="true" aria-describedby="f-code-error">
+          <p class="hui-error" id="f-code-error">That code has a letter O where a zero should be.</p>
+        </div>
+        <div class="hui-field">
+          <label class="hui-label" for="f-msg">Note <span class="hui-label__aside">optional</span></label>
+          <textarea class="hui-textarea" id="f-msg" placeholder="Say something nice..."></textarea>
+        </div>
+        <div class="hui-button-group">
+          <button class="hui-button hui-button--primary" type="submit">Save note</button>
+          <button class="hui-button hui-button--ghost" type="reset">Clear</button>
+        </div>
+      </form>
+
+      <div class="hui-stack hui-reveal" style="--hui-i: 1; --hui-gap: 1.5rem">
+        <div class="hui-card">
+          <fieldset class="hui-fieldset">
+            <legend>Checkboxes</legend>
+            <label class="hui-check"><input type="checkbox" checked> Send me the weekly doodle</label>
+            <label class="hui-check hui-pink"><input type="checkbox" checked> Pink ones are allowed too</label>
+            <label class="hui-check"><input type="checkbox"> I read the terms (nobody does)</label>
+          </fieldset>
+        </div>
+        <div class="hui-card">
+          <fieldset class="hui-fieldset">
+            <legend>Radio buttons</legend>
+            <div class="hui-cluster" style="--hui-gap: 1.25rem">
+              <label class="hui-radio"><input type="radio" name="size" checked> Small</label>
+              <label class="hui-radio"><input type="radio" name="size"> Medium</label>
+              <label class="hui-radio hui-blue"><input type="radio" name="size"> Huge</label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="hui-card">
+          <fieldset class="hui-fieldset">
+            <legend>Switches and sliders</legend>
+            <label class="hui-switch"><input type="checkbox" role="switch" checked> Cheerful sounds</label>
+            <label class="hui-switch hui-purple"><input type="checkbox" role="switch"> Night mode</label>
+            <label class="hui-label" for="f-range" style="margin-top: .5rem">Happiness level</label>
+            <input class="hui-range" id="f-range" type="range" min="0" max="100" value="72">
+          </fieldset>
+        </div>
+        <div class="hui-card">
+          <label class="hui-label" for="f-news">Get the newsletter</label>
+          <div class="hui-input-group">
+            <input class="hui-input" id="f-news" type="email" placeholder="you@example.com">
+            <button class="hui-button hui-button--ink" type="button">Join</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== NAVIGATION ============================== -->
+<section class="hui-section" id="navigation">
+  <div class="hui-container">
+    <div class="hui-section__head hui-reveal">
+      <span class="hui-eyebrow">Navigation</span>
+      <h2 class="hui-h1">Find your way <span class="hui-marker hui-green">around</span></h2>
+      <p class="hui-lede">Tabs with arrow keys, a dropdown that closes when you click away, breadcrumbs, pages and pick-one cards.</p>
+    </div>
+
+    <div class="hui-grid hui-grid--2" data-shot="navigation">
+      <div class="hui-card hui-reveal">
+        <span class="doc-label">Tabs</span>
+        <div class="hui-tabs" data-hui-tabs>
+          <div class="hui-tabs__list" role="tablist" aria-label="Platforms">
+            <button class="hui-tabs__tab" role="tab" id="t-mac" aria-controls="p-mac" aria-selected="true">macOS</button>
+            <button class="hui-tabs__tab" role="tab" id="t-win" aria-controls="p-win">Windows</button>
+            <button class="hui-tabs__tab" role="tab" id="t-lin" aria-controls="p-lin">Linux</button>
+          </div>
+          <div class="hui-tabs__panel" role="tabpanel" id="p-mac" aria-labelledby="t-mac" tabindex="0"><p class="hui-muted" style="margin: 0">Drag the app to your Applications folder. That is it.</p></div>
+          <div class="hui-tabs__panel" role="tabpanel" id="p-win" aria-labelledby="t-win" tabindex="0" hidden><p class="hui-muted" style="margin: 0">Run the installer and say yes to the friendly popup.</p></div>
+          <div class="hui-tabs__panel" role="tabpanel" id="p-lin" aria-labelledby="t-lin" tabindex="0" hidden><p class="hui-muted" style="margin: 0">Grab the AppImage, make it executable, done.</p></div>
+        </div>
+        <div class="hui-tabs hui-tabs--line hui-blue" data-hui-tabs style="margin-top: .5rem">
+          <div class="hui-tabs__list" role="tablist" aria-label="Sections">
+            <button class="hui-tabs__tab" role="tab" id="t-a" aria-controls="p-a" aria-selected="true">Overview</button>
+            <button class="hui-tabs__tab" role="tab" id="t-b" aria-controls="p-b">Activity</button>
+            <button class="hui-tabs__tab" role="tab" id="t-c" aria-controls="p-c">Settings</button>
+          </div>
+          <div class="hui-tabs__panel" role="tabpanel" id="p-a" aria-labelledby="t-a" tabindex="0"><p class="hui-muted" style="margin: 0">The line style, for quieter places like settings.</p></div>
+          <div class="hui-tabs__panel" role="tabpanel" id="p-b" aria-labelledby="t-b" tabindex="0" hidden><p class="hui-muted" style="margin: 0">Nothing new since yesterday. Enjoy the calm.</p></div>
+          <div class="hui-tabs__panel" role="tabpanel" id="p-c" aria-labelledby="t-c" tabindex="0" hidden><p class="hui-muted" style="margin: 0">All the switches live here.</p></div>
+        </div>
+        <span class="doc-label">Breadcrumb and pages</span>
+        <nav class="hui-breadcrumb" aria-label="Breadcrumb">
+          <ol><li><a href="#navigation">Home</a></li><li><a href="#navigation">Components</a></li><li><span aria-current="page">Navigation</span></li></ol>
+        </nav>
+        <nav class="hui-pagination" aria-label="Pages">
+          <a class="hui-pagination__item" href="#navigation" aria-label="Previous page">&larr;</a>
+          <a class="hui-pagination__item" href="#navigation">1</a>
+          <a class="hui-pagination__item" href="#navigation" aria-current="page">2</a>
+          <a class="hui-pagination__item" href="#navigation">3</a>
+          <span class="hui-pagination__gap">...</span>
+          <a class="hui-pagination__item" href="#navigation">9</a>
+          <a class="hui-pagination__item" href="#navigation" aria-label="Next page">&rarr;</a>
+        </nav>
+      </div>
+      <div class="hui-card hui-reveal" style="--hui-i: 1">
+        <span class="doc-label">Pick one</span>
+        <div class="hui-grid" style="--hui-min: 12rem; --hui-gap: .9rem">
+          <a class="hui-option" href="#navigation">
+            <svg class="hui-icon hui-option__icon"><use href="#i-home"/></svg>
+            <span class="hui-option__body"><span class="hui-option__title">macOS</span><span class="hui-option__meta">13 or later</span></span>
+            <span class="hui-option__action"><svg class="hui-icon"><use href="#i-download"/></svg></span>
+          </a>
+          <a class="hui-option" href="#navigation">
+            <svg class="hui-icon hui-option__icon"><use href="#i-globe"/></svg>
+            <span class="hui-option__body"><span class="hui-option__title">Windows</span><span class="hui-option__meta">10 · 11 · ARM</span></span>
+            <span class="hui-option__action"><svg class="hui-icon"><use href="#i-download"/></svg></span>
+          </a>
+          <a class="hui-option hui-green" href="#navigation" aria-current="true">
+            <svg class="hui-icon hui-option__icon"><use href="#i-leaf"/></svg>
+            <span class="hui-option__body"><span class="hui-option__title">Android</span><span class="hui-option__meta">your phone, detected</span></span>
+            <span class="hui-option__action"><svg class="hui-icon"><use href="#i-download"/></svg></span>
+          </a>
+          <label class="hui-option">
+            <input type="radio" name="plan-pick">
+            <svg class="hui-icon hui-option__icon"><use href="#i-code"/></svg>
+            <span class="hui-option__body"><span class="hui-option__title">Linux</span><span class="hui-option__meta">X11 · Wayland</span></span>
+          </label>
+        </div>
+        <span class="doc-label">Dropdown menu</span>
+        <div class="hui-cluster">
+          <details class="hui-menu">
+            <summary class="hui-button">Options <svg class="hui-icon hui-icon--sm"><use href="#i-sliders"/></svg></summary>
+            <div class="hui-menu__list" role="menu">
+              <span class="hui-menu__label">This note</span>
+              <button class="hui-menu__item" role="menuitem" type="button"><svg class="hui-icon"><use href="#i-edit"/></svg> Edit <kbd class="hui-kbd">E</kbd></button>
+              <button class="hui-menu__item" role="menuitem" type="button"><svg class="hui-icon"><use href="#i-copy"/></svg> Duplicate</button>
+              <button class="hui-menu__item" role="menuitem" type="button"><svg class="hui-icon"><use href="#i-star"/></svg> Add to favorites</button>
+              <hr class="hui-menu__sep">
+              <button class="hui-menu__item hui-menu__item--danger" role="menuitem" type="button"><svg class="hui-icon"><use href="#i-trash"/></svg> Delete</button>
+            </div>
+          </details>
+          <span class="hui-annotation hui-annotation--plain">click me</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== FEEDBACK ============================== -->
+<section class="hui-section" id="feedback">
+  <div class="hui-container">
+    <div class="hui-section__head hui-reveal">
+      <span class="hui-eyebrow">Feedback</span>
+      <h2 class="hui-h1">Tell people <span class="hui-marker hui-purple">what happened</span></h2>
+      <p class="hui-lede">Alerts, toasts, tooltips, dialogs, progress and loading states that sound like a friend.</p>
+    </div>
+
+    <div class="hui-grid hui-grid--2" data-shot="feedback">
+      <div class="hui-stack hui-reveal" style="--hui-gap: 1rem">
+        <div class="hui-alert hui-success" role="status">
+          <span class="hui-alert__icon"><svg class="hui-icon"><use href="#i-check"/></svg></span>
+          <div class="hui-alert__body"><p class="hui-alert__title">All saved!</p><p class="hui-alert__text">Your changes are safe. Go grab a snack.</p></div>
+        </div>
+        <div class="hui-alert hui-info" role="status">
+          <span class="hui-alert__icon"><svg class="hui-icon"><use href="#i-info"/></svg></span>
+          <div class="hui-alert__body"><p class="hui-alert__title">Heads up</p><p class="hui-alert__text">A new version is ready. It installs when you restart.</p></div>
+        </div>
+        <div class="hui-alert hui-warning" role="status">
+          <span class="hui-alert__icon"><svg class="hui-icon"><use href="#i-alert"/></svg></span>
+          <div class="hui-alert__body"><p class="hui-alert__title">Almost full</p><p class="hui-alert__text">You used 9 of 10 projects. Archive one to make room.</p></div>
+        </div>
+        <div class="hui-alert hui-danger" role="alert">
+          <span class="hui-alert__icon"><svg class="hui-icon"><use href="#i-x"/></svg></span>
+          <div class="hui-alert__body"><p class="hui-alert__title">That did not work</p><p class="hui-alert__text">We could not reach the server. Check your Wi-Fi and try again.</p></div>
+        </div>
+      </div>
+      <div class="hui-stack hui-reveal" style="--hui-i: 1; --hui-gap: 1.25rem">
+        <div class="hui-card">
+          <span class="doc-label">Toast, dialog and tooltip</span>
+          <div class="hui-button-group">
+            <button class="hui-button hui-green" type="button" data-hui-toast="Your note is on the fridge." data-hui-toast-title="Pinned!" data-hui-toast-tone="green">Show a toast</button>
+            <button class="hui-button" type="button" data-hui-open="#demo-dialog">Open dialog</button>
+            <button class="hui-button hui-button--icon" type="button" aria-label="Help" data-hui-tooltip="I explain things!"><svg class="hui-icon"><use href="#i-info"/></svg></button>
+          </div>
+          <div class="hui-toast hui-pink doc-static-toast">
+            <span class="hui-toast__icon" aria-hidden="true">&#9829;</span>
+            <div class="hui-toast__body"><strong class="hui-toast__title">Sam liked your doodle</strong>2 minutes ago</div>
+            <button class="hui-toast__close" type="button" aria-label="Dismiss">&times;</button>
+          </div>
+        </div>
+        <div class="hui-card">
+          <span class="doc-label">Progress and loading</span>
+          <progress class="hui-progress" value="35" max="100" aria-label="Upload">35%</progress>
+          <progress class="hui-progress hui-pink" value="70" max="100" aria-label="Profile">70%</progress>
+          <div class="hui-cluster" style="--hui-gap: 1.25rem">
+            <span class="hui-spinner" role="status" aria-label="Loading"></span>
+            <span class="hui-spinner hui-pink" style="--hui-spinner-size: 2.25rem" aria-hidden="true"></span>
+            <div style="flex: 1; min-width: 10rem">
+              <span class="hui-skeleton hui-skeleton--title"></span>
+              <span class="hui-skeleton hui-skeleton--text"></span>
+              <span class="hui-skeleton hui-skeleton--text" style="width: 80%"></span>
+            </div>
+          </div>
+        </div>
+        <div class="hui-accordion">
+          <details class="hui-accordion__item" open>
+            <summary>Is HappyUI free?</summary>
+            <div class="hui-accordion__body"><p>Yes. It is MIT licensed, so you can use it in personal and commercial work.</p></div>
+          </details>
+          <details class="hui-accordion__item">
+            <summary>Does it need React?</summary>
+            <div class="hui-accordion__body"><p>No. It is CSS classes. Use them in React, Vue, Svelte or plain HTML.</p></div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<dialog class="hui-dialog" id="demo-dialog" aria-labelledby="demo-dialog-title">
+  <div class="hui-dialog__inner">
+    <div class="hui-dialog__head">
+      <h2 class="hui-dialog__title" id="demo-dialog-title">Delete this doodle?</h2>
+      <button class="hui-button hui-button--icon hui-button--sm hui-button--ghost" type="button" data-hui-close aria-label="Close"><svg class="hui-icon hui-icon--sm"><use href="#i-x"/></svg></button>
+    </div>
+    <p class="hui-dialog__text">The doodle "Cat wearing a hat" will be gone for good. This cannot be undone.</p>
+    <div class="hui-dialog__actions">
+      <button class="hui-button hui-button--ghost" type="button" data-hui-close>Keep it</button>
+      <button class="hui-button hui-red" type="button" data-hui-close value="delete">Delete doodle</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- ============================== DATA ============================== -->
+<section class="hui-section" id="data">
+  <div class="hui-container">
+    <div class="hui-section__head hui-reveal">
+      <span class="hui-eyebrow">Data and content</span>
+      <h2 class="hui-h1">Numbers can be <span class="hui-marker hui-yellow">friendly</span> too</h2>
+      <p class="hui-lede">Tables, avatars, stats, steps, quotes, pricing and empty states.</p>
+    </div>
+
+    <div data-shot="data">
+      <div class="hui-grid hui-grid--2">
+        <div class="hui-table-wrap hui-reveal">
+          <table class="hui-table">
+            <caption>Doodles this week</caption>
+            <thead><tr><th>Artist</th><th>Doodle</th><th>Status</th><th class="is-num">Likes</th></tr></thead>
+            <tbody>
+              <tr><td><span class="hui-cluster" style="--hui-gap: .6rem"><span class="hui-avatar hui-avatar--sm hui-pink">A</span>Ana</span></td><td>Cat in a hat</td><td><span class="hui-badge hui-badge--dot hui-green">Live</span></td><td class="is-num">128</td></tr>
+              <tr><td><span class="hui-cluster" style="--hui-gap: .6rem"><span class="hui-avatar hui-avatar--sm hui-blue">J</span>Jo</span></td><td>Rainy window</td><td><span class="hui-badge hui-badge--dot hui-orange">Draft</span></td><td class="is-num">64</td></tr>
+              <tr><td><span class="hui-cluster" style="--hui-gap: .6rem"><span class="hui-avatar hui-avatar--sm hui-purple">K</span>Kai</span></td><td>Space taco</td><td><span class="hui-badge hui-badge--dot hui-green">Live</span></td><td class="is-num">311</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="hui-card hui-reveal" style="--hui-i: 1">
+          <div class="hui-grid" style="--hui-min: 8rem">
+            <div class="hui-stat"><span class="hui-stat__value">12,480</span><span class="hui-stat__label">happy people</span><span class="hui-stat__delta">+18% this month</span></div>
+            <div class="hui-stat"><span class="hui-stat__value">4.9</span><span class="hui-stat__label">average rating</span><span class="hui-stat__delta hui-blue">from 2,300 reviews</span></div>
+            <div class="hui-stat"><span class="hui-stat__value">0</span><span class="hui-stat__label">sad faces</span><span class="hui-stat__delta hui-red">we checked twice</span></div>
+          </div>
+          <hr class="hui-divider" style="margin-block: .75rem">
+          <ol class="hui-steps">
+            <li class="hui-step"><h3 class="hui-step__title">Install</h3><p class="hui-step__text">Add one CSS file.</p></li>
+            <li class="hui-step"><h3 class="hui-step__title">Doodle</h3><p class="hui-step__text">Use the classes.</p></li>
+            <li class="hui-step"><h3 class="hui-step__title">Smile</h3><p class="hui-step__text">Ship it.</p></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="hui-grid hui-grid--3 doc-gap-top" style="--hui-gap: 1.75rem">
+        <figure class="hui-quote hui-tilt-slight hui-reveal">
+          <blockquote class="hui-quote__text" style="border: 0; padding: 0; margin: 0">It made our checkout page feel like a birthday card. Sales went up and so did our mood.</blockquote>
+          <figcaption class="hui-quote__by"><span class="hui-avatar hui-orange">M</span><span><strong>Maya Torres</strong><span>runs a tiny bakery shop</span></span></figcaption>
+        </figure>
+        <div class="hui-price hui-reveal">
+          <h3 class="hui-price__name">Free</h3>
+          <p class="hui-price__amount">$0 <small>forever</small></p>
+          <ul class="hui-checklist hui-green">
+            <li>Every component</li>
+            <li>Light and dark themes</li>
+            <li class="is-off">A pony</li>
+          </ul>
+          <a class="hui-button hui-button--block" href="#install">Start doodling</a>
+        </div>
+        <div class="hui-price hui-price--featured hui-reveal">
+          <span class="hui-badge hui-badge--solid hui-red hui-price__flag">Most loved</span>
+          <h3 class="hui-price__name">Team</h3>
+          <p class="hui-price__amount">$9 <small>per month</small></p>
+          <ul class="hui-checklist">
+            <li>Everything in Free</li>
+            <li>Shared color themes</li>
+            <li>A sticker pack, mailed to you</li>
+          </ul>
+          <a class="hui-button hui-button--primary hui-button--block" href="#install">Make it happy</a>
+        </div>
+      </div>
+
+      <div class="hui-empty doc-gap-top hui-reveal">
+        <svg class="hui-icon hui-empty__art hui-yellow"><use href="#i-sparkles"/></svg>
+        <h3 class="hui-empty__title">Nothing here yet</h3>
+        <p class="hui-empty__text">This is where your doodles will live. Start with a blank page, we will cheer from the corner.</p>
+        <button class="hui-button hui-button--primary" type="button"><svg class="hui-icon hui-button__icon"><use href="#i-plus"/></svg> New doodle</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== THE END ============================== -->
+<section class="hui-container hui-section--tight">
+  <div class="hui-callout hui-reveal">
+    <p class="hui-callout__title">Ready to make something happy? <em>Grab the files and go.</em></p>
+    <div class="hui-button-group">
+      <a class="hui-button hui-button--primary hui-button--lg" href="https://github.com/paulohenriquesn/happyui">Get it on GitHub</a>
+      <a class="hui-button" href="../examples/landing.html">See a full page</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="hui-footer">
+  <div class="hui-container hui-footer__inner">
+    <div class="hui-footer__brand">
+      <a class="hui-logo" href="#top"><span class="hui-logo__mark"><svg class="hui-icon"><use href="#i-smile"/></svg></span> happyui</a>
+      <p>A hand-drawn design system for websites that want to smile. Plain CSS, a tiny bit of JavaScript, MIT licensed.</p>
+    </div>
+    <nav class="hui-footer__cols" aria-label="Footer">
+      <div><h2 class="hui-footer__title">Learn</h2><ul><li><a href="#foundations">Foundations</a></li><li><a href="#buttons">Components</a></li><li><a href="#install">Install</a></li></ul></div>
+      <div><h2 class="hui-footer__title">Examples</h2><ul><li><a href="../examples/landing.html">Landing page</a></li><li><a href="../examples/app.html">App screen</a></li></ul></div>
+      <div><h2 class="hui-footer__title">Project</h2><ul><li><a href="https://github.com/paulohenriquesn/happyui">GitHub</a></li><li><a href="https://github.com/paulohenriquesn/happyui/blob/main/LICENSE">MIT License</a></li></ul></div>
+    </nav>
+  </div>
+  <div class="hui-container hui-footer__bottom">
+    <span>Made with a pencil and a lot of coffee.</span>
+    <span class="hui-hand" style="font-size: 1.3rem">thanks for scrolling this far!</span>
+  </div>
+</footer>
+
+<script src="../dist/happyui.js"></script>
+</body>
+</html>

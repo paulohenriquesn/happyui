@@ -1,0 +1,114 @@
+/* =========================================================================
+   HappyUI · layout
+   A few honest building blocks: container, stack, cluster, grid, section,
+   hero and split. They only do spacing, never color.
+   ========================================================================= */
+
+.hui-container {
+  width: 100%;
+  max-width: var(--hui-container);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+.hui-container--narrow { max-width: var(--hui-container-narrow); }
+
+/* Vertical rhythm: children stacked with one gap */
+.hui-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hui-gap, var(--hui-space-4));
+}
+
+/* Things in a row that wrap when they run out of room */
+.hui-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hui-gap, var(--hui-space-3));
+}
+
+/* Responsive grid: as many columns as fit, never thinner than --hui-min */
+.hui-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--hui-min, 15rem), 100%), 1fr));
+  gap: var(--hui-gap, var(--hui-space-5));
+}
+
+.hui-grid--2 { --hui-min: 22rem; }
+.hui-grid--3 { --hui-min: 17rem; }
+.hui-grid--4 { --hui-min: 13rem; }
+
+/* A page section with generous breathing room */
+.hui-section {
+  padding-block: clamp(3.5rem, 2rem + 6vw, 7rem);
+}
+
+.hui-section--tight { padding-block: clamp(2rem, 1.5rem + 3vw, 3.5rem); }
+
+/* Centered heading group: eyebrow + title + lede */
+.hui-section__head {
+  max-width: 50rem;
+  margin: 0 auto clamp(2rem, 1.5rem + 2vw, 3.25rem);
+  text-align: center;
+}
+
+.hui-section__head > .hui-lede { margin-inline: auto; max-width: 44rem; }
+
+/* Text on one side, picture on the other. Stacks on small screens. */
+.hui-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  align-items: center;
+  gap: clamp(2rem, 1rem + 4vw, 4.5rem);
+}
+
+.hui-split--reverse > :first-child { order: 2; }
+.hui-split--even { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+@media (max-width: 860px) {
+  .hui-split,
+  .hui-split--even { grid-template-columns: minmax(0, 1fr); }
+  .hui-split--reverse > :first-child { order: 0; }
+}
+
+/* Hero: the first thing people see */
+.hui-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 1rem + 3vw, 3.5rem);
+  padding-block: clamp(2.5rem, 1.5rem + 5vw, 6rem);
+}
+
+.hui-hero__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--hui-space-5);
+}
+
+.hui-hero__copy > * { margin-block: 0; }
+.hui-hero__media { position: relative; }
+
+@media (max-width: 900px) {
+  .hui-hero { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Screen-reader only text */
+.hui-sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Show something only in one theme (theme switch icons, screenshots) */
+.hui-only-dark { display: none !important; }
+[data-theme="dark"] .hui-only-dark { display: revert !important; }
+[data-theme="dark"] .hui-only-light { display: none !important; }

@@ -1,0 +1,383 @@
+/* =========================================================================
+   HappyUI · navigation: nav bar, logo, tabs, breadcrumb, pagination,
+   dropdown menu, footer
+   ========================================================================= */
+
+/* ---------- Top bar ---------- */
+.hui-nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--hui-z-sticky);
+  background: color-mix(in srgb, var(--hui-paper) 90%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: var(--hui-stroke-thin) dashed var(--hui-line-dashed);
+}
+
+.hui-nav__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--hui-space-4);
+  min-height: 4rem;
+}
+
+.hui-nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--hui-space-1);
+  margin-left: auto;
+}
+
+.hui-nav__link {
+  padding: 0.35rem 0.7rem;
+  font: 600 var(--hui-text-sm) / 1.2 var(--hui-font-body);
+  color: var(--hui-ink);
+  text-decoration: none;
+  border-radius: var(--hui-radius-sm);
+  transition: background-color var(--hui-duration-fast) var(--hui-ease);
+}
+
+.hui-nav__link:hover {
+  text-decoration: none;
+  background: var(--hui-brand-mark);
+}
+
+.hui-nav__link[aria-current="page"] {
+  background: var(--hui-brand-mark);
+}
+
+.hui-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--hui-space-2);
+}
+
+/* Mobile: links move into a sheet behind a menu button */
+.hui-nav__menu { display: none; position: relative; }
+.hui-nav__menu > summary { list-style: none; }
+.hui-nav__menu > summary::-webkit-details-marker { display: none; }
+
+.hui-nav__sheet {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--hui-space-1);
+  min-width: 13rem;
+  padding: var(--hui-space-2);
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--hui-shadow-lg);
+  animation: hui-pop-in var(--hui-duration) var(--hui-ease-bounce);
+}
+
+@media (max-width: 760px) {
+  .hui-nav__links { display: none; }
+  .hui-nav__menu { display: block; margin-left: auto; }
+  .hui-nav__actions .hui-button:not(.hui-button--icon) { display: none; }
+}
+
+/* ---------- Logo ---------- */
+.hui-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font: 800 1.15rem / 1 var(--hui-font-body);
+  letter-spacing: -0.01em;
+  color: var(--hui-ink);
+  text-decoration: none;
+}
+
+.hui-logo:hover { text-decoration: none; }
+
+.hui-logo__mark {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  color: var(--hui-on-pop);
+  background: var(--hui-tone, var(--hui-brand));
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: 8px 11px 9px 12px;
+  box-shadow: var(--hui-shadow-sm);
+  rotate: -4deg;
+  transition: rotate var(--hui-duration) var(--hui-ease-bounce), scale var(--hui-duration) var(--hui-ease-bounce);
+}
+
+.hui-logo__mark svg { width: 70%; height: 70%; }
+
+.hui-logo:hover .hui-logo__mark {
+  rotate: -12deg;
+  scale: 1.07;
+}
+
+/* ---------- Tabs ---------- */
+.hui-tabs {
+  --_on: var(--hui-tone, var(--hui-brand));
+  display: flex;
+  flex-direction: column;
+  gap: var(--hui-space-4);
+}
+
+.hui-tabs__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hui-space-2);
+}
+
+.hui-tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  min-height: 2.5rem;
+  padding: 0.35em 1em;
+  font: 650 var(--hui-text-sm) / 1.2 var(--hui-font-body);
+  color: var(--hui-ink);
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--hui-shadow-sm);
+  cursor: pointer;
+  transition:
+    translate var(--hui-duration-fast) var(--hui-ease),
+    box-shadow var(--hui-duration-fast) var(--hui-ease),
+    background-color var(--hui-duration) var(--hui-ease);
+}
+
+.hui-tabs__tab:hover { translate: -1px -1px; box-shadow: var(--hui-shadow-md); }
+
+.hui-tabs__tab[aria-selected="true"] {
+  color: var(--hui-on-pop);
+  background: var(--_on);
+  translate: 1px 1px;
+  box-shadow: 1px 1px 0 var(--hui-shadow-color);
+}
+
+.hui-tabs__tab svg { width: 1.15em; height: 1.15em; }
+
+.hui-tabs__panel:focus-visible { outline-offset: 6px; }
+
+/* Lighter look: words with a marker under the chosen one */
+.hui-tabs--line .hui-tabs__list {
+  gap: var(--hui-space-5);
+  padding-bottom: 0.2rem;
+  border-bottom: var(--hui-stroke-thin) dashed var(--hui-line-dashed);
+}
+
+.hui-tabs--line .hui-tabs__tab {
+  min-height: 2.5rem;
+  padding: 0.2em 0.1em;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  translate: none;
+}
+
+.hui-tabs--line .hui-tabs__tab:hover { box-shadow: none; translate: none; color: var(--hui-ink); }
+
+.hui-tabs--line .hui-tabs__tab[aria-selected="true"] {
+  color: var(--hui-ink);
+  background: linear-gradient(177deg, transparent 52%, var(--_on) 53%, var(--_on) 86%, transparent 88%);
+  box-shadow: none;
+}
+
+/* ---------- Breadcrumb ---------- */
+.hui-breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--hui-text-sm);
+}
+
+.hui-breadcrumb li { margin: 0; display: inline-flex; align-items: center; gap: 0.35rem; }
+
+.hui-breadcrumb li + li::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  background: var(--hui-ink-faint);
+  -webkit-mask: var(--hui-chevron-mask) center / contain no-repeat;
+  mask: var(--hui-chevron-mask) center / contain no-repeat;
+  rotate: -90deg;
+}
+
+.hui-breadcrumb a { color: var(--hui-ink-soft); text-decoration: none; }
+.hui-breadcrumb a:hover { color: var(--hui-ink); text-decoration: underline wavy; }
+.hui-breadcrumb [aria-current="page"] { font-weight: 700; color: var(--hui-ink); }
+
+/* ---------- Pagination ---------- */
+.hui-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hui-space-2);
+}
+
+.hui-pagination__item {
+  display: grid;
+  place-items: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.6rem;
+  font: 700 var(--hui-text-sm) / 1 var(--hui-font-body);
+  color: var(--hui-ink);
+  text-decoration: none;
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--hui-shadow-sm);
+  transition: translate var(--hui-duration-fast) var(--hui-ease), box-shadow var(--hui-duration-fast) var(--hui-ease);
+}
+
+.hui-pagination__item:hover { translate: -1px -1px; box-shadow: var(--hui-shadow-md); text-decoration: none; }
+
+.hui-pagination__item[aria-current="page"] {
+  color: var(--hui-on-pop);
+  background: var(--hui-brand);
+}
+
+.hui-pagination__item[aria-disabled="true"] { opacity: 0.45; pointer-events: none; }
+
+.hui-pagination__gap {
+  padding: 0 0.2rem;
+  font: 700 var(--hui-hand-sm) / 1 var(--hui-font-hand);
+  color: var(--hui-ink-soft);
+}
+
+/* ---------- Dropdown menu (built on <details>) ---------- */
+.hui-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.hui-menu > summary { list-style: none; }
+.hui-menu > summary::-webkit-details-marker { display: none; }
+
+.hui-menu[open] > summary.hui-button {
+  translate: 2px 3px;
+  rotate: 0deg;
+  box-shadow: 0 0 0 var(--hui-shadow-color);
+}
+
+.hui-menu__list {
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  left: 0;
+  z-index: var(--hui-z-dropdown);
+  display: flex;
+  flex-direction: column;
+  min-width: 13rem;
+  padding: 0.4rem;
+  background: var(--hui-surface);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--hui-shadow-lg);
+  transform-origin: top left;
+  animation: hui-pop-in var(--hui-duration) var(--hui-ease-bounce);
+}
+
+.hui-menu--end .hui-menu__list { left: auto; right: 0; transform-origin: top right; }
+
+.hui-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  font: 550 var(--hui-text-sm) / 1.3 var(--hui-font-body);
+  color: var(--hui-ink);
+  text-align: left;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  border-radius: var(--hui-radius-sm);
+  cursor: pointer;
+}
+
+.hui-menu__item:hover,
+.hui-menu__item:focus-visible {
+  background: var(--hui-brand-mark);
+  outline: none;
+  text-decoration: none;
+}
+
+.hui-menu__item svg { width: 1.1em; height: 1.1em; flex: none; }
+.hui-menu__item kbd { margin-left: auto; }
+
+.hui-menu__item--danger { color: var(--hui-red-ink); }
+.hui-menu__item--danger:hover { background: var(--hui-red-soft); }
+
+.hui-menu__sep {
+  height: 0;
+  margin: 0.35rem 0.5rem;
+  border: 0;
+  border-top: var(--hui-stroke-thin) dashed var(--hui-line-dashed);
+  background: none;
+  -webkit-mask: none;
+  mask: none;
+}
+
+.hui-menu__label {
+  padding: 0.4rem 0.75rem 0.2rem;
+  font: 700 1.1rem / 1 var(--hui-font-hand);
+  color: var(--hui-ink-soft);
+}
+
+/* ---------- Footer ---------- */
+.hui-footer {
+  margin-top: var(--hui-space-16);
+  padding-block: var(--hui-space-12) var(--hui-space-8);
+  border-top: var(--hui-stroke-thin) dashed var(--hui-line-dashed);
+}
+
+.hui-footer__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 2fr);
+  gap: var(--hui-space-10);
+}
+
+.hui-footer__brand p { margin-top: var(--hui-space-3); max-width: 24rem; color: var(--hui-ink-soft); font-size: var(--hui-text-sm); }
+
+.hui-footer__cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--hui-space-6);
+}
+
+.hui-footer__title {
+  margin: 0 0 0.5rem;
+  font: 700 var(--hui-hand-sm) / 1 var(--hui-font-hand);
+  color: var(--hui-ink);
+}
+
+.hui-footer__cols ul { margin: 0; padding: 0; list-style: none; }
+.hui-footer__cols li + li { margin-top: 0.35rem; }
+
+.hui-footer__cols a {
+  font-size: var(--hui-text-sm);
+  color: var(--hui-ink-soft);
+  text-decoration: none;
+}
+
+.hui-footer__cols a:hover { color: var(--hui-ink); background: var(--hui-brand-mark); }
+
+.hui-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--hui-space-3);
+  margin-top: var(--hui-space-10);
+  font-size: var(--hui-text-xs);
+  color: var(--hui-ink-soft);
+}
+
+@media (max-width: 760px) {
+  .hui-footer__inner { grid-template-columns: minmax(0, 1fr); }
+}

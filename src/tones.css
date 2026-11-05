@@ -1,0 +1,103 @@
+/* =========================================================================
+   HappyUI · tones
+   Add one tone class next to a component to color it:
+     <button class="hui-button hui-pink">   <span class="hui-badge hui-green">
+   Each component decides how to use the tone (fill, text, stroke).
+   Loaded last, so a tone always wins over a component default.
+   ========================================================================= */
+
+.hui-yellow {
+  --hui-tone: var(--hui-yellow);
+  --hui-tone-on: var(--hui-on-pop);
+  --hui-tone-fill: var(--hui-yellow-fill);
+  --hui-tone-soft: var(--hui-yellow-soft);
+  --hui-tone-ink: var(--hui-yellow-ink);
+  --hui-tone-mark: var(--hui-yellow-mark);
+}
+
+.hui-orange,
+.hui-warning {
+  --hui-tone: var(--hui-orange);
+  --hui-tone-on: var(--hui-on-pop);
+  --hui-tone-fill: var(--hui-orange-fill);
+  --hui-tone-soft: var(--hui-orange-soft);
+  --hui-tone-ink: var(--hui-orange-ink);
+  --hui-tone-mark: var(--hui-orange-mark);
+}
+
+.hui-red,
+.hui-danger {
+  --hui-tone: var(--hui-red);
+  --hui-tone-on: var(--hui-on-pop);
+  --hui-tone-fill: var(--hui-red-fill);
+  --hui-tone-soft: var(--hui-red-soft);
+  --hui-tone-ink: var(--hui-red-ink);
+  --hui-tone-mark: var(--hui-red-mark);
+}
+
+.hui-pink {
+  --hui-tone: var(--hui-pink);
+  --hui-tone-on: var(--hui-on-pop);
+  --hui-tone-fill: var(--hui-pink-fill);
+  --hui-tone-soft: var(--hui-pink-soft);
+  --hui-tone-ink: var(--hui-pink-ink);
+  --hui-tone-mark: var(--hui-pink-mark);
+}
+
+.hui-purple {
+  --hui-tone: var(--hui-purple);
+  --hui-tone-on: var(--hui-on-pop);
+  --hui-tone-fill: var(--hui-purple-fill);
+  --hui-tone-soft: var(--hui-purple-soft);
+  --hui-tone-ink: var(--hui-purple-ink);
+  --hui-tone-mark: var(--hui-purple-mark);
+}
+
+.hui-blue,
+.hui-info {
+  --hui-tone: var(--hui-blue);
+  --hui-tone-on: var(--hui-on-pop);
+  --hui-tone-fill: var(--hui-blue-fill);
+  --hui-tone-soft: var(--hui-blue-soft);
+  --hui-tone-ink: var(--hui-blue-ink);
+  --hui-tone-mark: var(--hui-blue-mark);
+}
+
+.hui-teal {
+  --hui-tone: var(--hui-teal);
+  --hui-tone-on: var(--hui-on-pop);
+  --hui-tone-fill: var(--hui-teal-fill);
+  --hui-tone-soft: var(--hui-teal-soft);
+  --hui-tone-ink: var(--hui-teal-ink);
+  --hui-tone-mark: var(--hui-teal-mark);
+}
+
+.hui-green,
+.hui-success {
+  --hui-tone: var(--hui-green);
+  --hui-tone-on: var(--hui-on-pop);
+  --hui-tone-fill: var(--hui-green-fill);
+  --hui-tone-soft: var(--hui-green-soft);
+  --hui-tone-ink: var(--hui-green-ink);
+  --hui-tone-mark: var(--hui-green-mark);
+}
+
+/* The brand tone (yellow unless you change --hui-brand-*) */
+.hui-brand {
+  --hui-tone: var(--hui-brand);
+  --hui-tone-on: var(--hui-on-pop);
+  --hui-tone-fill: var(--hui-brand-fill);
+  --hui-tone-soft: var(--hui-brand-soft);
+  --hui-tone-ink: var(--hui-brand-ink);
+  --hui-tone-mark: var(--hui-brand-mark);
+}
+
+/* Plain paper, to undo a tone */
+.hui-paper {
+  --hui-tone: var(--hui-surface);
+  --hui-tone-on: var(--hui-ink);
+  --hui-tone-fill: var(--hui-surface);
+  --hui-tone-soft: var(--hui-surface-sunken);
+  --hui-tone-ink: var(--hui-ink);
+  --hui-tone-mark: var(--hui-line-soft);
+}
