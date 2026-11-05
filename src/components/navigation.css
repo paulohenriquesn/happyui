@@ -75,7 +75,8 @@
 
 @media (max-width: 760px) {
   .hui-nav__links { display: none; }
-  .hui-nav__menu { display: block; margin-left: auto; }
+  .hui-nav__actions { margin-left: auto; }
+  .hui-nav__menu { display: block; }
   .hui-nav__actions .hui-button:not(.hui-button--icon) { display: none; }
 }
 
@@ -232,6 +233,7 @@
   border: var(--hui-stroke) solid var(--hui-line);
   border-radius: var(--hui-wobble);
   box-shadow: var(--hui-shadow-sm);
+  cursor: pointer;
   transition: translate var(--hui-duration-fast) var(--hui-ease), box-shadow var(--hui-duration-fast) var(--hui-ease);
 }
 
@@ -242,7 +244,8 @@
   background: var(--hui-brand);
 }
 
-.hui-pagination__item[aria-disabled="true"] { opacity: 0.45; pointer-events: none; }
+.hui-pagination__item[aria-disabled="true"],
+.hui-pagination__item:disabled { opacity: 0.45; pointer-events: none; }
 
 .hui-pagination__gap {
   padding: 0 0.2rem;
@@ -259,7 +262,8 @@
 .hui-menu > summary { list-style: none; }
 .hui-menu > summary::-webkit-details-marker { display: none; }
 
-.hui-menu[open] > summary.hui-button {
+.hui-menu[open] > summary.hui-button,
+.hui-nav__menu[open] > summary.hui-button {
   translate: 2px 3px;
   rotate: 0deg;
   box-shadow: 0 0 0 var(--hui-shadow-color);

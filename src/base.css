@@ -137,7 +137,7 @@
 }
 
 :where(.hui) ::selection {
-  background: var(--hui-yellow);
+  background: var(--hui-brand);
   color: var(--hui-on-pop);
 }
 

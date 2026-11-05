@@ -190,7 +190,7 @@ Or let people choose with a button:
 HappyUI.theme.set("dark"); // "light", "dark" or "auto" (follows the system)
 ```
 
-The script remembers the choice in `localStorage`. With no saved choice and no `data-theme` attribute, the page follows the system setting. You can also theme one part of a page: `<section data-theme="dark">`.
+With no `data-theme` at all, the CSS follows the system setting by itself, so people who use dark mode never see a light flash. The script remembers a choice made with the switch in `localStorage`. You can also theme one part of a page: `<section data-theme="dark">`.
 
 ### Your brand color
 
@@ -281,6 +281,10 @@ Then ask for things like:
 - "Restyle this signup form in the happyui style."
 - "Add a happyui pricing section with three plans."
 
+Here is a real result. A fresh Claude agent, with nothing but this skill, got one paragraph: "a landing page for my small bakery, Crumb & Co., with our three products, how ordering works, testimonials, an order form, a FAQ and dark mode". It built [`examples/bakery.html`](examples/bakery.html) and used only classes that exist:
+
+<img src="docs/screenshots/bakery.png" alt="A bakery landing page built by Claude with HappyUI: a handwritten headline, highlighted product names, an order button and a framed drawing of bread, a cake and a cinnamon bun with a pink sticky note" width="100%">
+
 Claude reads [`SKILL.md`](SKILL.md) first. It points to the doc for each component, so Claude loads only what the task needs. Working on HappyUI itself? [`AGENTS.md`](AGENTS.md) has the rules for the repo, and [`CLAUDE.md`](CLAUDE.md) loads it for Claude Code. Codex, Cursor and other agents read `AGENTS.md` directly.
 
 ## Accessibility
@@ -312,7 +316,7 @@ happyui/
 ├── tokens/            tokens.json, generated from src/tokens.css
 ├── react/             optional typed React components
 ├── docs/              showcase page, foundations, one doc per component, screenshots
-├── examples/          a full landing page and an app screen
+├── examples/          a landing page, an app screen and a bakery page made by Claude
 ├── scripts/           build, contrast check and screenshots
 ├── SKILL.md           entry point for Claude Code
 ├── AGENTS.md          rules for AI agents and contributors

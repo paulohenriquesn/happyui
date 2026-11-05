@@ -17,6 +17,18 @@
 @property --hui-tone-mark { syntax: "*"; inherits: false; }
 /* Same idea for the hand-placed rotation of a card, note or frame */
 @property --hui-tilt { syntax: "*"; inherits: false; }
+/* Knobs you set on one element (style="--hui-gap: 2rem") stay on it */
+@property --hui-gap { syntax: "*"; inherits: false; }
+@property --hui-min { syntax: "*"; inherits: false; }
+@property --hui-card-padding { syntax: "*"; inherits: false; }
+@property --hui-frame-padding { syntax: "*"; inherits: false; }
+@property --hui-window-padding { syntax: "*"; inherits: false; }
+@property --hui-tape-width { syntax: "*"; inherits: false; }
+@property --hui-doodle-size { syntax: "*"; inherits: false; }
+@property --hui-spinner-size { syntax: "*"; inherits: false; }
+@property --hui-icon-size { syntax: "*"; inherits: false; }
+@property --hui-steps { syntax: "*"; inherits: false; }
+@property --hui-i { syntax: "*"; inherits: false; }
 
 /* ---------- Theme independent ---------- */
 :root {
@@ -169,7 +181,8 @@
 }
 
 /* ---------- Dark theme: the same sketchbook at night ---------- */
-[data-theme="dark"] {
+[data-theme="dark"],
+.hui-window--night {
   color-scheme: dark;
 
   --hui-paper: #1d1b18;
@@ -241,7 +254,8 @@
    Declared on every themed element so they recompute inside a nested
    [data-theme] block. Override the brand here to recolor the whole kit. */
 :root,
-[data-theme] {
+[data-theme],
+.hui-window--night {
   --hui-brand: var(--hui-yellow);
   --hui-brand-fill: var(--hui-yellow-fill);
   --hui-brand-soft: var(--hui-yellow-soft);

@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crumb &amp; Co. · Sourdough, cinnamon buns and birthday cakes</title>
+  <meta name="description" content="Crumb &amp; Co. is a small neighborhood bakery. Order sourdough, cinnamon buns and birthday cakes online and pick them up fresh.">
+  <script>
+    document.documentElement.classList.add("hui-js");
+    /* Apply the saved theme (or the system one) before the first paint, so there is no flash. */
+    try {
+      var t = localStorage.getItem("happyui-theme");
+      if (!t && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+      if (t) document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap">
+  <link rel="stylesheet" href="../dist/happyui.css">
+  <script src="../dist/happyui.js" defer></script>
+  <style>
+    /* Page-specific placement only. Every look comes from HappyUI. */
+
+    /* hui-sr-only stays hidden even when focused, so give the skip link a visible focus state */
+    .bk-skip:focus {
+      position: fixed !important; top: .75rem; left: .75rem; z-index: 100;
+      width: auto; height: auto; margin: 0; padding: .6rem 1rem;
+      overflow: visible; clip: auto; white-space: normal;
+      color: var(--hui-ink); background: var(--hui-surface);
+      border: var(--hui-stroke) solid var(--hui-line); border-radius: var(--hui-radius-sm);
+    }
+
+    /* Hero picture: frame, tape, note and doodles are pinned to this stage */
+    .bk-stage { position: relative; }
+    .bk-ann { position: absolute; top: -2.9rem; left: 18%; }
+    .bk-star { position: absolute; left: -1.5rem; top: 40%; --hui-doodle-size: 2.6rem; }
+    .bk-note { position: absolute; right: -1.2rem; top: -2.2rem; width: 10.5rem; --hui-tilt: 4deg; }
+
+    /* Drawings inside the menu cards */
+    .bk-media { padding: .75rem .5rem; }
+    .bk-pic { display: block; width: min(100%, 12.5rem); height: auto; }
+
+    /* Testimonial text is a blockquote: drop the default bar and indent */
+    .bk-quote-text { padding: 0; border: 0; }
+
+    .bk-order-note { max-width: 15.5rem; }
+
+    @media (max-width: 900px) {
+      /* Stacked hero: leave room for the annotation, and let the note sit under the picture */
+      .hui-hero__media { margin-top: 3.25rem; }
+      .bk-stage { max-width: 34rem; margin-inline: auto; }
+      .bk-note { position: relative; top: auto; right: auto; width: 12.5rem; margin: 1.5rem 0 0 auto; }
+      .bk-star { left: -.25rem; }
+    }
+
+    @media (max-width: 760px) {
+      /* Keep the theme button next to the menu button, at the right edge */
+      .hui-nav__actions { margin-left: auto; }
+      .hui-nav__menu { margin-left: 0; }
+    }
+  </style>
+</head>
+<body class="hui">
+
+<!-- Icons and drawings, defined once and used with <use> -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <symbol id="i-wheat" viewBox="0 0 24 24"><path d="M12 21.5V7.5"/><path d="M12 11c-3 0-5-1.6-5-4 3 0 5 1.6 5 4z"/><path d="M12 15.5c-3 0-5-1.6-5-4 3 0 5 1.6 5 4z"/><path d="M12 20c-3 0-5-1.6-5-4 3 0 5 1.6 5 4z"/><path d="M12 11c3 0 5-1.6 5-4-3 0-5 1.6-5 4z"/><path d="M12 15.5c3 0 5-1.6 5-4-3 0-5 1.6-5 4z"/><path d="M12 20c3 0 5-1.6 5-4-3 0-5 1.6-5 4z"/><path d="M12 3c1.3 1.2 1.3 3.2 0 4.5-1.3-1.3-1.3-3.3 0-4.5z"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+
+  <!-- Menu drawings (120 x 100). Pop colors for fills, the always-dark on-pop color for the lines. -->
+  <symbol id="pic-loaf" viewBox="0 0 120 100">
+    <g style="stroke:var(--hui-on-pop);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round">
+      <path style="fill:var(--hui-orange)" d="M15 90C8 59 32 27 60 27s52 32 45 63z"/>
+      <path style="fill:none" d="M37 71C41 60 49 52 60 48M52 77C56 65 66 57 79 53M70 79C74 69 83 63 94 61"/>
+    </g>
+  </symbol>
+  <symbol id="pic-bun" viewBox="0 0 120 100">
+    <g style="stroke:var(--hui-on-pop);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round">
+      <path style="fill:var(--hui-orange)" d="M22 50v22c0 11 17 18 38 18s38-7 38-18V50z"/>
+      <ellipse style="fill:var(--hui-yellow)" cx="60" cy="50" rx="38" ry="20"/>
+      <path style="fill:none" d="M60 50a5 2.5 0 0 1 10 0a10 5 0 0 1-20 0a15 7.5 0 0 1 30 0a20 10 0 0 1-40 0a25 12.5 0 0 1 50 0a30 15 0 0 1-60 0"/>
+      <path style="fill:none;stroke:var(--hui-pink);stroke-width:5" d="M32 44q6-5 12 0t12 0t12 0t12 0"/>
+    </g>
+  </symbol>
+  <symbol id="pic-cake" viewBox="0 0 120 100">
+    <g style="stroke:var(--hui-on-pop);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round">
+      <rect style="fill:var(--hui-yellow)" x="18" y="58" width="84" height="32" rx="4"/>
+      <path style="fill:var(--hui-pink)" d="M18 62a4 4 0 0 1 4-4H98a4 4 0 0 1 4 4V68q-6 10-12 0q-6 10-12 0q-6 10-12 0q-6 10-12 0q-6 10-12 0q-6 10-12 0q-6 10-12 0z"/>
+      <rect style="fill:var(--hui-yellow)" x="32" y="34" width="56" height="24" rx="4"/>
+      <path style="fill:var(--hui-pink)" d="M32 38a4 4 0 0 1 4-4H84a4 4 0 0 1 4 4V44q-5.6 10-11.2 0q-5.6 10-11.2 0q-5.6 10-11.2 0q-5.6 10-11.2 0q-5.6 10-11.2 0z"/>
+      <rect style="fill:var(--hui-orange)" x="57" y="18" width="6" height="16" rx="1.5"/>
+      <path style="fill:var(--hui-yellow)" d="M60 5c4 4 4 8 0 10c-4-2-4-6 0-10z"/>
+    </g>
+  </symbol>
+</svg>
+
+<a class="hui-sr-only bk-skip" href="#main">Skip to content</a>
+
+<header class="hui-nav">
+  <div class="hui-container hui-nav__inner">
+    <a class="hui-logo" href="#top">
+      <span class="hui-logo__mark hui-yellow"><svg class="hui-icon" aria-hidden="true"><use href="#i-wheat"/></svg></span>
+      Crumb &amp; Co.
+    </a>
+    <nav class="hui-nav__links" aria-label="Main">
+      <a class="hui-nav__link" href="#menu">Menu</a>
+      <a class="hui-nav__link" href="#how">How it works</a>
+      <a class="hui-nav__link" href="#love">Reviews</a>
+      <a class="hui-nav__link" href="#faq">FAQ</a>
+    </nav>
+    <div class="hui-nav__actions">
+      <button class="hui-button hui-button--icon hui-button--sm" type="button" data-hui-theme-toggle aria-label="Switch between light and dark theme">
+        <svg class="hui-icon hui-icon--sm hui-only-light" aria-hidden="true"><use href="#i-moon"/></svg>
+        <svg class="hui-icon hui-icon--sm hui-only-dark" aria-hidden="true"><use href="#i-sun"/></svg>
+      </button>
+      <a class="hui-button hui-button--sm" href="#order">Order now</a>
+    </div>
+    <details class="hui-nav__menu">
+      <summary class="hui-button hui-button--icon hui-button--sm" aria-label="Open menu"><svg class="hui-icon hui-icon--sm" aria-hidden="true"><use href="#i-menu"/></svg></summary>
+      <div class="hui-nav__sheet">
+        <a class="hui-nav__link" href="#menu">Menu</a>
+        <a class="hui-nav__link" href="#how">How it works</a>
+        <a class="hui-nav__link" href="#love">Reviews</a>
+        <a class="hui-nav__link" href="#faq">FAQ</a>
+        <a class="hui-nav__link" href="#order">Order now</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- Hero -->
+<section class="hui-container" id="top">
+  <div class="hui-hero">
+    <div class="hui-hero__copy hui-reveal">
+      <a class="hui-banner" href="#menu"><span class="hui-badge hui-badge--solid hui-red">Baked daily</span> Small batches, never from the freezer</a>
+      <h1 class="hui-display">Baked by hand, <span class="hui-scribble">still warm.</span></h1>
+      <p class="hui-lede">Crumb &amp; Co. is a small neighborhood bakery. We make <span class="hui-highlight hui-yellow">sourdough</span>, <span class="hui-highlight hui-orange">cinnamon buns</span> and <span class="hui-highlight hui-pink">birthday cakes</span>. Send us an order and pick it up fresh.</p>
+      <div class="hui-button-group">
+        <a class="hui-button hui-button--primary hui-button--lg" href="#order">
+          <svg class="hui-icon hui-button__icon" aria-hidden="true"><use href="#i-bag"/></svg>
+          <span class="hui-button__text">
+            <span class="hui-button__label">Order for pick-up</span>
+            <span class="hui-button__hint">takes about a minute</span>
+          </span>
+        </a>
+        <a class="hui-button" href="#menu">See the menu</a>
+      </div>
+      <ul class="hui-checklist hui-checklist--inline" role="list">
+        <li>Baked every morning</li>
+        <li>Pick up at the shop</li>
+        <li>Candles on request</li>
+      </ul>
+    </div>
+
+    <div class="hui-hero__media hui-reveal" style="--hui-i: 2">
+      <div class="bk-stage">
+        <span class="hui-annotation hui-annotation--down-right bk-ann">just out of the oven!</span>
+        <div class="hui-frame hui-yellow hui-tilt-slight">
+          <span class="hui-tape hui-tape--tl hui-orange"></span>
+          <span class="hui-tape hui-tape--br hui-orange"></span>
+          <svg viewBox="0 62 360 205" role="img" aria-label="A drawing of a sourdough loaf, a cinnamon bun and a birthday cake sitting on a bakery shelf">
+            <path d="M16 246h328" style="fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round"/>
+            <path d="M64 158c-7-10 7-14 0-26M90 154c-7-10 7-14 0-26M262 164c-7-10 7-14 0-26M288 160c-7-10 7-14 0-26" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;opacity:.55"/>
+            <use href="#pic-cake" x="66" y="75" width="228" height="190"/>
+            <use href="#pic-loaf" x="8" y="133.5" width="150" height="125"/>
+            <use href="#pic-bun" x="202" y="133.5" width="150" height="125"/>
+          </svg>
+        </div>
+        <div class="hui-note hui-pink bk-note">listen for the crackle, that is the crust singing</div>
+        <span class="hui-doodle hui-doodle--sparkle hui-orange bk-star hui-bob" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The menu: our three products -->
+<section class="hui-section" id="menu">
+  <div class="hui-container">
+    <div class="hui-section__head">
+      <span class="hui-eyebrow">The menu</span>
+      <h2 class="hui-h1">Three things, <span class="hui-marker hui-orange">done properly</span></h2>
+      <p class="hui-lede">We keep the list short so every loaf, bun and cake gets our full attention.</p>
+    </div>
+    <div class="hui-grid hui-grid--3" style="--hui-gap: 2rem">
+      <div class="hui-card hui-tilt-left">
+        <div class="hui-card__media hui-yellow bk-media">
+          <svg class="bk-pic" viewBox="0 0 120 100" role="img" aria-label="A round sourdough loaf with three cuts on top">
+            <path d="M10 91h100" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round"/>
+            <use href="#pic-loaf"/>
+          </svg>
+        </div>
+        <h3 class="hui-card__title">Sourdough</h3>
+        <p class="hui-card__text">Long-rise loaves with a crackly crust and a soft, tangy middle. White, rye or seeded.</p>
+        <div class="hui-card__footer">
+          <span class="hui-card__meta">Baked every morning</span>
+          <a class="hui-link" href="#order">Order a loaf</a>
+        </div>
+      </div>
+
+      <div class="hui-card">
+        <span class="hui-tape hui-tape--top hui-pink"></span>
+        <div class="hui-card__media hui-orange bk-media">
+          <svg class="bk-pic" viewBox="0 0 120 100" role="img" aria-label="A cinnamon bun with a swirl and pink icing">
+            <path d="M10 91h100" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round"/>
+            <use href="#pic-bun"/>
+          </svg>
+        </div>
+        <h3 class="hui-card__title">Cinnamon buns</h3>
+        <p class="hui-card__text">Soft, sticky and swirled with cinnamon sugar. Best warm, in boxes of four or six.</p>
+        <div class="hui-card__footer">
+          <span class="hui-card__meta">Best on the day</span>
+          <a class="hui-link" href="#order">Order a box</a>
+        </div>
+      </div>
+
+      <div class="hui-card hui-tilt-right">
+        <div class="hui-card__media hui-pink bk-media">
+          <svg class="bk-pic" viewBox="0 0 120 100" role="img" aria-label="A two-layer birthday cake with pink icing and one candle">
+            <path d="M10 91h100" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round"/>
+            <use href="#pic-cake"/>
+          </svg>
+        </div>
+        <h3 class="hui-card__title">Birthday cakes</h3>
+        <p class="hui-card__text">Made to order, with a name on top if you like. Tell us the flavor and who it is for.</p>
+        <div class="hui-card__footer">
+          <span class="hui-card__meta">Order a few days ahead</span>
+          <a class="hui-link" href="#order">Order a cake</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How ordering works -->
+<section class="hui-section--tight" id="how">
+  <div class="hui-container">
+    <div class="hui-section__head">
+      <span class="hui-eyebrow">How ordering works</span>
+      <h2 class="hui-h1">Ordering takes <span class="hui-circled">three</span> small steps</h2>
+    </div>
+    <ol class="hui-steps" role="list">
+      <li class="hui-step">
+        <h3 class="hui-step__title">Pick your treats</h3>
+        <p class="hui-step__text">Sourdough, cinnamon buns, a birthday cake, or a little bit of everything.</p>
+      </li>
+      <li class="hui-step">
+        <h3 class="hui-step__title">Send the form</h3>
+        <p class="hui-step__text">Choose a pick-up day and tell us anything we should know.</p>
+      </li>
+      <li class="hui-step">
+        <h3 class="hui-step__title">Collect it warm</h3>
+        <p class="hui-step__text">We confirm by e-mail, then you swing by the shop and it is ready.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- Testimonials (placeholders: swap in real customer quotes) -->
+<section class="hui-section" id="love">
+  <div class="hui-container">
+    <div class="hui-section__head">
+      <span class="hui-eyebrow">Kind words</span>
+      <h2 class="hui-h1">Neighbors who <span class="hui-marker hui-pink">keep coming back</span></h2>
+    </div>
+    <div class="hui-grid hui-grid--2" style="--hui-gap: 2.5rem">
+      <figure class="hui-quote hui-tilt-slight">
+        <blockquote class="hui-quote__text bk-quote-text">I stopped buying bread at the supermarket after my first Crumb &amp; Co. loaf. The crust crackles all the way home.</blockquote>
+        <figcaption class="hui-quote__by">
+          <div class="hui-avatar hui-pink" aria-hidden="true">M</div>
+          <div><strong>Maya R.</strong><span>Saturday regular</span></div>
+        </figcaption>
+      </figure>
+      <figure class="hui-quote hui-yellow hui-tilt-right">
+        <blockquote class="hui-quote__text bk-quote-text">They made my daughter's birthday cake and even remembered the candle. It was gone in ten minutes.</blockquote>
+        <figcaption class="hui-quote__by">
+          <div class="hui-avatar hui-orange" aria-hidden="true">D</div>
+          <div><strong>Daniel K.</strong><span>dad of a very happy seven-year-old</span></div>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- Order form -->
+<section class="hui-section" id="order">
+  <div class="hui-container">
+    <div class="hui-split">
+      <div class="hui-stack" style="--hui-gap: 1rem">
+        <span class="hui-eyebrow">Place an order</span>
+        <h2 class="hui-h1" id="order-title">Order ahead, <span class="hui-scribble">pick up warm</span></h2>
+        <p class="hui-lede">Fill in the little form and choose a day. We will e-mail you to confirm.</p>
+        <ul class="hui-checklist" role="list">
+          <li>Pick-up only, at the shop</li>
+          <li>Need a change? Just reply to our e-mail</li>
+          <li>Allergies or a name for the cake? Put it in the note</li>
+        </ul>
+        <div class="hui-note hui-yellow bk-order-note">tip: tell us who the cake is for and we will pencil their name on top</div>
+      </div>
+
+      <form class="hui-card hui-card--lg hui-stack" style="--hui-gap: 1.1rem" id="order-form" aria-labelledby="order-title" novalidate>
+        <div class="hui-field">
+          <label class="hui-label" for="o-name">Your name</label>
+          <input class="hui-input" id="o-name" name="name" type="text" placeholder="Sam Baker" autocomplete="name" required>
+        </div>
+        <div class="hui-field">
+          <label class="hui-label" for="o-email">E-mail</label>
+          <input class="hui-input" id="o-email" name="email" type="email" placeholder="sam@example.com" autocomplete="email" required>
+        </div>
+        <div class="hui-field">
+          <label class="hui-label" for="o-day">Pick-up day</label>
+          <div class="hui-select">
+            <select id="o-day" name="day" required>
+              <option value="" selected disabled>Choose a day</option>
+              <option value="wednesday">Wednesday</option>
+              <option value="thursday">Thursday</option>
+              <option value="friday">Friday</option>
+              <option value="saturday">Saturday</option>
+              <option value="sunday">Sunday</option>
+            </select>
+          </div>
+        </div>
+        <div class="hui-field">
+          <label class="hui-check hui-pink"><input type="checkbox" id="o-candle" name="candle"> Add a birthday candle</label>
+        </div>
+        <div class="hui-field">
+          <label class="hui-label" for="o-note">Your note <span class="hui-label__aside">optional</span></label>
+          <textarea class="hui-textarea" id="o-note" name="note" rows="4" placeholder="Two sourdough loaves and a box of four buns, please." aria-describedby="o-note-hint"></textarea>
+          <p class="hui-hint" id="o-note-hint">Tell us what you would like, plus any allergies or a name for the cake.</p>
+        </div>
+        <button class="hui-button hui-button--primary hui-button--lg hui-button--block" type="submit">
+          <svg class="hui-icon hui-button__icon" aria-hidden="true"><use href="#i-bag"/></svg>
+          Send my order
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="hui-section--tight" id="faq">
+  <div class="hui-container hui-container--narrow">
+    <div class="hui-section__head">
+      <span class="hui-eyebrow">Questions</span>
+      <h2 class="hui-h1">Good questions, <span class="hui-circled">short</span> answers</h2>
+    </div>
+    <div class="hui-accordion">
+      <details class="hui-accordion__item" open>
+        <summary>How far ahead should I order?</summary>
+        <div class="hui-accordion__body"><p>For loaves and buns, a day or two ahead is plenty. Birthday cakes need a bit longer, so pick a day with a few days to spare. If it is tight, say so in your note and we will tell you what is possible.</p></div>
+      </details>
+      <details class="hui-accordion__item">
+        <summary>Can I change my order after sending it?</summary>
+        <div class="hui-accordion__body"><p>Yes. Just reply to the confirmation e-mail and we will update it.</p></div>
+      </details>
+      <details class="hui-accordion__item">
+        <summary>Do you deliver?</summary>
+        <div class="hui-accordion__body"><p>Not at the moment. Everything is for pick-up at the shop, still warm.</p></div>
+      </details>
+      <details class="hui-accordion__item">
+        <summary>What about allergies?</summary>
+        <div class="hui-accordion__body"><p>Our kitchen handles wheat, eggs, milk and nuts, so we cannot promise anything is free of them. Tell us about any allergy in your note and we will be honest about what we can do.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="hui-footer">
+  <div class="hui-container hui-footer__inner">
+    <div class="hui-footer__brand">
+      <a class="hui-logo" href="#top"><span class="hui-logo__mark hui-yellow"><svg class="hui-icon" aria-hidden="true"><use href="#i-wheat"/></svg></span> Crumb &amp; Co.</a>
+      <p>A small neighborhood bakery. Sourdough, cinnamon buns and birthday cakes, baked by hand and handed over warm.</p>
+    </div>
+    <nav class="hui-footer__cols" aria-label="Footer">
+      <div>
+        <h2 class="hui-footer__title">On the menu</h2>
+        <ul><li><a href="#menu">Sourdough</a></li><li><a href="#menu">Cinnamon buns</a></li><li><a href="#menu">Birthday cakes</a></li></ul>
+      </div>
+      <div>
+        <h2 class="hui-footer__title">Ordering</h2>
+        <ul><li><a href="#how">How it works</a></li><li><a href="#order">Order form</a></li><li><a href="#faq">Questions</a></li></ul>
+      </div>
+    </nav>
+  </div>
+  <div class="hui-container hui-footer__bottom">
+    <span>&copy; 2026 Crumb &amp; Co. All rights reserved.</span>
+    <span class="hui-hand" style="font-size: 1.3rem">see you at the counter!</span>
+  </div>
+</footer>
+
+<script>
+  /* Demo order form: checks the required fields with HappyUI's error style, then shows a success alert.
+     There is no server behind it. Replace the "sent" step with a real submit (fetch or a form service). */
+  (function () {
+    var form = document.getElementById("order-form");
+    if (!form) return;
+
+    var rules = [
+      { id: "o-name",  missing: "Please tell us your name." },
+      { id: "o-email", missing: "Please add your e-mail so we can confirm.", invalid: "That e-mail does not look right yet." },
+      { id: "o-day",   missing: "Please choose a pick-up day." }
+    ];
+
+    function showError(el, message) {
+      var field = el.closest(".hui-field");
+      var err = document.getElementById(el.id + "-error");
+      if (!err) {
+        err = document.createElement("p");
+        err.className = "hui-error";
+        err.id = el.id + "-error";
+        err.setAttribute("role", "alert"); /* added after the user typed, so it must be announced */
+        field.appendChild(err);
+      }
+      err.textContent = message;
+      el.setAttribute("aria-invalid", "true");
+      el.setAttribute("aria-describedby", err.id);
+    }
+
+    function clearError(el) {
+      var err = document.getElementById(el.id + "-error");
+      if (err) err.remove();
+      el.removeAttribute("aria-invalid");
+      el.removeAttribute("aria-describedby");
+    }
+
+    /* A success alert stays in the page (a toast would vanish after a few seconds). */
+    function hideSuccess() {
+      var old = document.getElementById("order-success");
+      if (old) old.remove();
+    }
+
+    function showSuccess() {
+      hideSuccess();
+      var box = document.createElement("div");
+      box.className = "hui-alert hui-success";
+      box.id = "order-success";
+      box.setAttribute("role", "status");
+      box.innerHTML =
+        '<span class="hui-alert__icon"><svg class="hui-icon" aria-hidden="true"><use href="#i-check"/></svg></span>' +
+        '<div class="hui-alert__body"><p class="hui-alert__title">Order sent!</p>' +
+        '<p class="hui-alert__text">We will e-mail you shortly to confirm your pick-up.</p></div>';
+      form.insertBefore(box, form.querySelector('button[type="submit"]'));
+      box.scrollIntoView({ block: "nearest" });
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      hideSuccess();
+      var first = null;
+      rules.forEach(function (rule) {
+        var el = document.getElementById(rule.id);
+        clearError(el);
+        if (!el.checkValidity()) {
+          showError(el, el.validity.valueMissing ? rule.missing : (rule.invalid || rule.missing));
+          if (!first) first = el;
+        }
+      });
+      if (first) { first.focus(); return; }
+      form.reset();
+      showSuccess();
+    });
+
+    function onEdit(e) {
+      hideSuccess(); /* the user is starting another order */
+      if (e.target.getAttribute("aria-invalid")) clearError(e.target);
+    }
+    form.addEventListener("input", onEdit);
+    form.addEventListener("change", onEdit);
+  })();
+</script>
+</body>
+</html>

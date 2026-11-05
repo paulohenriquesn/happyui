@@ -72,6 +72,9 @@ import type {
    Foundations: types and tiny helpers
    ========================================================================== */
 
+// The PURE marks on the top-level component calls let bundlers drop the
+// components you never import, so importing only Button stays tiny.
+
 /** A tone class: the component takes that color. */
 export type Tone =
   | "yellow"
@@ -225,12 +228,30 @@ function createTonePart(tag: string, base: string, displayName: string) {
    Layout
    ========================================================================== */
 
+export interface RootProps extends HTMLAttributes<HTMLDivElement> {
+  /** A blank sheet, without the graph paper grid (.hui-plain). */
+  plain?: boolean;
+  /** Force a theme for everything inside, as a nested data-theme block. */
+  theme?: ThemeName;
+}
+
+/**
+ * The .hui base (paper, fonts, friendly defaults for plain HTML) on a
+ * wrapper. Skip it when <body className="hui"> already does the job.
+ */
+export const Root = /* @__PURE__ */ forwardRef<HTMLDivElement, RootProps>(function Root(
+  { plain, theme, className, ...rest },
+  ref,
+) {
+  return <div ref={ref} data-theme={theme} {...rest} className={cx("hui", plain && "hui-plain", className)} />;
+});
+
 export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
   /** A narrower reading width. */
   narrow?: boolean;
 }
 
-export const Container = forwardRef<HTMLDivElement, ContainerProps>(function Container(
+export const Container = /* @__PURE__ */ forwardRef<HTMLDivElement, ContainerProps>(function Container(
   { narrow, className, ...rest },
   ref,
 ) {
@@ -243,19 +264,17 @@ export interface StackProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /** Children stacked vertically with one gap. */
-export const Stack = forwardRef<HTMLDivElement, StackProps>(function Stack({ gap, className, style, ...rest }, ref) {
+export const Stack = /* @__PURE__ */ forwardRef<HTMLDivElement, StackProps>(function Stack(
+  { gap, className, style, ...rest },
+  ref,
+) {
   return (
-    <div
-      ref={ref}
-      {...rest}
-      className={cx("hui-stack", className)}
-      style={withVars(style, { "--hui-gap": px(gap) })}
-    />
+    <div ref={ref} {...rest} className={cx("hui-stack", className)} style={withVars(style, { "--hui-gap": px(gap) })} />
   );
 });
 
 /** Things in a row that wrap when they run out of room. */
-export const Cluster = forwardRef<HTMLDivElement, StackProps>(function Cluster(
+export const Cluster = /* @__PURE__ */ forwardRef<HTMLDivElement, StackProps>(function Cluster(
   { gap, className, style, ...rest },
   ref,
 ) {
@@ -278,7 +297,7 @@ export interface GridProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /** Responsive grid: as many columns as fit. */
-export const Grid = forwardRef<HTMLDivElement, GridProps>(function Grid(
+export const Grid = /* @__PURE__ */ forwardRef<HTMLDivElement, GridProps>(function Grid(
   { cols, min, gap, className, style, ...rest },
   ref,
 ) {
@@ -297,12 +316,15 @@ export interface SectionProps extends HTMLAttributes<HTMLElement> {
   tight?: boolean;
 }
 
-export const Section = forwardRef<HTMLElement, SectionProps>(function Section({ tight, className, ...rest }, ref) {
+export const Section = /* @__PURE__ */ forwardRef<HTMLElement, SectionProps>(function Section(
+  { tight, className, ...rest },
+  ref,
+) {
   return <section ref={ref} {...rest} className={cx("hui-section", tight && "hui-section--tight", className)} />;
 });
 
 /** Centered heading group: eyebrow, title and lede. */
-export const SectionHead = createPart("div", "hui-section__head", "SectionHead");
+export const SectionHead = /* @__PURE__ */ createPart("div", "hui-section__head", "SectionHead");
 
 export interface SplitProps extends HTMLAttributes<HTMLDivElement> {
   /** Put the second child first on wide screens. */
@@ -312,7 +334,10 @@ export interface SplitProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /** Text on one side, picture on the other. */
-export const Split = forwardRef<HTMLDivElement, SplitProps>(function Split({ reverse, even, className, ...rest }, ref) {
+export const Split = /* @__PURE__ */ forwardRef<HTMLDivElement, SplitProps>(function Split(
+  { reverse, even, className, ...rest },
+  ref,
+) {
   return (
     <div
       ref={ref}
@@ -322,16 +347,16 @@ export const Split = forwardRef<HTMLDivElement, SplitProps>(function Split({ rev
   );
 });
 
-export const Hero = createPart("div", "hui-hero", "Hero");
-export const HeroCopy = createPart("div", "hui-hero__copy", "HeroCopy");
-export const HeroMedia = createPart("div", "hui-hero__media", "HeroMedia");
+export const Hero = /* @__PURE__ */ createPart("div", "hui-hero", "Hero");
+export const HeroCopy = /* @__PURE__ */ createPart("div", "hui-hero__copy", "HeroCopy");
+export const HeroMedia = /* @__PURE__ */ createPart("div", "hui-hero__media", "HeroMedia");
 
 /* ==========================================================================
    Typography
    ========================================================================== */
 
 /** The big handwritten title (an h1 by default). */
-export const Display = createPart("h1", "hui-display", "Display");
+export const Display = /* @__PURE__ */ createPart("h1", "hui-display", "Display");
 
 export type HeadingSize = "display" | "h1" | "h2" | "h3" | "h4";
 
@@ -341,7 +366,7 @@ export interface HeadingProps extends PartProps {
 }
 
 /** A heading with the look of your choice. Defaults to an h2 that looks like .hui-h1. */
-export const Heading = forwardRef<HTMLElement, HeadingProps>(function Heading(
+export const Heading = /* @__PURE__ */ forwardRef<HTMLElement, HeadingProps>(function Heading(
   { as = "h2", size = "h1", className, ...rest },
   ref,
 ) {
@@ -349,13 +374,13 @@ export const Heading = forwardRef<HTMLElement, HeadingProps>(function Heading(
 });
 
 /** The little note above a title. */
-export const Eyebrow = createTonePart("span", "hui-eyebrow", "Eyebrow");
+export const Eyebrow = /* @__PURE__ */ createTonePart("span", "hui-eyebrow", "Eyebrow");
 
 /** Intro paragraph under a title. */
-export const Lede = createPart("p", "hui-lede", "Lede");
+export const Lede = /* @__PURE__ */ createPart("p", "hui-lede", "Lede");
 
 /** Long-form text with a comfortable measure. */
-export const Prose = createPart("div", "hui-prose", "Prose");
+export const Prose = /* @__PURE__ */ createPart("div", "hui-prose", "Prose");
 
 /* ==========================================================================
    Icon
@@ -373,7 +398,7 @@ export interface IconProps extends SVGAttributes<SVGSVGElement> {
  * An outline icon. Pass a sprite `symbol` or the SVG shapes as children.
  * It is hidden from screen readers unless you give it an aria-label.
  */
-export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
+export const Icon = /* @__PURE__ */ forwardRef<SVGSVGElement, IconProps>(function Icon(
   { symbol, size = "md", tone, className, children, ...rest },
   ref,
 ) {
@@ -416,7 +441,10 @@ interface ButtonLook {
   iconOnly?: boolean;
 }
 
-function buttonClasses({ variant = "default", size = "md", tone, block, iconOnly }: ButtonLook, ...extra: ClassValue[]) {
+function buttonClasses(
+  { variant = "default", size = "md", tone, block, iconOnly }: ButtonLook,
+  ...extra: ClassValue[]
+) {
   return cx(
     "hui-button",
     variant !== "default" && `hui-button--${variant}`,
@@ -438,7 +466,8 @@ export interface ButtonOwnProps extends ButtonLook {
 }
 
 export interface ButtonProps
-  extends ButtonOwnProps,
+  extends
+    ButtonOwnProps,
     LinkAttrs,
     Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ButtonOwnProps | keyof LinkAttrs> {}
 
@@ -446,7 +475,7 @@ export interface ButtonProps
  * A drawn button. With `href` it renders an <a>, otherwise a
  * <button type="button">. Icon-only buttons need an aria-label.
  */
-export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(function Button(
+export const Button = /* @__PURE__ */ forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(function Button(
   { variant, size, tone, block, iconOnly, busy, icon, hint, className, children, onClick, disabled, type, ...rest },
   ref,
 ) {
@@ -493,7 +522,7 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
 });
 
 /** A row of buttons. */
-export const ButtonGroup = createPart("div", "hui-button-group", "ButtonGroup");
+export const ButtonGroup = /* @__PURE__ */ createPart("div", "hui-button-group", "ButtonGroup");
 
 export interface ChipOwnProps {
   tone?: Tone;
@@ -503,12 +532,13 @@ export interface ChipOwnProps {
 }
 
 export interface ChipProps
-  extends ChipOwnProps,
+  extends
+    ChipOwnProps,
     LinkAttrs,
     Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ChipOwnProps | keyof LinkAttrs> {}
 
 /** A small toggle, filter or quick choice. */
-export const Chip = forwardRef<HTMLButtonElement | HTMLAnchorElement, ChipProps>(function Chip(
+export const Chip = /* @__PURE__ */ forwardRef<HTMLButtonElement | HTMLAnchorElement, ChipProps>(function Chip(
   { tone, pressed, icon, className, children, ...rest },
   ref,
 ) {
@@ -536,12 +566,13 @@ export interface LinkOwnProps {
 }
 
 export interface LinkProps
-  extends LinkOwnProps,
+  extends
+    LinkOwnProps,
     LinkAttrs,
     Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof LinkOwnProps | keyof LinkAttrs> {}
 
 /** A handwritten link with an arrow, for "see more" moments. */
-export const Link = forwardRef<HTMLButtonElement | HTMLAnchorElement, LinkProps>(function Link(
+export const Link = /* @__PURE__ */ forwardRef<HTMLButtonElement | HTMLAnchorElement, LinkProps>(function Link(
   { tone, back, className, ...rest },
   ref,
 ) {
@@ -562,7 +593,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   tone?: Tone;
 }
 
-export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
+export const Badge = /* @__PURE__ */ forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   { variant = "default", size = "md", tone, className, ...rest },
   ref,
 ) {
@@ -582,13 +613,13 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
 });
 
 /** A keyboard key. */
-export const Kbd = createPart("kbd", "hui-kbd", "Kbd");
+export const Kbd = /* @__PURE__ */ createPart("kbd", "hui-kbd", "Kbd");
 
 /** Inline code. A tone tints the background. */
-export const Code = createTonePart("code", "hui-code", "Code");
+export const Code = /* @__PURE__ */ createTonePart("code", "hui-code", "Code");
 
 /** A code block. The text goes in a <code> inside the <pre>. */
-export const Pre = forwardRef<HTMLPreElement, HTMLAttributes<HTMLPreElement>>(function Pre(
+export const Pre = /* @__PURE__ */ forwardRef<HTMLPreElement, HTMLAttributes<HTMLPreElement>>(function Pre(
   { className, children, ...rest },
   ref,
 ) {
@@ -604,15 +635,15 @@ export const Pre = forwardRef<HTMLPreElement, HTMLAttributes<HTMLPreElement>>(fu
    ========================================================================== */
 
 /** Highlighter box over the words. */
-export const Highlight = createTonePart("span", "hui-highlight", "Highlight");
+export const Highlight = /* @__PURE__ */ createTonePart("span", "hui-highlight", "Highlight");
 /** Marker stroke behind the lower half of the text. */
-export const Marker = createTonePart("span", "hui-marker", "Marker");
+export const Marker = /* @__PURE__ */ createTonePart("span", "hui-marker", "Marker");
 /** Hand-drawn swoosh under a short phrase. */
-export const Scribble = createTonePart("span", "hui-scribble", "Scribble");
+export const Scribble = /* @__PURE__ */ createTonePart("span", "hui-scribble", "Scribble");
 /** A pen line through words you take back. */
-export const Strike = createTonePart("span", "hui-strike", "Strike");
+export const Strike = /* @__PURE__ */ createTonePart("span", "hui-strike", "Strike");
 /** A loose pen circle around one word. */
-export const Circled = createTonePart("span", "hui-circled", "Circled");
+export const Circled = /* @__PURE__ */ createTonePart("span", "hui-circled", "Circled");
 
 export interface DividerProps extends HTMLAttributes<HTMLElement> {
   /** A word in the middle, like "or". */
@@ -698,7 +729,7 @@ export interface CardProps extends LinkAttrs, HTMLAttributes<HTMLElement> {
 }
 
 /** A sheet of paper. With `href` it is a link card that lifts on hover. */
-export const Card = forwardRef<HTMLElement, CardProps>(function Card(
+export const Card = /* @__PURE__ */ forwardRef<HTMLElement, CardProps>(function Card(
   { variant = "default", size = "md", row, interactive, tone, tilt, as = "div", className, style, ...rest },
   ref,
 ) {
@@ -722,19 +753,22 @@ export const Card = forwardRef<HTMLElement, CardProps>(function Card(
 });
 
 /** The icon at the top of a card. */
-export const CardIcon = forwardRef<SVGSVGElement, IconProps>(function CardIcon({ className, ...rest }, ref) {
+export const CardIcon = /* @__PURE__ */ forwardRef<SVGSVGElement, IconProps>(function CardIcon(
+  { className, ...rest },
+  ref,
+) {
   return <Icon ref={ref} {...rest} className={cx("hui-card__icon", className)} />;
 });
 
-export const CardTitle = createPart("h3", "hui-card__title", "CardTitle");
-export const CardText = createPart("p", "hui-card__text", "CardText");
-export const CardMeta = createPart("p", "hui-card__meta", "CardMeta");
+export const CardTitle = /* @__PURE__ */ createPart("h3", "hui-card__title", "CardTitle");
+export const CardText = /* @__PURE__ */ createPart("p", "hui-card__text", "CardText");
+export const CardMeta = /* @__PURE__ */ createPart("p", "hui-card__meta", "CardMeta");
 /** The words column of a row card. */
-export const CardBody = createPart("div", "hui-card__body", "CardBody");
+export const CardBody = /* @__PURE__ */ createPart("div", "hui-card__body", "CardBody");
 /** Actions at the bottom of a card. */
-export const CardFooter = createPart("div", "hui-card__footer", "CardFooter");
+export const CardFooter = /* @__PURE__ */ createPart("div", "hui-card__footer", "CardFooter");
 /** Picture area at the top. A tone tints the background. */
-export const CardMedia = createTonePart("div", "hui-card__media", "CardMedia");
+export const CardMedia = /* @__PURE__ */ createTonePart("div", "hui-card__media", "CardMedia");
 
 export interface FrameProps extends HTMLAttributes<HTMLDivElement> {
   /** No padding, for a picture that fills the frame. */
@@ -744,7 +778,7 @@ export interface FrameProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /** A taped-on picture, screenshot or demo. */
-export const Frame = forwardRef<HTMLDivElement, FrameProps>(function Frame(
+export const Frame = /* @__PURE__ */ forwardRef<HTMLDivElement, FrameProps>(function Frame(
   { bare, tone, tilt, className, style, ...rest },
   ref,
 ) {
@@ -768,11 +802,7 @@ export interface TapeProps extends HTMLAttributes<HTMLSpanElement> {
 /** Stick it to a corner of a frame or card. Decorative. */
 export function Tape({ corner = "tl", tone, className, ...rest }: TapeProps) {
   return (
-    <span
-      aria-hidden="true"
-      {...rest}
-      className={cx("hui-tape", `hui-tape--${corner}`, toneClass(tone), className)}
-    />
+    <span aria-hidden="true" {...rest} className={cx("hui-tape", `hui-tape--${corner}`, toneClass(tone), className)} />
   );
 }
 
@@ -784,7 +814,7 @@ export interface NoteProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /** A sticky note. */
-export const Note = forwardRef<HTMLDivElement, NoteProps>(function Note(
+export const Note = /* @__PURE__ */ forwardRef<HTMLDivElement, NoteProps>(function Note(
   { by, tone, tilt, className, style, children, ...rest },
   ref,
 ) {
@@ -809,7 +839,7 @@ export interface CalloutProps extends Omit<HTMLAttributes<HTMLDivElement>, "titl
 }
 
 /** A big colored box that asks for one action. Children are the actions. */
-export const Callout = forwardRef<HTMLDivElement, CalloutProps>(function Callout(
+export const Callout = /* @__PURE__ */ forwardRef<HTMLDivElement, CalloutProps>(function Callout(
   { title, tone, tilt, className, style, children, ...rest },
   ref,
 ) {
@@ -832,7 +862,7 @@ export interface BannerProps extends LinkAttrs, HTMLAttributes<HTMLElement> {
 }
 
 /** The tilted "what's new" pill. With `href` it is a link with an arrow. */
-export const Banner = forwardRef<HTMLElement, BannerProps>(function Banner(
+export const Banner = /* @__PURE__ */ forwardRef<HTMLElement, BannerProps>(function Banner(
   { tone, tilt, className, style, ...rest },
   ref,
 ) {
@@ -858,7 +888,7 @@ export interface WindowProps extends Omit<HTMLAttributes<HTMLDivElement>, "title
 }
 
 /** A pretend app window for demos and screenshots. Children go in the body. */
-export const Window = forwardRef<HTMLDivElement, WindowProps>(function Window(
+export const Window = /* @__PURE__ */ forwardRef<HTMLDivElement, WindowProps>(function Window(
   { title, night, tilt, bodyPadding, className, style, children, ...rest },
   ref,
 ) {
@@ -890,7 +920,7 @@ interface FieldContextValue {
   invalid: boolean;
 }
 
-const FieldContext = createContext<FieldContextValue | null>(null);
+const FieldContext = /* @__PURE__ */ createContext<FieldContextValue | null>(null);
 
 interface ControlA11y {
   id?: string;
@@ -898,11 +928,15 @@ interface ControlA11y {
   "aria-invalid"?: AriaAttributes["aria-invalid"];
 }
 
-/** Takes id, aria-describedby and aria-invalid from the surrounding Field. */
-function useFieldControl(props: ControlA11y): ControlA11y {
+/**
+ * Takes id, aria-describedby and aria-invalid from the surrounding Field.
+ * Choice controls (checkbox, radio, switch) come in groups and have their own
+ * wrapping label, so they skip the id and never end up with duplicates.
+ */
+function useFieldControl(props: ControlA11y, takeId = true): ControlA11y {
   const field = useContext(FieldContext);
   return {
-    id: props.id ?? field?.id,
+    id: props.id ?? (takeId ? field?.id : undefined),
     "aria-describedby": cx(props["aria-describedby"], field?.describedBy) || undefined,
     "aria-invalid": props["aria-invalid"] ?? (field?.invalid ? true : undefined),
   };
@@ -921,10 +955,10 @@ export interface FieldProps extends Omit<HTMLAttributes<HTMLDivElement>, "id"> {
 
 /**
  * Label, control and hint or error in one block. The Input, Textarea,
- * Select, Checkbox, Radio, Switch or Range inside is wired to it
- * (id, aria-describedby, aria-invalid) without extra props.
+ * Select or Range inside is wired to it (id, aria-describedby, aria-invalid)
+ * without extra props. Checkbox, Radio and Switch get the last two only.
  */
-export const Field = forwardRef<HTMLDivElement, FieldProps>(function Field(
+export const Field = /* @__PURE__ */ forwardRef<HTMLDivElement, FieldProps>(function Field(
   { label, aside, hint, error, id, className, children, ...rest },
   ref,
 ) {
@@ -963,22 +997,22 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(function Field(
 });
 
 /** A label on its own, for a control outside a Field. */
-export const Label = forwardRef<HTMLLabelElement, LabelHTMLAttributes<HTMLLabelElement>>(function Label(
+export const Label = /* @__PURE__ */ forwardRef<HTMLLabelElement, LabelHTMLAttributes<HTMLLabelElement>>(function Label(
   { className, ...rest },
   ref,
 ) {
   return <label ref={ref} {...rest} className={cx("hui-label", className)} />;
 });
 
-export const Hint = createPart("p", "hui-hint", "Hint");
-export const FieldError = createPart("p", "hui-error", "FieldError");
+export const Hint = /* @__PURE__ */ createPart("p", "hui-hint", "Hint");
+export const FieldError = /* @__PURE__ */ createPart("p", "hui-error", "FieldError");
 
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
   /** The look. The native numeric size attribute is not supported. */
   size?: "sm" | "md" | "lg";
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
+export const Input = /* @__PURE__ */ forwardRef<HTMLInputElement, InputProps>(function Input(
   { size = "md", className, ...props },
   ref,
 ) {
@@ -993,7 +1027,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   );
 });
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>>(
+export const Textarea = /* @__PURE__ */ forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>>(
   function Textarea({ className, ...props }, ref) {
     const a11y = useFieldControl(props);
     return <textarea ref={ref} {...props} {...a11y} className={cx("hui-textarea", className)} />;
@@ -1004,27 +1038,28 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<H
  * A native <select> with the drawn chevron. className and style go on the
  * wrapper, everything else on the <select>. Put <option>s inside.
  */
-export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(function Select(
-  { className, style, children, ...props },
-  ref,
-) {
-  const a11y = useFieldControl(props);
-  return (
-    <div className={cx("hui-select", className)} style={style}>
-      <select ref={ref} {...props} {...a11y}>
-        {children}
-      </select>
-    </div>
-  );
-});
+export const Select = /* @__PURE__ */ forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(
+  function Select({ className, style, children, ...props }, ref) {
+    const a11y = useFieldControl(props);
+    return (
+      <div className={cx("hui-select", className)} style={style}>
+        <select ref={ref} {...props} {...a11y}>
+          {children}
+        </select>
+      </div>
+    );
+  },
+);
 
 /** An input with a button or label glued to it. */
-export const InputGroup = createPart("div", "hui-input-group", "InputGroup");
+export const InputGroup = /* @__PURE__ */ createPart("div", "hui-input-group", "InputGroup");
 
 type ChoiceKind = "check" | "radio" | "switch";
 
-export interface ChoiceProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "size" | "className" | "style" | "children"> {
+export interface ChoiceProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "type" | "size" | "className" | "style" | "children"
+> {
   tone?: Tone;
   /** On the outer label. */
   className?: string;
@@ -1034,28 +1069,29 @@ export interface ChoiceProps
   children?: ReactNode;
 }
 
-const Choice = forwardRef<HTMLInputElement, ChoiceProps & { kind: ChoiceKind; indeterminate?: boolean }>(
-  function Choice({ kind, tone, indeterminate, className, style, children, ...props }, ref) {
-    const a11y = useFieldControl(props);
-    const inputRef = useRef<HTMLInputElement>(null);
-    const setRef = useMergedRef<HTMLInputElement>(inputRef, ref);
-    useEffect(() => {
-      if (inputRef.current) inputRef.current.indeterminate = Boolean(indeterminate);
-    }, [indeterminate]);
-    return (
-      <label className={cx(`hui-${kind}`, toneClass(tone), className)} style={style}>
-        <input
-          ref={setRef}
-          type={kind === "radio" ? "radio" : "checkbox"}
-          role={kind === "switch" ? "switch" : undefined}
-          {...props}
-          {...a11y}
-        />
-        {children}
-      </label>
-    );
-  },
-);
+const Choice = /* @__PURE__ */ forwardRef<
+  HTMLInputElement,
+  ChoiceProps & { kind: ChoiceKind; indeterminate?: boolean }
+>(function Choice({ kind, tone, indeterminate, className, style, children, ...props }, ref) {
+  const a11y = useFieldControl(props, false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const setRef = useMergedRef<HTMLInputElement>(inputRef, ref);
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.indeterminate = Boolean(indeterminate);
+  }, [indeterminate]);
+  return (
+    <label className={cx(`hui-${kind}`, toneClass(tone), className)} style={style}>
+      <input
+        ref={setRef}
+        type={kind === "radio" ? "radio" : "checkbox"}
+        role={kind === "switch" ? "switch" : undefined}
+        {...props}
+        {...a11y}
+      />
+      {children}
+    </label>
+  );
+});
 
 export interface CheckboxProps extends ChoiceProps {
   /** The dash state, set on the input as a DOM property. */
@@ -1063,17 +1099,17 @@ export interface CheckboxProps extends ChoiceProps {
 }
 
 /** A drawn checkbox. The children are its label. */
-export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(props, ref) {
+export const Checkbox = /* @__PURE__ */ forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(props, ref) {
   return <Choice ref={ref} kind="check" {...props} />;
 });
 
 /** A drawn radio button. Give the group a shared name. */
-export const Radio = forwardRef<HTMLInputElement, ChoiceProps>(function Radio(props, ref) {
+export const Radio = /* @__PURE__ */ forwardRef<HTMLInputElement, ChoiceProps>(function Radio(props, ref) {
   return <Choice ref={ref} kind="radio" {...props} />;
 });
 
 /** An on and off switch with a bouncy knob (role="switch"). */
-export const Switch = forwardRef<HTMLInputElement, ChoiceProps>(function Switch(props, ref) {
+export const Switch = /* @__PURE__ */ forwardRef<HTMLInputElement, ChoiceProps>(function Switch(props, ref) {
   return <Choice ref={ref} kind="switch" {...props} />;
 });
 
@@ -1081,17 +1117,12 @@ export interface RangeProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   tone?: Tone;
 }
 
-export const Range = forwardRef<HTMLInputElement, RangeProps>(function Range({ tone, className, ...props }, ref) {
+export const Range = /* @__PURE__ */ forwardRef<HTMLInputElement, RangeProps>(function Range(
+  { tone, className, ...props },
+  ref,
+) {
   const a11y = useFieldControl(props);
-  return (
-    <input
-      ref={ref}
-      type="range"
-      {...props}
-      {...a11y}
-      className={cx("hui-range", toneClass(tone), className)}
-    />
-  );
+  return <input ref={ref} type="range" {...props} {...a11y} className={cx("hui-range", toneClass(tone), className)} />;
 });
 
 export interface FieldsetProps extends FieldsetHTMLAttributes<HTMLFieldSetElement> {
@@ -1100,7 +1131,7 @@ export interface FieldsetProps extends FieldsetHTMLAttributes<HTMLFieldSetElemen
 }
 
 /** A group of related controls under one title. */
-export const Fieldset = forwardRef<HTMLFieldSetElement, FieldsetProps>(function Fieldset(
+export const Fieldset = /* @__PURE__ */ forwardRef<HTMLFieldSetElement, FieldsetProps>(function Fieldset(
   { legend, className, children, ...rest },
   ref,
 ) {
@@ -1117,7 +1148,7 @@ export const Fieldset = forwardRef<HTMLFieldSetElement, FieldsetProps>(function 
    ========================================================================== */
 
 /** The top bar. Put Logo, NavLinks, NavActions and NavMenu inside. */
-export const Nav = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function Nav(
+export const Nav = /* @__PURE__ */ forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function Nav(
   { className, children, ...rest },
   ref,
 ) {
@@ -1129,7 +1160,7 @@ export const Nav = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function
 });
 
 /** The links of the top bar (hidden on small screens, see NavMenu). */
-export const NavLinks = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function NavLinks(
+export const NavLinks = /* @__PURE__ */ forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function NavLinks(
   { className, ...rest },
   ref,
 ) {
@@ -1141,15 +1172,17 @@ export interface NavLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   current?: boolean;
 }
 
-export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(function NavLink(
+export const NavLink = /* @__PURE__ */ forwardRef<HTMLAnchorElement, NavLinkProps>(function NavLink(
   { current, className, ...rest },
   ref,
 ) {
-  return <a ref={ref} aria-current={current ? "page" : undefined} {...rest} className={cx("hui-nav__link", className)} />;
+  return (
+    <a ref={ref} aria-current={current ? "page" : undefined} {...rest} className={cx("hui-nav__link", className)} />
+  );
 });
 
 /** Buttons on the right side of the top bar. */
-export const NavActions = createPart("div", "hui-nav__actions", "NavActions");
+export const NavActions = /* @__PURE__ */ createPart("div", "hui-nav__actions", "NavActions");
 
 export interface LogoProps extends LinkAttrs, HTMLAttributes<HTMLElement> {
   /** The drawing in the little tilted box. */
@@ -1159,7 +1192,7 @@ export interface LogoProps extends LinkAttrs, HTMLAttributes<HTMLElement> {
 }
 
 /** Name and mark. With `href` it is a link. */
-export const Logo = forwardRef<HTMLElement, LogoProps>(function Logo(
+export const Logo = /* @__PURE__ */ forwardRef<HTMLElement, LogoProps>(function Logo(
   { mark, tone, className, children, ...rest },
   ref,
 ) {
@@ -1190,7 +1223,7 @@ export interface NavMenuProps extends Omit<DetailsHTMLAttributes<HTMLDetailsElem
  * The small-screen menu of the top bar. Put NavLink children inside. It
  * closes on outside click, on Escape and when a link is chosen.
  */
-export const NavMenu = forwardRef<HTMLDetailsElement, NavMenuProps>(function NavMenu(
+export const NavMenu = /* @__PURE__ */ forwardRef<HTMLDetailsElement, NavMenuProps>(function NavMenu(
   { label = "Open menu", icon, className, children, ...rest },
   ref,
 ) {
@@ -1234,7 +1267,7 @@ interface TabsContextValue {
   panelId: (value: string) => string;
 }
 
-const TabsContext = createContext<TabsContextValue | null>(null);
+const TabsContext = /* @__PURE__ */ createContext<TabsContextValue | null>(null);
 
 function useTabsContext(part: string): TabsContextValue {
   const context = useContext(TabsContext);
@@ -1259,7 +1292,7 @@ export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, "default
  * Tabs with arrow keys, Home and End, roving tabindex and the right
  * ARIA roles. Build them with TabList, Tab and TabPanel.
  */
-export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
+export const Tabs = /* @__PURE__ */ forwardRef<HTMLDivElement, TabsProps>(function Tabs(
   { value, defaultValue, onValueChange, variant = "solid", tone, className, children, ...rest },
   ref,
 ) {
@@ -1312,7 +1345,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
 });
 
 /** The row of tabs. Give it an aria-label. */
-export const TabList = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function TabList(
+export const TabList = /* @__PURE__ */ forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function TabList(
   { className, onKeyDown, ...rest },
   ref,
 ) {
@@ -1333,13 +1366,7 @@ export const TabList = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>
     next.click();
   };
   return (
-    <div
-      ref={ref}
-      role="tablist"
-      {...rest}
-      className={cx("hui-tabs__list", className)}
-      onKeyDown={handleKeyDown}
-    />
+    <div ref={ref} role="tablist" {...rest} className={cx("hui-tabs__list", className)} onKeyDown={handleKeyDown} />
   );
 });
 
@@ -1349,7 +1376,7 @@ export interface TabProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 
   icon?: ReactNode;
 }
 
-export const Tab = forwardRef<HTMLButtonElement, TabProps>(function Tab(
+export const Tab = /* @__PURE__ */ forwardRef<HTMLButtonElement, TabProps>(function Tab(
   { value, icon, className, onClick, children, ...rest },
   ref,
 ) {
@@ -1383,7 +1410,7 @@ export interface TabPanelProps extends HTMLAttributes<HTMLDivElement> {
   value: string;
 }
 
-export const TabPanel = forwardRef<HTMLDivElement, TabPanelProps>(function TabPanel(
+export const TabPanel = /* @__PURE__ */ forwardRef<HTMLDivElement, TabPanelProps>(function TabPanel(
   { value, className, ...rest },
   ref,
 ) {
@@ -1405,7 +1432,7 @@ export const TabPanel = forwardRef<HTMLDivElement, TabPanelProps>(function TabPa
 /* ---------- Breadcrumb ---------- */
 
 /** A trail of places. Put BreadcrumbItems inside. */
-export const Breadcrumb = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function Breadcrumb(
+export const Breadcrumb = /* @__PURE__ */ forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function Breadcrumb(
   { className, children, ...rest },
   ref,
 ) {
@@ -1423,13 +1450,19 @@ export interface BreadcrumbItemProps extends LiHTMLAttributes<HTMLLIElement> {
   current?: boolean;
 }
 
-export const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(function BreadcrumbItem(
+export const BreadcrumbItem = /* @__PURE__ */ forwardRef<HTMLLIElement, BreadcrumbItemProps>(function BreadcrumbItem(
   { href, current, children, ...rest },
   ref,
 ) {
   return (
     <li ref={ref} {...rest}>
-      {current ? <span aria-current="page">{children}</span> : href !== undefined ? <a href={href}>{children}</a> : children}
+      {current ? (
+        <span aria-current="page">{children}</span>
+      ) : href !== undefined ? (
+        <a href={href}>{children}</a>
+      ) : (
+        children
+      )}
     </li>
   );
 });
@@ -1437,22 +1470,20 @@ export const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(fun
 /* ---------- Pagination ---------- */
 
 /** Page numbers. Put PaginationItems and PaginationGaps inside. */
-export const Pagination = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function Pagination(
+export const Pagination = /* @__PURE__ */ forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function Pagination(
   { className, ...rest },
   ref,
 ) {
   return <nav ref={ref} aria-label="Pages" {...rest} className={cx("hui-pagination", className)} />;
 });
 
-export interface PaginationItemProps
-  extends LinkAttrs,
-    Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof LinkAttrs> {
+export interface PaginationItemProps extends LinkAttrs, Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof LinkAttrs> {
   /** The page you are on (aria-current="page"). */
   current?: boolean;
 }
 
 /** One page. With `href` it is a link, otherwise a button. */
-export const PaginationItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, PaginationItemProps>(
+export const PaginationItem = /* @__PURE__ */ forwardRef<HTMLButtonElement | HTMLAnchorElement, PaginationItemProps>(
   function PaginationItem({ current, disabled, className, onClick, ...rest }, ref) {
     return renderLinkOrElement(
       "button",
@@ -1511,7 +1542,7 @@ interface MenuContextValue {
   close: () => void;
 }
 
-const MenuContext = createContext<MenuContextValue | null>(null);
+const MenuContext = /* @__PURE__ */ createContext<MenuContextValue | null>(null);
 
 const MENU_ITEMS = '[role="menuitem"]:not(:disabled)';
 
@@ -1535,7 +1566,7 @@ export interface MenuProps extends Omit<DetailsHTMLAttributes<HTMLDetailsElement
  * A dropdown menu on <details>. It closes on outside click, on Escape and
  * when an item is chosen. Arrow keys, Home and End move between items.
  */
-export const Menu = forwardRef<HTMLDetailsElement, MenuProps>(function Menu(
+export const Menu = /* @__PURE__ */ forwardRef<HTMLDetailsElement, MenuProps>(function Menu(
   {
     trigger,
     triggerLabel,
@@ -1589,7 +1620,8 @@ export const Menu = forwardRef<HTMLDetailsElement, MenuProps>(function Menu(
     const index = list.indexOf(document.activeElement as HTMLElement);
     let next: HTMLElement | undefined;
     if (event.key === "ArrowDown") next = list[index < 0 ? 0 : (index + 1) % list.length];
-    else if (event.key === "ArrowUp") next = list[index < 0 ? list.length - 1 : (index - 1 + list.length) % list.length];
+    else if (event.key === "ArrowUp")
+      next = list[index < 0 ? list.length - 1 : (index - 1 + list.length) % list.length];
     else if (event.key === "Home") next = list[0];
     else if (event.key === "End") next = list[list.length - 1];
     if (!next) return;
@@ -1604,7 +1636,10 @@ export const Menu = forwardRef<HTMLDetailsElement, MenuProps>(function Menu(
         {...rest}
         className={cx("hui-menu", align === "end" && "hui-menu--end", className)}
         open={isOpen}
-        onToggle={(event) => setOpen(event.currentTarget.open)}
+        onToggle={(event) => {
+          // The browser also fires toggle for the open attribute we set ourselves.
+          if (event.currentTarget.open !== isOpen) setOpen(event.currentTarget.open);
+        }}
       >
         <summary
           className={buttonClasses({ variant, size, tone, iconOnly })}
@@ -1630,35 +1665,34 @@ export interface MenuItemProps extends LinkAttrs, Omit<ButtonHTMLAttributes<HTML
 }
 
 /** An action in a Menu. With `href` it is a link. Choosing it closes the menu. */
-export const MenuItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, MenuItemProps>(function MenuItem(
-  { danger, icon, shortcut, className, onClick, children, ...rest },
-  ref,
-) {
-  const menu = useContext(MenuContext);
-  return renderLinkOrElement(
-    "button",
-    {
-      role: "menuitem",
-      ...rest,
-      className: cx("hui-menu__item", danger && "hui-menu__item--danger", className),
-      onClick: (event: ReactMouseEvent<HTMLButtonElement>) => {
-        onClick?.(event);
-        if (!event.defaultPrevented) menu?.close();
+export const MenuItem = /* @__PURE__ */ forwardRef<HTMLButtonElement | HTMLAnchorElement, MenuItemProps>(
+  function MenuItem({ danger, icon, shortcut, className, onClick, children, ...rest }, ref) {
+    const menu = useContext(MenuContext);
+    return renderLinkOrElement(
+      "button",
+      {
+        role: "menuitem",
+        ...rest,
+        className: cx("hui-menu__item", danger && "hui-menu__item--danger", className),
+        onClick: (event: ReactMouseEvent<HTMLButtonElement>) => {
+          onClick?.(event);
+          if (!event.defaultPrevented) menu?.close();
+        },
+        children: (
+          <>
+            {icon}
+            {children}
+            {has(shortcut) && <Kbd>{shortcut}</Kbd>}
+          </>
+        ),
       },
-      children: (
-        <>
-          {icon}
-          {children}
-          {has(shortcut) && <Kbd>{shortcut}</Kbd>}
-        </>
-      ),
-    },
-    ref,
-  );
-});
+      ref,
+    );
+  },
+);
 
 /** A small handwritten heading inside a Menu. */
-export const MenuLabel = createPart("span", "hui-menu__label", "MenuLabel");
+export const MenuLabel = /* @__PURE__ */ createPart("span", "hui-menu__label", "MenuLabel");
 
 /** A dashed line between groups of items. */
 export function MenuSeparator({ className, ...rest }: HTMLAttributes<HTMLHRElement>) {
@@ -1667,7 +1701,7 @@ export function MenuSeparator({ className, ...rest }: HTMLAttributes<HTMLHREleme
 
 /* ---------- Footer ---------- */
 
-export const Footer = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function Footer(
+export const Footer = /* @__PURE__ */ forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function Footer(
   { className, ...rest },
   ref,
 ) {
@@ -1675,16 +1709,15 @@ export const Footer = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(funct
 });
 
 /** The top row of the footer: brand on the left, columns on the right. */
-export const FooterMain = createPart("div", "hui-container hui-footer__inner", "FooterMain");
-export const FooterBrand = createPart("div", "hui-footer__brand", "FooterBrand");
+export const FooterMain = /* @__PURE__ */ createPart("div", "hui-container hui-footer__inner", "FooterMain");
+export const FooterBrand = /* @__PURE__ */ createPart("div", "hui-footer__brand", "FooterBrand");
 
 /** The link columns. Put FooterColumns inside. */
-export const FooterColumns = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function FooterColumns(
-  { className, ...rest },
-  ref,
-) {
-  return <nav ref={ref} aria-label="Footer" {...rest} className={cx("hui-footer__cols", className)} />;
-});
+export const FooterColumns = /* @__PURE__ */ forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(
+  function FooterColumns({ className, ...rest }, ref) {
+    return <nav ref={ref} aria-label="Footer" {...rest} className={cx("hui-footer__cols", className)} />;
+  },
+);
 
 export interface FooterColumnProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   title: ReactNode;
@@ -1701,7 +1734,7 @@ export function FooterColumn({ title, children, ...rest }: FooterColumnProps) {
 }
 
 /** The last row: small print on the left, a wink on the right. */
-export const FooterBottom = createPart("div", "hui-container hui-footer__bottom", "FooterBottom");
+export const FooterBottom = /* @__PURE__ */ createPart("div", "hui-container hui-footer__bottom", "FooterBottom");
 
 /* ==========================================================================
    Feedback: alert, toast, tooltip, dialog, progress, spinner, skeleton,
@@ -1709,14 +1742,14 @@ export const FooterBottom = createPart("div", "hui-container hui-footer__bottom"
    ========================================================================== */
 
 const GLYPHS: Record<string, string> = {
-  green: "✓",
+  green: "\u2713",
   red: "!",
   orange: "!",
-  yellow: "★",
+  yellow: "\u2605",
   blue: "i",
-  purple: "✦",
-  pink: "♥",
-  teal: "✦",
+  purple: "\u2726",
+  pink: "\u2665",
+  teal: "\u2726",
 };
 
 const TONE_ALIASES: Partial<Record<Tone, string>> = {
@@ -1731,7 +1764,7 @@ const TONE_ALIASES: Partial<Record<Tone, string>> = {
 /** The small character in a round icon when you do not bring your own. */
 function toneGlyph(tone?: Tone): string {
   const key = tone ? (TONE_ALIASES[tone] ?? tone) : "yellow";
-  return GLYPHS[key] ?? "★";
+  return GLYPHS[key] ?? "\u2605";
 }
 
 function prefersReducedMotion(): boolean {
@@ -1749,19 +1782,14 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"
 }
 
 /** A message in the page. Danger alerts use role="alert", the rest role="status". */
-export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+export const Alert = /* @__PURE__ */ forwardRef<HTMLDivElement, AlertProps>(function Alert(
   { tone, title, icon, onClose, closeLabel = "Dismiss", className, children, ...rest },
   ref,
 ) {
   const glyph = icon === undefined ? toneGlyph(tone) : icon;
   const loud = tone === "danger" || tone === "red";
   return (
-    <div
-      ref={ref}
-      role={loud ? "alert" : "status"}
-      {...rest}
-      className={cx("hui-alert", toneClass(tone), className)}
-    >
+    <div ref={ref} role={loud ? "alert" : "status"} {...rest} className={cx("hui-alert", toneClass(tone), className)}>
       {has(glyph) && (
         <span className="hui-alert__icon" aria-hidden="true">
           {glyph}
@@ -1811,9 +1839,9 @@ export interface ToastApi {
   clear: () => void;
 }
 
-const ToastContext = createContext<ToastApi | null>(null);
+const ToastContext = /* @__PURE__ */ createContext<ToastApi | null>(null);
 
-export interface ToastProviderProps {
+export interface ToastProviderProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
   children?: ReactNode;
   /** Default milliseconds before a toast leaves. */
   timeout?: number;
@@ -1823,18 +1851,22 @@ export interface ToastProviderProps {
 /**
  * Renders the toast region (role="status", aria-live="polite") and gives
  * useToast() to everything below it. Mount it once, near the root.
+ * className and the other props go on the region.
  */
-export function ToastProvider({ children, timeout = 4500, dismissLabel = "Dismiss" }: ToastProviderProps) {
+export function ToastProvider({
+  children,
+  timeout = 4500,
+  dismissLabel = "Dismiss",
+  className,
+  ...rest
+}: ToastProviderProps) {
   const [items, setItems] = useState<ToastItem[]>([]);
-  const itemsRef = useRef<ToastItem[]>([]);
   const nextId = useRef(1);
+  // Ids on screen (the leaving ones too) and the ids already on their way out.
+  const live = useRef(new Set<number>());
   const leaving = useRef(new Set<number>());
   const autoTimers = useRef(new Map<number, ReturnType<typeof setTimeout>>());
   const exitTimers = useRef(new Set<ReturnType<typeof setTimeout>>());
-
-  useEffect(() => {
-    itemsRef.current = items;
-  }, [items]);
 
   useEffect(() => {
     const auto = autoTimers.current;
@@ -1858,6 +1890,7 @@ export function ToastProvider({ children, timeout = 4500, dismissLabel = "Dismis
       () => {
         exitTimers.current.delete(exit);
         leaving.current.delete(id);
+        live.current.delete(id);
         setItems((list) => list.filter((item) => item.id !== id));
       },
       prefersReducedMotion() ? 0 : 280,
@@ -1868,24 +1901,32 @@ export function ToastProvider({ children, timeout = 4500, dismissLabel = "Dismis
   const show = useCallback(
     (message: ReactNode, options: ToastOptions = {}) => {
       const id = nextId.current++;
+      live.current.add(id);
       setItems((list) => [...list, { ...options, id, message, leaving: false }]);
       const wait = options.timeout ?? timeout;
-      if (wait > 0) autoTimers.current.set(id, setTimeout(() => dismiss(id), wait));
+      if (wait > 0)
+        autoTimers.current.set(
+          id,
+          setTimeout(() => dismiss(id), wait),
+        );
       return id;
     },
     [dismiss, timeout],
   );
 
   const clear = useCallback(() => {
-    itemsRef.current.forEach((item) => dismiss(item.id));
+    Array.from(live.current).forEach(dismiss);
   }, [dismiss]);
 
-  const api = useMemo<ToastApi>(() => Object.assign((message: ReactNode, options?: ToastOptions) => show(message, options), { dismiss, clear }), [show, dismiss, clear]);
+  const api = useMemo<ToastApi>(
+    () => Object.assign((message: ReactNode, options?: ToastOptions) => show(message, options), { dismiss, clear }),
+    [show, dismiss, clear],
+  );
 
   return (
     <ToastContext.Provider value={api}>
       {children}
-      <div className="hui-toast-region" role="status" aria-live="polite">
+      <div role="status" aria-live="polite" {...rest} className={cx("hui-toast-region", className)}>
         {items.map((item) => (
           <div key={item.id} className={cx("hui-toast", toneClass(item.tone), item.leaving && "is-leaving")}>
             <span className="hui-toast__icon" aria-hidden="true">
@@ -1964,7 +2005,7 @@ export interface DialogProps extends Omit<DialogHTMLAttributes<HTMLDialogElement
  * A native <dialog> opened with showModal() while `open` is true, so
  * focus trapping, the backdrop and Escape come from the browser.
  */
-export const Dialog = forwardRef<HTMLDialogElement, DialogProps>(function Dialog(
+export const Dialog = /* @__PURE__ */ forwardRef<HTMLDialogElement, DialogProps>(function Dialog(
   {
     open,
     onClose,
@@ -2067,19 +2108,13 @@ export interface ProgressProps extends Omit<HTMLAttributes<HTMLProgressElement>,
 }
 
 /** A native <progress>. Give it an aria-label. */
-export const Progress = forwardRef<HTMLProgressElement, ProgressProps>(function Progress(
+export const Progress = /* @__PURE__ */ forwardRef<HTMLProgressElement, ProgressProps>(function Progress(
   { value, max = 100, tone, className, children, ...rest },
   ref,
 ) {
   const fallback = value !== undefined ? `${Math.round((value / max) * 100)}%` : undefined;
   return (
-    <progress
-      ref={ref}
-      {...rest}
-      value={value}
-      max={max}
-      className={cx("hui-progress", toneClass(tone), className)}
-    >
+    <progress ref={ref} {...rest} value={value} max={max} className={cx("hui-progress", toneClass(tone), className)}>
       {children ?? fallback}
     </progress>
   );
@@ -2111,20 +2146,18 @@ export interface SkeletonProps extends HTMLAttributes<HTMLSpanElement> {
 
 /** A hatched placeholder while content loads. Set the width in `style` or `className`. */
 export function Skeleton({ variant = "line", className, ...rest }: SkeletonProps) {
-  return (
-    <span
-      {...rest}
-      className={cx("hui-skeleton", variant !== "line" && `hui-skeleton--${variant}`, className)}
-    />
-  );
+  return <span {...rest} className={cx("hui-skeleton", variant !== "line" && `hui-skeleton--${variant}`, className)} />;
 }
 
 /* ---------- Accordion ---------- */
 
 /** A stack of AccordionItems. */
-export const Accordion = createPart("div", "hui-accordion", "Accordion");
+export const Accordion = /* @__PURE__ */ createPart("div", "hui-accordion", "Accordion");
 
-export interface AccordionItemProps extends Omit<DetailsHTMLAttributes<HTMLDetailsElement>, "open" | "onToggle" | "title"> {
+export interface AccordionItemProps extends Omit<
+  DetailsHTMLAttributes<HTMLDetailsElement>,
+  "open" | "onToggle" | "title"
+> {
   /** The question, always visible. */
   title: ReactNode;
   open?: boolean;
@@ -2133,7 +2166,7 @@ export interface AccordionItemProps extends Omit<DetailsHTMLAttributes<HTMLDetai
 }
 
 /** One question and its answer, on a native <details>. */
-export const AccordionItem = forwardRef<HTMLDetailsElement, AccordionItemProps>(function AccordionItem(
+export const AccordionItem = /* @__PURE__ */ forwardRef<HTMLDetailsElement, AccordionItemProps>(function AccordionItem(
   { title, open, defaultOpen, onOpenChange, className, children, ...rest },
   ref,
 ) {
@@ -2144,7 +2177,10 @@ export const AccordionItem = forwardRef<HTMLDetailsElement, AccordionItemProps>(
       {...rest}
       className={cx("hui-accordion__item", className)}
       open={isOpen}
-      onToggle={(event) => setOpen(event.currentTarget.open)}
+      onToggle={(event) => {
+        // The browser also fires toggle for the open attribute we set ourselves.
+        if (event.currentTarget.open !== isOpen) setOpen(event.currentTarget.open);
+      }}
     >
       <summary>{title}</summary>
       <div className="hui-accordion__body">{children}</div>
@@ -2164,7 +2200,7 @@ export interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
 }
 
 /** A drawn table. Write <thead>, <tbody>, <tr> as usual, with Th and Td if you like. */
-export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
+export const Table = /* @__PURE__ */ forwardRef<HTMLTableElement, TableProps>(function Table(
   { caption, tableClassName, className, style, children, ...rest },
   ref,
 ) {
@@ -2183,7 +2219,10 @@ export interface ThProps extends ThHTMLAttributes<HTMLTableCellElement> {
   numeric?: boolean;
 }
 
-export const Th = forwardRef<HTMLTableCellElement, ThProps>(function Th({ numeric, className, ...rest }, ref) {
+export const Th = /* @__PURE__ */ forwardRef<HTMLTableCellElement, ThProps>(function Th(
+  { numeric, className, ...rest },
+  ref,
+) {
   return <th ref={ref} {...rest} className={cx(numeric && "is-num", className) || undefined} />;
 });
 
@@ -2192,7 +2231,10 @@ export interface TdProps extends TdHTMLAttributes<HTMLTableCellElement> {
   numeric?: boolean;
 }
 
-export const Td = forwardRef<HTMLTableCellElement, TdProps>(function Td({ numeric, className, ...rest }, ref) {
+export const Td = /* @__PURE__ */ forwardRef<HTMLTableCellElement, TdProps>(function Td(
+  { numeric, className, ...rest },
+  ref,
+) {
   return <td ref={ref} {...rest} className={cx(numeric && "is-num", className) || undefined} />;
 });
 
@@ -2208,7 +2250,7 @@ export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
 const firstLetter = (name: string): string => (Array.from(name.trim())[0] ?? "").toUpperCase();
 
 /** A round avatar: a photo, a letter or anything you put inside. */
-export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
+export const Avatar = /* @__PURE__ */ forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
   { size = "md", tone, src, alt, name, className, children, ...rest },
   ref,
 ) {
@@ -2227,7 +2269,7 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
 });
 
 /** Avatars that overlap a little. */
-export const AvatarGroup = createPart("div", "hui-avatar-group", "AvatarGroup");
+export const AvatarGroup = /* @__PURE__ */ createPart("div", "hui-avatar-group", "AvatarGroup");
 
 export interface StatProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
   value: ReactNode;
@@ -2239,7 +2281,7 @@ export interface StatProps extends Omit<HTMLAttributes<HTMLDivElement>, "childre
 }
 
 /** A big number with a label. */
-export const Stat = forwardRef<HTMLDivElement, StatProps>(function Stat(
+export const Stat = /* @__PURE__ */ forwardRef<HTMLDivElement, StatProps>(function Stat(
   { value, label, delta, deltaTone, className, ...rest },
   ref,
 ) {
@@ -2260,7 +2302,7 @@ export interface StepsProps extends HTMLAttributes<HTMLOListElement> {
 }
 
 /** 1, 2, 3 and done. Put Step children inside. */
-export const Steps = forwardRef<HTMLOListElement, StepsProps>(function Steps(
+export const Steps = /* @__PURE__ */ forwardRef<HTMLOListElement, StepsProps>(function Steps(
   { vertical, tone, columns, className, style, children, ...rest },
   ref,
 ) {
@@ -2283,7 +2325,7 @@ export interface StepProps extends Omit<HTMLAttributes<HTMLLIElement>, "title"> 
   titleAs?: PartTag;
 }
 
-export const Step = forwardRef<HTMLLIElement, StepProps>(function Step(
+export const Step = /* @__PURE__ */ forwardRef<HTMLLIElement, StepProps>(function Step(
   { title, titleAs = "h3", className, children, ...rest },
   ref,
 ) {
@@ -2303,7 +2345,7 @@ export interface ChecklistProps extends HTMLAttributes<HTMLUListElement> {
 }
 
 /** A list with hand-drawn ticks. */
-export const Checklist = forwardRef<HTMLUListElement, ChecklistProps>(function Checklist(
+export const Checklist = /* @__PURE__ */ forwardRef<HTMLUListElement, ChecklistProps>(function Checklist(
   { inline, tone, className, ...rest },
   ref,
 ) {
@@ -2321,7 +2363,7 @@ export interface ChecklistItemProps extends LiHTMLAttributes<HTMLLIElement> {
   off?: boolean;
 }
 
-export const ChecklistItem = forwardRef<HTMLLIElement, ChecklistItemProps>(function ChecklistItem(
+export const ChecklistItem = /* @__PURE__ */ forwardRef<HTMLLIElement, ChecklistItemProps>(function ChecklistItem(
   { off, className, ...rest },
   ref,
 ) {
@@ -2340,7 +2382,7 @@ export interface QuoteProps extends HTMLAttributes<HTMLElement> {
 }
 
 /** A testimonial. The children are the words. */
-export const Quote = forwardRef<HTMLElement, QuoteProps>(function Quote(
+export const Quote = /* @__PURE__ */ forwardRef<HTMLElement, QuoteProps>(function Quote(
   { name, detail, avatar, tone, tilt, className, style, children, ...rest },
   ref,
 ) {
@@ -2384,8 +2426,22 @@ export interface PriceProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"
 }
 
 /** A pricing card. The children are usually a Checklist and a Button. */
-export const Price = forwardRef<HTMLDivElement, PriceProps>(function Price(
-  { name, amount, period, description, flag, flagTone = "red", featured, tone, tilt, className, style, children, ...rest },
+export const Price = /* @__PURE__ */ forwardRef<HTMLDivElement, PriceProps>(function Price(
+  {
+    name,
+    amount,
+    period,
+    description,
+    flag,
+    flagTone = "red",
+    featured,
+    tone,
+    tilt,
+    className,
+    style,
+    children,
+    ...rest
+  },
   ref,
 ) {
   return (
@@ -2434,16 +2490,14 @@ function OptionBody({ icon, title, meta, action }: OptionContent) {
 }
 
 export interface OptionProps
-  extends OptionContent,
-    LinkAttrs,
-    Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof LinkAttrs | "title"> {
+  extends OptionContent, LinkAttrs, Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof LinkAttrs | "title"> {
   tone?: Tone;
   /** The chosen one. aria-current on a link, aria-pressed on a button. */
   selected?: boolean;
 }
 
 /** A pick-one card that acts like a link or a toggle button. */
-export const Option = forwardRef<HTMLButtonElement | HTMLAnchorElement, OptionProps>(function Option(
+export const Option = /* @__PURE__ */ forwardRef<HTMLButtonElement | HTMLAnchorElement, OptionProps>(function Option(
   { title, meta, icon, action, tone, selected, className, ...rest },
   ref,
 ) {
@@ -2461,7 +2515,8 @@ export const Option = forwardRef<HTMLButtonElement | HTMLAnchorElement, OptionPr
 });
 
 export interface OptionInputProps
-  extends OptionContent,
+  extends
+    OptionContent,
     Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "size" | "title" | "className" | "style" | "children"> {
   type?: "radio" | "checkbox";
   tone?: Tone;
@@ -2472,11 +2527,11 @@ export interface OptionInputProps
 }
 
 /** A pick-one card with a hidden radio or checkbox inside, for forms. */
-export const OptionInput = forwardRef<HTMLInputElement, OptionInputProps>(function OptionInput(
+export const OptionInput = /* @__PURE__ */ forwardRef<HTMLInputElement, OptionInputProps>(function OptionInput(
   { type = "radio", title, meta, icon, action, tone, className, style, ...props },
   ref,
 ) {
-  const a11y = useFieldControl(props);
+  const a11y = useFieldControl(props, false);
   return (
     <label className={cx("hui-option", toneClass(tone), className)} style={style}>
       <input ref={ref} type={type} {...props} {...a11y} />
@@ -2495,7 +2550,7 @@ export interface EmptyStateProps extends Omit<HTMLAttributes<HTMLDivElement>, "t
 }
 
 /** "Nothing here yet". The children (a button) go under the words. */
-export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(function EmptyState(
+export const EmptyState = /* @__PURE__ */ forwardRef<HTMLDivElement, EmptyStateProps>(function EmptyState(
   { art, title, description, titleAs = "h3", className, children, ...rest },
   ref,
 ) {
@@ -2525,7 +2580,7 @@ export interface RevealProps extends HTMLAttributes<HTMLElement> {
  * (Marker, Scribble, Strike) draw themselves at the same time. Nothing is
  * hidden before React runs, so the page works without JavaScript.
  */
-export const Reveal = forwardRef<HTMLElement, RevealProps>(function Reveal(
+export const Reveal = /* @__PURE__ */ forwardRef<HTMLElement, RevealProps>(function Reveal(
   { as = "div", index, className, style, ...rest },
   ref,
 ) {
@@ -2653,39 +2708,38 @@ export interface ThemeToggleProps extends Omit<ButtonProps, "children" | "iconOn
 }
 
 /** A small icon button that switches between the light and dark themes. */
-export const ThemeToggle = forwardRef<HTMLButtonElement | HTMLAnchorElement, ThemeToggleProps>(function ThemeToggle(
-  { lightIcon, darkIcon, size = "sm", onClick, ...rest },
-  ref,
-) {
-  const { isDark, toggleTheme } = useTheme();
-  return (
-    <Button
-      ref={ref}
-      size={size}
-      iconOnly
-      aria-label="Switch light or dark theme"
-      aria-pressed={isDark}
-      {...rest}
-      onClick={(event) => {
-        onClick?.(event);
-        if (!event.defaultPrevented) toggleTheme();
-      }}
-    >
-      {has(lightIcon) ? (
-        withClass(lightIcon, "hui-only-light")
-      ) : (
-        <Icon size="sm" className="hui-only-light">
-          <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" />
-        </Icon>
-      )}
-      {has(darkIcon) ? (
-        withClass(darkIcon, "hui-only-dark")
-      ) : (
-        <Icon size="sm" className="hui-only-dark">
-          <circle cx="12" cy="12" r="4.2" />
-          <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" />
-        </Icon>
-      )}
-    </Button>
-  );
-});
+export const ThemeToggle = /* @__PURE__ */ forwardRef<HTMLButtonElement | HTMLAnchorElement, ThemeToggleProps>(
+  function ThemeToggle({ lightIcon, darkIcon, size = "sm", onClick, ...rest }, ref) {
+    const { isDark, toggleTheme } = useTheme();
+    return (
+      <Button
+        ref={ref}
+        size={size}
+        iconOnly
+        aria-label="Switch light or dark theme"
+        aria-pressed={isDark}
+        {...rest}
+        onClick={(event) => {
+          onClick?.(event);
+          if (!event.defaultPrevented) toggleTheme();
+        }}
+      >
+        {has(lightIcon) ? (
+          withClass(lightIcon, "hui-only-light")
+        ) : (
+          <Icon size="sm" className="hui-only-light">
+            <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" />
+          </Icon>
+        )}
+        {has(darkIcon) ? (
+          withClass(darkIcon, "hui-only-dark")
+        ) : (
+          <Icon size="sm" className="hui-only-dark">
+            <circle cx="12" cy="12" r="4.2" />
+            <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" />
+          </Icon>
+        )}
+      </Button>
+    );
+  },
+);

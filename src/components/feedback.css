@@ -113,7 +113,7 @@
 .hui-toast__close:hover { color: var(--hui-ink); background: var(--hui-surface-sunken); }
 
 /* ---------- Tooltip (pure CSS, add data-hui-tooltip="text") ---------- */
-[data-hui-tooltip] { position: relative; }
+:where([data-hui-tooltip]) { position: relative; }
 
 [data-hui-tooltip]::after {
   content: attr(data-hui-tooltip);
@@ -232,6 +232,19 @@
     var(--_on);
   border-radius: var(--hui-radius-pill);
 }
+
+/* No value yet: moving stripes */
+.hui-progress:indeterminate {
+  background:
+    repeating-linear-gradient(-45deg, var(--_on) 0 8px, var(--hui-surface-sunken) 8px 16px)
+    0 0 / 22.63px 22.63px;
+  animation: hui-progress-slide 900ms linear infinite;
+}
+
+.hui-progress:indeterminate::-webkit-progress-bar { background: transparent; }
+.hui-progress:indeterminate::-moz-progress-bar { background: transparent; }
+
+@keyframes hui-progress-slide { to { background-position: 22.63px 0; } }
 
 /* ---------- Spinner: a dashed pencil circle ---------- */
 .hui-spinner {

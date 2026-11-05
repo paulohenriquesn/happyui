@@ -39,7 +39,7 @@ All paths below are relative to this skill's folder.
 | Labels | `hui-badge` + `--solid` `--dot` `--hand` `--count`, `hui-kbd`, `hui-code`, `hui-pre` | components/badge.md, code.md |
 | Surfaces | `hui-card` (+ `--dashed` `--soft` `--flat` `--row` `--lg`), `hui-frame` + `hui-tape`, `hui-note`, `hui-callout`, `hui-banner`, `hui-window` | components/card.md and neighbors |
 | Point at something | `hui-annotation` (+ `--up-right` `--down-left` `--down-right` `--plain`) | components/annotation.md |
-| Forms | `hui-field` > `hui-label` + `hui-input` / `hui-textarea` / `hui-select` + `hui-hint` / `hui-error`; `hui-check`, `hui-radio`, `hui-switch`, `hui-range` | components/forms.md, choice-controls.md |
+| Forms | `hui-field` > `hui-label` + `hui-input` / `hui-textarea` / `<div class="hui-select"><select>` + `hui-hint` / `hui-error`; `<label class="hui-check"><input type="checkbox">`, same for `hui-radio` and `hui-switch`; `hui-range` on the input | components/forms.md, choice-controls.md |
 | Navigation | `hui-nav`, `hui-logo`, `hui-tabs`, `hui-menu`, `hui-breadcrumb`, `hui-pagination`, `hui-footer` | components/nav.md, tabs.md, menu.md |
 | Feedback | `hui-alert`, `HappyUI.toast()`, `data-hui-tooltip`, `hui-dialog`, `hui-progress`, `hui-spinner`, `hui-skeleton`, `hui-accordion` | components/alert.md and neighbors |
 | Data | `hui-table-wrap` > `hui-table`, `hui-avatar`, `hui-stat`, `hui-steps`, `hui-checklist`, `hui-quote`, `hui-price`, `hui-option`, `hui-empty` | components/table.md and neighbors |
@@ -47,11 +47,27 @@ All paths below are relative to this skill's folder.
 | Hand-placed rotation | `hui-tilt-left`, `hui-tilt-right`, `hui-tilt-slight`, `hui-straight` | components/card.md |
 | Motion | `hui-reveal`, `data-hui-stagger`, `hui-float`, `hui-bob`, `hui-buzz`, `hui-nudge`, `hui-wiggle-hover` | components/motion.md |
 
+## Anatomy (element classes)
+
+- `hui-button`: `__icon`, `__text` > `__label` + `__hint`
+- `hui-card`: `__icon`, `__title`, `__text`, `__meta`, `__media`, `__footer`; `hui-card--row` > `__body`
+- `hui-hero`: `__copy`, `__media`. `hui-section`: `__head`
+- `hui-nav`: `__inner` > `hui-logo` (`__mark`), `__links` > `__link`, `__actions`, `__menu` > `__sheet`. `hui-footer`: `__inner`, `__brand`, `__cols`, `__title`, `__bottom`
+- `hui-field`: `hui-label` (`__aside`), control, `hui-hint` or `hui-error`
+- `hui-tabs` (`data-hui-tabs`): `__list` > `__tab`, `__panel`. `hui-menu` (a `<details>`): `summary`, `__list` > `__item`, `__sep`, `__label`
+- `hui-alert`: `__icon`, `__body` > `__title` + `__text`, `__close`. `hui-toast`: `__icon`, `__body`, `__title`, `__close`
+- `hui-dialog` (a `<dialog>`): `__inner` > `__head` > `__title`, `__text`, `__actions`
+- `hui-accordion`: `__item` (a `<details>`) > `summary` + `__body`
+- `hui-window`: `__bar` > `__dot` x3 + `__title`, `__body`. `hui-frame`: any image inside, `hui-tape--tl` `--tr` `--top` `--bl` `--br`
+- `hui-steps` (an `<ol>`): `hui-step` > `__title` + `__text`. `hui-stat`: `__value`, `__label`, `__delta`
+- `hui-quote` (a `<figure>`): `__text`, `__by`. `hui-price`: `__name`, `__amount` (`<small>`), `__text`, `__flag`
+- `hui-option`: `__icon`, `__body` > `__title` + `__meta`, `__action`. `hui-empty`: `__art`, `__title`, `__text`
+
 The first time you use a component in a task, read its doc: it has the exact markup and the required attributes. `docs/index.html` shows every component working. `examples/landing.html` and `examples/app.html` are complete pages to copy structure from.
 
 ## Rules that make it look right
 
-1. One `hui-button--primary` per view. Every other action is a default or ghost button.
+1. One `hui-button--primary` per section. The nav may repeat the page's main action as a small primary. Every other action is a default or ghost button.
 2. Handwriting (Caveat) only for short text: titles, card titles, notes, annotations. Paragraphs, labels and buttons keep the body font.
 3. One marker or scribble per section title. Highlight one to four words, never a sentence.
 4. Use two or three tones per page plus the brand yellow, and repeat them.
@@ -60,7 +76,7 @@ The first time you use a component in a task, read its doc: it has the exact mar
 7. Semantic HTML: `button` for actions, `a` for navigation, `label` with every input, `dialog`, `details`, `table`. Icon-only buttons need `aria-label`.
 8. Colors come from tokens such as `var(--hui-ink)` or `var(--hui-pink-fill)`. Your own CSS only places things (position, size, grid).
 9. Never touch the private `--_*` variables.
-10. Check both themes: `data-theme="dark"` on `<html>`.
+10. Dark mode works on its own: with no `data-theme`, the page follows the system. Offer a switch with `<button data-hui-theme-toggle aria-label="Switch theme">` (show icons with `hui-only-light` and `hui-only-dark`), and check both themes with `data-theme="dark"` on `<html>`.
 
 ## Page recipes
 
@@ -72,7 +88,7 @@ The first time you use a component in a task, read its doc: it has the exact mar
 | Mistake | Fix |
 |---|---|
 | No `class="hui"` on body: no paper, wrong fonts | Add it |
-| `hui-reveal` blocks stay invisible | Load `happyui.js`, or drop `hui-reveal` where no script runs |
+| `hui-reveal` blocks stay invisible | Load `happyui.js`, or drop `hui-reveal` where no script runs. Screenshots and PDF exports only see blocks already scrolled into view: add the `is-in` class first |
 | Tone on a parent, expecting the buttons inside to change | Put the tone class on each component |
 | Tape or tilted cards look cut off | Remove `overflow: hidden` from the container or give it padding |
 | Tooltip missing on `hui-link`, `hui-scribble` or `a.hui-banner` | Those use `::after`; wrap the element in a `span` with `data-hui-tooltip` |

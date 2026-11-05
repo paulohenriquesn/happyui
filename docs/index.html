@@ -612,9 +612,9 @@
         <span class="doc-label">Tabs</span>
         <div class="hui-tabs" data-hui-tabs>
           <div class="hui-tabs__list" role="tablist" aria-label="Platforms">
-            <button class="hui-tabs__tab" role="tab" id="t-mac" aria-controls="p-mac" aria-selected="true">macOS</button>
-            <button class="hui-tabs__tab" role="tab" id="t-win" aria-controls="p-win">Windows</button>
-            <button class="hui-tabs__tab" role="tab" id="t-lin" aria-controls="p-lin">Linux</button>
+            <button class="hui-tabs__tab" type="button" role="tab" id="t-mac" aria-controls="p-mac" aria-selected="true">macOS</button>
+            <button class="hui-tabs__tab" type="button" role="tab" id="t-win" aria-controls="p-win">Windows</button>
+            <button class="hui-tabs__tab" type="button" role="tab" id="t-lin" aria-controls="p-lin">Linux</button>
           </div>
           <div class="hui-tabs__panel" role="tabpanel" id="p-mac" aria-labelledby="t-mac" tabindex="0"><p class="hui-muted" style="margin: 0">Drag the app to your Applications folder. That is it.</p></div>
           <div class="hui-tabs__panel" role="tabpanel" id="p-win" aria-labelledby="t-win" tabindex="0" hidden><p class="hui-muted" style="margin: 0">Run the installer and say yes to the friendly popup.</p></div>
@@ -622,9 +622,9 @@
         </div>
         <div class="hui-tabs hui-tabs--line hui-blue" data-hui-tabs style="margin-top: .5rem">
           <div class="hui-tabs__list" role="tablist" aria-label="Sections">
-            <button class="hui-tabs__tab" role="tab" id="t-a" aria-controls="p-a" aria-selected="true">Overview</button>
-            <button class="hui-tabs__tab" role="tab" id="t-b" aria-controls="p-b">Activity</button>
-            <button class="hui-tabs__tab" role="tab" id="t-c" aria-controls="p-c">Settings</button>
+            <button class="hui-tabs__tab" type="button" role="tab" id="t-a" aria-controls="p-a" aria-selected="true">Overview</button>
+            <button class="hui-tabs__tab" type="button" role="tab" id="t-b" aria-controls="p-b">Activity</button>
+            <button class="hui-tabs__tab" type="button" role="tab" id="t-c" aria-controls="p-c">Settings</button>
           </div>
           <div class="hui-tabs__panel" role="tabpanel" id="p-a" aria-labelledby="t-a" tabindex="0"><p class="hui-muted" style="margin: 0">The line style, for quieter places like settings.</p></div>
           <div class="hui-tabs__panel" role="tabpanel" id="p-b" aria-labelledby="t-b" tabindex="0" hidden><p class="hui-muted" style="margin: 0">Nothing new since yesterday. Enjoy the calm.</p></div>
@@ -672,13 +672,13 @@
         <div class="hui-cluster">
           <details class="hui-menu">
             <summary class="hui-button">Options <svg class="hui-icon hui-icon--sm"><use href="#i-sliders"/></svg></summary>
-            <div class="hui-menu__list" role="menu">
+            <div class="hui-menu__list">
               <span class="hui-menu__label">This note</span>
-              <button class="hui-menu__item" role="menuitem" type="button"><svg class="hui-icon"><use href="#i-edit"/></svg> Edit <kbd class="hui-kbd">E</kbd></button>
-              <button class="hui-menu__item" role="menuitem" type="button"><svg class="hui-icon"><use href="#i-copy"/></svg> Duplicate</button>
-              <button class="hui-menu__item" role="menuitem" type="button"><svg class="hui-icon"><use href="#i-star"/></svg> Add to favorites</button>
+              <button class="hui-menu__item" type="button"><svg class="hui-icon"><use href="#i-edit"/></svg> Edit <kbd class="hui-kbd">E</kbd></button>
+              <button class="hui-menu__item" type="button"><svg class="hui-icon"><use href="#i-copy"/></svg> Duplicate</button>
+              <button class="hui-menu__item" type="button"><svg class="hui-icon"><use href="#i-star"/></svg> Add to favorites</button>
               <hr class="hui-menu__sep">
-              <button class="hui-menu__item hui-menu__item--danger" role="menuitem" type="button"><svg class="hui-icon"><use href="#i-trash"/></svg> Delete</button>
+              <button class="hui-menu__item hui-menu__item--danger" type="button"><svg class="hui-icon"><use href="#i-trash"/></svg> Delete</button>
             </div>
           </details>
           <span class="hui-annotation hui-annotation--plain">click me</span>
@@ -812,7 +812,7 @@
 
       <div class="hui-grid hui-grid--3 doc-gap-top" style="--hui-gap: 1.75rem">
         <figure class="hui-quote hui-tilt-slight hui-reveal">
-          <blockquote class="hui-quote__text" style="border: 0; padding: 0; margin: 0">It made our checkout page feel like a birthday card. Sales went up and so did our mood.</blockquote>
+          <blockquote class="hui-quote__text">It made our checkout page feel like a birthday card. Sales went up and so did our mood.</blockquote>
           <figcaption class="hui-quote__by"><span class="hui-avatar hui-orange">M</span><span><strong>Maya Torres</strong><span>runs a tiny bakery shop</span></span></figcaption>
         </figure>
         <div class="hui-price hui-reveal">
@@ -869,7 +869,7 @@
     </div>
     <nav class="hui-footer__cols" aria-label="Footer">
       <div><h2 class="hui-footer__title">Learn</h2><ul><li><a href="#foundations">Foundations</a></li><li><a href="#buttons">Components</a></li><li><a href="#install">Install</a></li></ul></div>
-      <div><h2 class="hui-footer__title">Examples</h2><ul><li><a href="../examples/landing.html">Landing page</a></li><li><a href="../examples/app.html">App screen</a></li></ul></div>
+      <div><h2 class="hui-footer__title">Examples</h2><ul><li><a href="../examples/landing.html">Landing page</a></li><li><a href="../examples/app.html">App screen</a></li><li><a href="../examples/bakery.html">Bakery, made by Claude</a></li></ul></div>
       <div><h2 class="hui-footer__title">Project</h2><ul><li><a href="https://github.com/paulohenriquesn/happyui">GitHub</a></li><li><a href="https://github.com/paulohenriquesn/happyui/blob/main/LICENSE">MIT License</a></li></ul></div>
     </nav>
   </div>

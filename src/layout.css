@@ -108,6 +108,29 @@
   border: 0;
 }
 
+/* A skip link ("Skip to content") shows up when it gets keyboard focus */
+.hui-sr-only:focus,
+.hui-sr-only:focus-visible {
+  position: fixed !important;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0.55rem 1rem;
+  overflow: visible;
+  clip: auto;
+  white-space: nowrap;
+  font-weight: 700;
+  color: var(--hui-on-pop);
+  text-decoration: none;
+  background: var(--hui-brand);
+  border: var(--hui-stroke) solid var(--hui-line);
+  border-radius: var(--hui-wobble);
+  box-shadow: var(--hui-shadow-md);
+}
+
 /* Show something only in one theme (theme switch icons, screenshots) */
 .hui-only-dark { display: none !important; }
 [data-theme="dark"] .hui-only-dark { display: revert !important; }

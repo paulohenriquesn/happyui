@@ -80,6 +80,7 @@ try {
   await viewport(browser, "examples/landing.html", "landing.png", { width: 1280, height: 900 });
   await viewport(browser, "examples/landing.html", "landing-dark.png", { width: 1280, height: 900, theme: "dark" });
   await viewport(browser, "examples/app.html", "app.png", { width: 1280, height: 1290 });
+  await viewport(browser, "examples/bakery.html", "bakery.png", { width: 1280, height: 900 });
   await viewport(browser, "examples/landing.html", "mobile.png", { width: 390, height: 844, mobile: true });
   await viewport(browser, "examples/app.html", "mobile-app.png", { width: 390, height: 844, mobile: true, theme: "dark" });
   await blocks(browser, "docs/index.html", ["colors", "type", "buttons", "ink", "cards", "notes", "forms", "navigation", "feedback", "data"]);

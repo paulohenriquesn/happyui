@@ -53,7 +53,7 @@
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+      }, { threshold: 0, rootMargin: "0px 0px -8% 0px" });
     }
 
     items.forEach(function (el) { observer.observe(el); });
@@ -150,7 +150,13 @@
   });
 
   /* ---------- Toasts ---------- */
-  var ICONS = { green: "✓", red: "!", orange: "!", yellow: "★", blue: "i", purple: "✦", pink: "♥", teal: "✦" };
+  var ICONS = {
+    green: "✓", success: "✓",
+    red: "!", danger: "!", orange: "!", warning: "!",
+    blue: "i", info: "i",
+    yellow: "★", brand: "★",
+    purple: "✦", teal: "✦", pink: "♥"
+  };
 
   function region() {
     var r = doc.querySelector(".hui-toast-region");
@@ -172,7 +178,7 @@
 
   function toast(message, opts) {
     opts = opts || {};
-    var tone = opts.tone || "yellow";
+    var tone = opts.tone || "brand";
     var t = doc.createElement("div");
     t.className = "hui-toast hui-" + tone;
 
@@ -238,8 +244,25 @@
     });
   }
 
+  /* ---------- Range sliders: share the filled part with CSS (Chrome and Safari) ---------- */
+  function paintRange(input) {
+    var min = input.min === "" ? 0 : parseFloat(input.min);
+    var max = input.max === "" ? 100 : parseFloat(input.max);
+    var pct = max > min ? ((parseFloat(input.value) - min) / (max - min)) * 100 : 0;
+    input.style.setProperty("--hui-range-pct", pct + "%");
+  }
+
+  function ranges(scope) {
+    $all("input.hui-range", scope).forEach(function (input) {
+      paintRange(input);
+      if (!once(input, "Range")) return;
+      input.addEventListener("input", function () { paintRange(input); });
+    });
+  }
+
   /* ---------- Theme: light, dark or auto ---------- */
   var media = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+  var pageFixed = false; // true when the page wrote its own data-theme and nobody picked one yet
 
   function stored() {
     try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; }
@@ -262,6 +285,7 @@
   var theme = {
     get: function () { return root.getAttribute("data-theme") || "light"; },
     set: function (mode) {
+      pageFixed = false;
       try {
         if (mode === "auto") localStorage.removeItem(THEME_KEY);
         else localStorage.setItem(THEME_KEY, mode);
@@ -272,7 +296,7 @@
   };
 
   if (media && media.addEventListener) {
-    media.addEventListener("change", function () { if (!stored()) applyTheme("auto"); });
+    media.addEventListener("change", function () { if (!stored() && !pageFixed) applyTheme("auto"); });
   }
 
   function themeButtons(scope) {
@@ -292,12 +316,14 @@
     menus(scope);
     toastButtons(scope);
     copyButtons(scope);
+    ranges(scope);
     themeButtons(scope);
   }
 
-  // Respect a saved choice; otherwise follow the page or the system.
+  // A saved choice wins. Then a data-theme written by the page. Then the system.
   if (stored()) applyTheme(stored());
-  else if (!root.hasAttribute("data-theme")) applyTheme("auto");
+  else if (root.hasAttribute("data-theme")) pageFixed = true;
+  else applyTheme("auto");
 
   window.HappyUI = { init: init, toast: toast, theme: theme, reveal: reveal, version: "1.0.0" };
 

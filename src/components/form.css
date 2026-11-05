@@ -308,7 +308,7 @@
 
 .hui-range::-webkit-slider-runnable-track {
   height: 0.7rem;
-  background: var(--hui-surface-sunken);
+  background: linear-gradient(to right, var(--_on) 0 var(--hui-range-pct, 0%), var(--hui-surface-sunken) var(--hui-range-pct, 0%));
   border: var(--hui-stroke) solid var(--hui-line);
   border-radius: var(--hui-radius-pill);
 }

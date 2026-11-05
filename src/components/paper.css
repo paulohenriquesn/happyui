@@ -286,14 +286,13 @@ a.hui-banner:hover::after { translate: 3px 0; }
 .hui-window__body { padding: var(--hui-window-padding, 1.25rem); }
 
 /* A dark screen inside the sketch, like a real app at night */
+/* It carries the dark tokens (see tokens.css), so it reads in both themes. */
 .hui-window--night {
-  --hui-surface: #171a2b;
-  --hui-surface-sunken: #11131f;
-  color: #eef0ff;
+  --hui-surface: #1b1f36;
+  --hui-surface-sunken: #141729;
+  color: var(--hui-ink);
   background: linear-gradient(140deg, #1b1f36, #241a3d 60%, #2d1c43);
 }
-
-.hui-window--night .hui-window__bar { color: #b9bfdd; border-bottom-color: var(--hui-line); }
 
 /* ---------- Tilt helpers ---------- */
 .hui-tilt-left { --hui-tilt: calc(var(--hui-tilt-md) * -1); }

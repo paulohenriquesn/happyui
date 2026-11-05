@@ -242,6 +242,8 @@
 
 .hui-quote__text {
   margin: 0;
+  padding: 0;
+  border: 0;
   font: 600 var(--hui-hand-md) / 1.2 var(--hui-font-hand);
   color: var(--hui-ink);
 }
@@ -255,7 +257,8 @@
 }
 
 .hui-quote__by strong { display: block; line-height: 1.2; }
-.hui-quote__by span { color: var(--hui-ink-soft); font-size: var(--hui-text-xs); }
+.hui-quote__by span span,
+.hui-quote__role { color: var(--hui-ink-soft); font-size: var(--hui-text-xs); }
 
 /* ---------- Pricing card ---------- */
 .hui-price {
@@ -291,7 +294,7 @@
 
 /* The one you recommend */
 .hui-price--featured {
-  --hui-tilt: -1deg;
+  rotate: var(--hui-tilt, -1deg);
   background: var(--hui-tone-fill, var(--hui-brand-fill));
   border-width: var(--hui-stroke-thick);
   box-shadow: var(--hui-shadow-xl);
@@ -307,6 +310,7 @@
 /* ---------- Option card: pick one (platform, plan, size) ---------- */
 .hui-option {
   --_on: var(--hui-tone-fill, var(--hui-brand-fill));
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--hui-space-3);
